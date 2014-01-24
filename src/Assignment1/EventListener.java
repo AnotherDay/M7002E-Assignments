@@ -36,16 +36,8 @@ public class EventListener implements GLEventListener {
 		if (height == 0) height = 1;   // prevent divide by zero
 		float aspect = (float)width / height;
 		 
-		  // Set the view port (display area) to cover the entire window
-//		gl.glViewport(0, 0, width, height);
-		 
-		  // Setup perspective projection, with aspect ratio matches viewport
-		gl.glLoadIdentity();             // reset projection matrix
+		gl.glLoadIdentity();
 		glu.gluPerspective(45.0, aspect, 0.1, 100.0); // fovy, aspect, zNear, zFar
-		 
-        // Enable the model-view transform
-//		gl.glMatrixMode(GL2.GL_MODELVIEW);
-//		gl.glLoadIdentity(); // reset
 	}
 
 }
