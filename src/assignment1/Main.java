@@ -1,4 +1,4 @@
-package Assignment1;
+package assignment1;
 
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;

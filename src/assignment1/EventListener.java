@@ -1,4 +1,4 @@
-package Assignment1;
+package assignment1;
 
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
