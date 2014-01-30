@@ -1,4 +1,4 @@
-package assignment2.ui;
+package assignment2.ui.uiParts;
 
 import java.awt.Color;
 
