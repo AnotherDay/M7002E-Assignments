@@ -2,21 +2,24 @@ package assignment2;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLCanvas;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import assignment2.globals.Constants;
-import assignment2.ui.CreatePolygonToolbar;
+import assignment2.ui.LeftToolbar;
 import assignment2.ui.Toolbar;
 import assignment2.ui.Window;
 
-public class Main {
+public class Main implements ActionListener {
 
+	private static LeftToolbar leftToolbar;
+	
 	public static void main(String[] args) {
 		
 		//Source: http://stackoverflow.com/a/2592258
@@ -31,7 +34,7 @@ public class Main {
 		GLCanvas canvas = new GLCanvas(caps);
 		
 		Toolbar toolbar = new Toolbar();
-		CreatePolygonToolbar leftToolbar = new CreatePolygonToolbar();
+		leftToolbar = new LeftToolbar();
 		
 		JPanel leftPanel = new JPanel();
 		leftPanel.add(leftToolbar);
@@ -39,9 +42,12 @@ public class Main {
 		leftPanel.setBackground(Constants.backgroundColor);
 		
 		Window window = new Window("M7002E - Lab 2");
-//		window.add(toolbar, BorderLayout.NORTH);
 		window.add(leftPanel, BorderLayout.WEST);
-//		window.add(leftToolbar, BorderLayout.WEST);
 		window.add(canvas);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		System.out.println();
 	}
 }
