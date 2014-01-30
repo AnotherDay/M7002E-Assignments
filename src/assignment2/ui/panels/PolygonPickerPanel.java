@@ -18,7 +18,7 @@ public class PolygonPickerPanel extends JPanel {
 		super(new FlowLayout(FlowLayout.LEFT));
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 		model.addElement(Constants.PYRAMID_POLYGON);
-		model.addElement(Constants.RECTANGLE_POLYGON);
+		model.addElement(Constants.SQUARE_POLYGON);
 		model.addElement(Constants.STAR_POLYGON);
 		
 		comboBox = new JComboBox<String>(model);
@@ -28,5 +28,9 @@ public class PolygonPickerPanel extends JPanel {
 	
 	public void addActionListener(ActionListener actionListener)	{
 		comboBox.addActionListener(actionListener);
+	}
+	
+	public String getCurrentPolygon()	{
+		return (String)comboBox.getSelectedItem();
 	}
 }

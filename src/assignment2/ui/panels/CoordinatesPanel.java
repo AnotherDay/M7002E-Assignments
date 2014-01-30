@@ -34,14 +34,14 @@ public class CoordinatesPanel extends JPanel {
 	}
 	
 	public float getXValue() throws NumberFormatException	{
-		return Float.valueOf(xInput.getText());
+		return Float.parseFloat(xInput.getText());
 	}
 	
 	public float getYValue() throws NumberFormatException	{
-		return Float.valueOf(yInput.getText());
+		return Float.parseFloat(yInput.getText());
 	}
 	
 	public float getZValue() throws NumberFormatException	{
-		return Float.valueOf(zInput.getText());
+		return Float.parseFloat(zInput.getText());
 	}
 }

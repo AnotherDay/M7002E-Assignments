@@ -9,15 +9,17 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import assignment2.globals.Constants;
-import assignment2.ui.LableText;
+import assignment2.ui.uiParts.LableText;
 
 public class PyramidSpecificationPanel extends Panel {
 	
 	private final static int INPUT_COLUMNS = 3;
 	
+	private JTextField baseWidthInput, heightInput;
+	
 	public PyramidSpecificationPanel()	{
 		LableText baseWidthLable = new LableText("Base Width:");
-		JTextField baseWidthInput = new JTextField("", INPUT_COLUMNS);
+		baseWidthInput = new JTextField("", INPUT_COLUMNS);
 		
 		JPanel baseWidthPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		baseWidthPanel.setBackground(Constants.backgroundColor);
@@ -26,7 +28,7 @@ public class PyramidSpecificationPanel extends Panel {
 		
 		LableText heightLable = new LableText("Height:");
 		heightLable.setBorder(new EmptyBorder(0, 0, 0, 36)); //Makes both the boxes leveled
-		JTextField heightInput = new JTextField("", INPUT_COLUMNS);
+		heightInput = new JTextField("", INPUT_COLUMNS);
 		
 		JPanel heightPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		heightPanel.setBackground(Constants.backgroundColor);
@@ -39,7 +41,11 @@ public class PyramidSpecificationPanel extends Panel {
 		this.add(heightPanel);
 	}
 	
-	public float getBaseWidth()	{
-		return 0.0f;
+	public float getPyramidHeight() throws NumberFormatException	{
+		return Float.parseFloat(heightInput.getText());
+	}
+	
+	public float getPyramidBaseWidth() throws NumberFormatException	{
+		return Float.parseFloat(baseWidthInput.getText());
 	}
 }

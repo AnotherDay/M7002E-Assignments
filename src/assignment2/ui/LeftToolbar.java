@@ -37,6 +37,7 @@ public class LeftToolbar extends Panel implements ActionListener {
 	private JButton createPolygonButton;
 	
 	private final static int BOTTOM_MARGIN_SMALL = 10;
+	private final static String START_OF_ILLEGALSTATE_MESSAGE = "Polygon not choosen by the user. Current polygon choosen: ";
 	
 	public LeftToolbar() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -78,6 +79,42 @@ public class LeftToolbar extends Panel implements ActionListener {
 		return coordinatesPanel.getZValue();
 	}
 	
+	public float getPyramidHeight()	throws IllegalStateException	{
+		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.PYRAMID_POLYGON))	{
+			return pyramidSpecPanel.getPyramidHeight();
+		}
+		else	{
+			throw new IllegalStateException(START_OF_ILLEGALSTATE_MESSAGE + polygonPickerPanel.getCurrentPolygon());
+		}
+	}
+	
+	public float getPyramidBaseWidth()	throws IllegalStateException	{
+		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.PYRAMID_POLYGON))	{
+			return pyramidSpecPanel.getPyramidBaseWidth();
+		}
+		else	{
+			throw new IllegalStateException(START_OF_ILLEGALSTATE_MESSAGE + polygonPickerPanel.getCurrentPolygon());
+		}
+	}
+	
+	public float getSquareEdgeLength()	throws IllegalStateException	{
+		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.SQUARE_POLYGON))	{
+			return squareSpecPanel.getEdgeLength();
+		}
+		else	{
+			throw new IllegalStateException(START_OF_ILLEGALSTATE_MESSAGE + polygonPickerPanel.getCurrentPolygon());
+		}
+	}
+	
+	public float getStarSpan()	throws IllegalStateException	{
+		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.PYRAMID_POLYGON))	{
+			return starSpecPanel.getSpanValue();
+		}
+		else	{
+			throw new IllegalStateException(START_OF_ILLEGALSTATE_MESSAGE + polygonPickerPanel.getCurrentPolygon());
+		}
+	}
+	
 	/**
 	 * Used for the polygon switcher 
 	 */
@@ -89,7 +126,7 @@ public class LeftToolbar extends Panel implements ActionListener {
 		if(polygonName.equals(Constants.PYRAMID_POLYGON))	{
 			this.add(pyramidSpecPanel, 2);
 		}
-		else if(polygonName.equals(Constants.RECTANGLE_POLYGON))	{
+		else if(polygonName.equals(Constants.SQUARE_POLYGON))	{
 			this.add(squareSpecPanel, 2);
 		}
 		else if(polygonName.equals(Constants.STAR_POLYGON))	{
