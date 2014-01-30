@@ -44,7 +44,7 @@ public class Toolbar extends Panel {
 		addPolygonButton = new JButton("Place");
 		
 		model.addElement(Constants.PYRAMID_POLYGON);
-		model.addElement(Constants.RECTANGLE_POLYGON);
+		model.addElement(Constants.SQUARE_POLYGON);
 		model.addElement(Constants.STAR_POLYGON);
 		comboBox = new JComboBox<String>(model);
 
