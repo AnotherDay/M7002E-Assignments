@@ -12,11 +12,13 @@ public class Window extends Frame {
 		super(title);
 		
 		this.setSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
+		final Window windowForInnerClass = this;
 		this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
             	new Thread()	{
 					@Override
 					public void run() {
+						windowForInnerClass.dispose();
 						System.exit(0);
 					}
             	}.start();

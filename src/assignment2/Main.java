@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLProfile;
@@ -12,6 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import assignment2.globals.Constants;
+import assignment2.globals.ObjectContainer;
+import assignment2.openGL.EventListener;
+import assignment2.shapes.Pyramid;
 import assignment2.ui.LeftToolbar;
 import assignment2.ui.Toolbar;
 import assignment2.ui.Window;
@@ -19,6 +24,7 @@ import assignment2.ui.Window;
 public class Main implements ActionListener {
 
 	private static LeftToolbar leftToolbar;
+	private static ObjectContainer objectContainer = ObjectContainer.getInstance();
 	
 	public static void main(String[] args) {
 		
@@ -35,7 +41,7 @@ public class Main implements ActionListener {
 		
 		Toolbar toolbar = new Toolbar();
 		leftToolbar = new LeftToolbar();
-		
+
 		JPanel leftPanel = new JPanel();
 		leftPanel.add(leftToolbar);
 		leftPanel.setPreferredSize(new Dimension(200, 200));
@@ -44,6 +50,9 @@ public class Main implements ActionListener {
 		Window window = new Window("M7002E - Lab 2");
 		window.add(leftPanel, BorderLayout.WEST);
 		window.add(canvas);
+		
+		canvas.addGLEventListener(new EventListener());
+		
 	}
 
 	@Override
