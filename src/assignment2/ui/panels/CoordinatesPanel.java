@@ -8,6 +8,7 @@ import javax.swing.JTextField;
 import assignment2.globals.Constants;
 import assignment2.ui.uiParts.LableText;
 
+@SuppressWarnings("serial")
 public class CoordinatesPanel extends JPanel {
 	
 	private final static int numberOfColumns = 2;
