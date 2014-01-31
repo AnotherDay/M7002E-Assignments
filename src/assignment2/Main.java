@@ -13,6 +13,7 @@ import javax.media.opengl.awt.GLCanvas;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
+import assignment2.actionListeners.CreatePolygonActionListener;
 import assignment2.globals.Constants;
 import assignment2.globals.ObjectContainer;
 import assignment2.openGL.EventListener;
@@ -21,10 +22,9 @@ import assignment2.ui.LeftToolbar;
 import assignment2.ui.Toolbar;
 import assignment2.ui.Window;
 
-public class Main implements ActionListener {
+public class Main {
 
 	private static LeftToolbar leftToolbar;
-	private static ObjectContainer objectContainer = ObjectContainer.getInstance();
 	
 	public static void main(String[] args) {
 		
@@ -41,6 +41,7 @@ public class Main implements ActionListener {
 		
 		Toolbar toolbar = new Toolbar();
 		leftToolbar = new LeftToolbar();
+		leftToolbar.addButtonActionListener(new CreatePolygonActionListener(leftToolbar));
 
 		JPanel leftPanel = new JPanel();
 		leftPanel.add(leftToolbar);
@@ -53,10 +54,5 @@ public class Main implements ActionListener {
 		
 		canvas.addGLEventListener(new EventListener());
 		
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		System.out.println();
 	}
 }

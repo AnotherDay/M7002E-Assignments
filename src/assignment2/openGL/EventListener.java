@@ -14,14 +14,14 @@ public class EventListener implements GLEventListener {
 
 	private GLU glu; 
 	private PolygonDrawer polygonDrawer = new PolygonDrawer();
-	private ObjectContainer objectContainer = ObjectContainer.getInstance();
+	private ObjectContainer theObjectContainer = ObjectContainer.getInstance();
 	
 	@Override
 	public void display(GLAutoDrawable drawable) {
 		GL2 gl = drawable.getGL().getGL2();
-		Iterator<Pyramid> pyramidIterator = objectContainer.getPyramidIterator();
-		Iterator<Square> squareIterator = objectContainer.getSquareIterator();
-		Iterator<Star> starIterator = objectContainer.getStarIterator();
+		Iterator<Pyramid> pyramidIterator = theObjectContainer.getPyramidIterator();
+		Iterator<Square> squareIterator = theObjectContainer.getSquareIterator();
+		Iterator<Star> starIterator = theObjectContainer.getStarIterator();
 		
 		Pyramid p;
 		while(pyramidIterator.hasNext())	{
