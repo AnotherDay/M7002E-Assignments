@@ -23,7 +23,7 @@ import assignment2.ui.panels.StarSpecificationPanel;
 import assignment2.ui.uiParts.LableText;
 
 @SuppressWarnings("serial")
-public class LeftToolbar extends Panel implements ActionListener {
+public class LeftToolbar extends Panel{
 	
 	private Color backgroundColor = Constants.backgroundColor;
 	
@@ -44,7 +44,6 @@ public class LeftToolbar extends Panel implements ActionListener {
 		this.setBackground(backgroundColor);
 		
 		polygonPickerPanel = new PolygonPickerPanel();
-		polygonPickerPanel.addActionListener(this);
 		polygonPickerPanel.setBorder(new EmptyBorder(0, 0, BOTTOM_MARGIN_SMALL, 0));
 		coordinatesPanel.setBorder(new EmptyBorder(0, 0, BOTTOM_MARGIN_SMALL, 0));
 		
@@ -61,6 +60,10 @@ public class LeftToolbar extends Panel implements ActionListener {
 	
 	public void addButtonActionListener(ActionListener actionLitstener)	{
 		createPolygonButton.addActionListener(actionLitstener);
+	}
+	
+	public void addPolygonPickerActionListener(ActionListener actionListener)	{
+		polygonPickerPanel.addActionListener(actionListener);
 	}
 	
 	public String getActivePolygon()	{
@@ -115,26 +118,37 @@ public class LeftToolbar extends Panel implements ActionListener {
 		}
 	}
 	
-	/**
-	 * Used for the polygon switcher 
-	 */
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		JComboBox<String> comboBox = (JComboBox<String>)e.getSource(); 
-		this.remove(2);
-		String polygonName = (String) comboBox.getSelectedItem();
-		if(polygonName.equals(Constants.PYRAMID_POLYGON))	{
+	public void changeToPyramidSpecificationPanel()	{
+		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.PYRAMID_POLYGON))	{
+			this.remove(2);
 			this.add(pyramidSpecPanel, 2);
+			updatePanel();
 		}
-		else if(polygonName.equals(Constants.SQUARE_POLYGON))	{
+	}
+	
+	public void changeToSquareSpecificationPanel()	{
+		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.SQUARE_POLYGON))	{
+			this.remove(2);
 			this.add(squareSpecPanel, 2);
+			updatePanel();
 		}
-		else if(polygonName.equals(Constants.STAR_POLYGON))	{
+	}
+	
+	public void changeToStarSpecificationPanel()	{
+		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.STAR_POLYGON))	{
+			this.remove(2);
 			this.add(starSpecPanel, 2);
+			updatePanel();
 		}
-		else	{
-			this.add(new LableText("Unspecified Polygon"), 2);
-		}
+	}
+	
+	public void changeToUnspecifiedPolygonLable()	{
+		this.remove(2);
+		this.add(new LableText("Unspecified Polygon"), 2);
+		this.updatePanel();
+	}
+	
+	private void updatePanel()	{
 		this.repaint();
 		this.revalidate();
 	}

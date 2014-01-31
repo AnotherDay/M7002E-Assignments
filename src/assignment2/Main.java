@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import assignment2.actionListeners.CreatePolygonActionListener;
+import assignment2.actionListeners.SwitchPolygonActionListener;
 import assignment2.globals.Constants;
 import assignment2.globals.ObjectContainer;
 import assignment2.openGL.EventListener;
@@ -41,7 +42,6 @@ public class Main {
 		
 		Toolbar toolbar = new Toolbar();
 		leftToolbar = new LeftToolbar();
-		leftToolbar.addButtonActionListener(new CreatePolygonActionListener(leftToolbar));
 
 		JPanel leftPanel = new JPanel();
 		leftPanel.add(leftToolbar);
@@ -51,6 +51,9 @@ public class Main {
 		Window window = new Window("M7002E - Lab 2");
 		window.add(leftPanel, BorderLayout.WEST);
 		window.add(canvas);
+		
+		leftToolbar.addPolygonPickerActionListener(new SwitchPolygonActionListener(leftToolbar, window));
+		leftToolbar.addButtonActionListener(new CreatePolygonActionListener(leftToolbar));
 		
 		canvas.addGLEventListener(new EventListener());
 		
