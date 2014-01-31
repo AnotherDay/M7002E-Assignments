@@ -23,20 +23,24 @@ public class CreatePolygonActionListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		try	{
 			String activePolygon = leftToolbar.getActivePolygon();
+			String printOutMessage = "Created: ";
 			if(activePolygon.equals(Constants.PYRAMID_POLYGON))		{
 				theObjectContainer.addPyramid(new Pyramid(leftToolbar.getXCoordinate(), 
 						leftToolbar.getYCoordinate(), leftToolbar.getZCoordinate(), 
 						leftToolbar.getPyramidHeight(), leftToolbar.getPyramidBaseWidth()));
+				System.out.println(printOutMessage + "Pyramid");
 			}
 			else if(activePolygon.equals(Constants.SQUARE_POLYGON))	{
 				theObjectContainer.addSquare(new Square(leftToolbar.getXCoordinate(), 
 						leftToolbar.getYCoordinate(), leftToolbar.getZCoordinate(), 
 						leftToolbar.getSquareEdgeLength()));
+				System.out.println(printOutMessage + "Square");
 			}
 			else if(activePolygon.equals(Constants.STAR_POLYGON))	{
 				theObjectContainer.addStar(new Star(leftToolbar.getXCoordinate(), 
 						leftToolbar.getYCoordinate(), leftToolbar.getZCoordinate(), 
 						leftToolbar.getStarSpan()));
+				System.out.println(printOutMessage + "Star");
 			}
 		}
 		catch(NumberFormatException nfe)	{
