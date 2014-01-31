@@ -1,20 +1,18 @@
 package assignment2.ui;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Panel;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import assignment2.globals.Constants;
-import assignment2.globals.TextStyleDocument;
 import assignment2.ui.panels.CoordinatesPanel;
 import assignment2.ui.panels.PolygonPickerPanel;
 import assignment2.ui.panels.PyramidSpecificationPanel;
@@ -36,6 +34,8 @@ public class LeftToolbar extends Panel{
 	
 	private JButton createPolygonButton;
 	
+	private Vector<Component> order = new Vector<Component>();
+	
 	private final static int BOTTOM_MARGIN_SMALL = 10;
 	private final static String START_OF_ILLEGALSTATE_MESSAGE = "Polygon not choosen by the user. Current polygon choosen: ";
 	
@@ -51,6 +51,8 @@ public class LeftToolbar extends Panel{
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		buttonPanel.add(createPolygonButton);
 		buttonPanel.setBackground(backgroundColor);
+		
+		this.updateFocusTraversalOrder();
 		
 		this.add(polygonPickerPanel);
 		this.add(coordinatesPanel);
@@ -118,6 +120,10 @@ public class LeftToolbar extends Panel{
 		}
 	}
 	
+	public Vector<Component> getFocusTraversalOrder()	{
+		return order;
+	}
+	
 	public void changeToPyramidSpecificationPanel()	{
 		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.PYRAMID_POLYGON))	{
 			this.remove(2);
@@ -149,7 +155,22 @@ public class LeftToolbar extends Panel{
 	}
 	
 	private void updatePanel()	{
+		updateFocusTraversalOrder();
 		this.repaint();
 		this.revalidate();
 	}
+	
+	private void updateFocusTraversalOrder()	{
+		order = new Vector<Component>();
+		order.addAll(coordinatesPanel.getFocusTraversalOrder());
+		switch(polygonPickerPanel.getCurrentPolygon())	{
+			case Constants.PYRAMID_POLYGON:
+				order.addAll(pyramidSpecPanel.getFocusTraversalOrder());
+			case Constants.SQUARE_POLYGON:
+				order.addAll(squareSpecPanel.getFocusTraversalOrder());
+			case Constants.STAR_POLYGON:
+				order.addAll(starSpecPanel.getFocusTraversalOrder());
+		}
+	}
+	
 }

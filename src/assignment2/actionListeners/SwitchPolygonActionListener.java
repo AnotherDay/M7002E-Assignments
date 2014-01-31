@@ -5,16 +5,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import assignment2.globals.Constants;
+import assignment2.ui.CustomFocusTraversalPolicy;
 import assignment2.ui.LeftToolbar;
 
 public class SwitchPolygonActionListener implements ActionListener {
 
-	LeftToolbar leftToolbar;
-	Frame window;
+	private LeftToolbar leftToolbar;
+	private Frame window;
+	private CustomFocusTraversalPolicy traversalPolicy;
 	
 	public SwitchPolygonActionListener(LeftToolbar leftToolbar, Frame window)	{
 		this.window = window;
 		this.leftToolbar = leftToolbar;
+		traversalPolicy = new CustomFocusTraversalPolicy(leftToolbar.getFocusTraversalOrder());
+		window.setFocusTraversalPolicy(traversalPolicy);
 	}
 	
 	@Override
@@ -32,6 +36,8 @@ public class SwitchPolygonActionListener implements ActionListener {
 		else	{
 			leftToolbar.changeToUnspecifiedPolygonLable();
 		}
+		traversalPolicy.updateOrder(leftToolbar.getFocusTraversalOrder());
+		window.setFocusTraversalPolicy(traversalPolicy);
 	}
 
 }

@@ -19,6 +19,7 @@ import assignment2.globals.Constants;
 import assignment2.globals.ObjectContainer;
 import assignment2.openGL.EventListener;
 import assignment2.shapes.Pyramid;
+import assignment2.ui.CustomFocusTraversalPolicy;
 import assignment2.ui.LeftToolbar;
 import assignment2.ui.Toolbar;
 import assignment2.ui.Window;

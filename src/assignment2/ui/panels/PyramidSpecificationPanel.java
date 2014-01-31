@@ -1,7 +1,9 @@
 package assignment2.ui.panels;
 
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Panel;
+import java.util.Vector;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -11,6 +13,7 @@ import javax.swing.border.EmptyBorder;
 import assignment2.globals.Constants;
 import assignment2.ui.uiParts.LableText;
 
+@SuppressWarnings("serial")
 public class PyramidSpecificationPanel extends Panel {
 	
 	private final static int INPUT_COLUMNS = 3;
@@ -47,5 +50,12 @@ public class PyramidSpecificationPanel extends Panel {
 	
 	public float getPyramidBaseWidth() throws NumberFormatException	{
 		return Float.parseFloat(baseWidthInput.getText());
+	}
+	
+	public Vector<Component> getFocusTraversalOrder()	{
+		Vector<Component> order = new Vector<Component>();
+		order.add(baseWidthInput);
+		order.add(heightInput);
+		return order;
 	}
 }

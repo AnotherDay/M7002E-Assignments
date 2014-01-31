@@ -1,6 +1,8 @@
 package assignment2.ui.panels;
 
+import java.awt.Component;
 import java.awt.FlowLayout;
+import java.util.Vector;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -27,4 +29,9 @@ public class SquareSpecificationPanel extends JPanel {
 		return Float.parseFloat(edgeLenghtInput.getText());
 	}
 	
+	public Vector<Component> getFocusTraversalOrder()	{
+		Vector<Component> order = new Vector<Component>();
+		order.add(edgeLenghtInput);
+		return order;
+	}
 }

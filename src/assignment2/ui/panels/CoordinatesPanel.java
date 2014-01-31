@@ -1,6 +1,8 @@
 package assignment2.ui.panels;
 
+import java.awt.Component;
 import java.awt.FlowLayout;
+import java.util.Vector;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -44,5 +46,13 @@ public class CoordinatesPanel extends JPanel {
 	
 	public float getZValue() throws NumberFormatException	{
 		return Float.parseFloat(zInput.getText());
+	}
+	
+	public Vector<Component> getFocusTraversalOrder()	{
+		Vector<Component> order = new Vector<Component>();
+		order.add(xInput);
+		order.add(yInput);
+		order.add(zInput);
+		return order;
 	}
 }
