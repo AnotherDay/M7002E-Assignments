@@ -53,6 +53,7 @@ public class PolygonDrawer {
 	public void drawSquare(GL2 gl, float xPos, float yPos, float zPos, float edgeLenght) throws IllegalArgumentException	{
 		if(edgeLenght == 0) throw new IllegalArgumentException("Radius cannot be zero");
 		else	{
+			edgeLenght = edgeLenght/2;
 			gl.glPushMatrix();
 			gl.glPushAttrib(GL2.GL_ALL_ATTRIB_BITS);
 			gl.glTranslatef(xPos, yPos, zPos);
@@ -73,7 +74,6 @@ public class PolygonDrawer {
 		if(span == 0)	throw new IllegalArgumentException("Span cannot be zero");
 		else	{
 			float innerRadius = span/4;
-			
 			gl.glPushMatrix();
 			gl.glPushAttrib(GL2.GL_ALL_ATTRIB_BITS);
 				gl.glTranslatef(xPos, yPos, zPos);
