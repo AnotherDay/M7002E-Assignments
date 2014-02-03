@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 import assignment2.globals.Constants;
 import assignment2.ui.CustomFocusTraversalPolicy;
-import assignment2.ui.LeftToolbar;
+import assignment2.ui.leftToolbar.LeftToolbar;
 
 public class SwitchPolygonActionListener implements ActionListener {
 

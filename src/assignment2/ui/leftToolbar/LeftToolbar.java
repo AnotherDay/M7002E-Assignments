@@ -1,4 +1,4 @@
-package assignment2.ui;
+package assignment2.ui.leftToolbar;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -13,11 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import assignment2.globals.Constants;
-import assignment2.ui.panels.CoordinatesPanel;
-import assignment2.ui.panels.PolygonPickerPanel;
-import assignment2.ui.panels.PyramidSpecificationPanel;
-import assignment2.ui.panels.SquareSpecificationPanel;
-import assignment2.ui.panels.StarSpecificationPanel;
 import assignment2.ui.uiParts.LableText;
 
 @SuppressWarnings("serial")

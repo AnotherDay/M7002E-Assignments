@@ -1,4 +1,4 @@
-package assignment2.ui.panels;
+package assignment2.ui.leftToolbar;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;

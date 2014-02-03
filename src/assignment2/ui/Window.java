@@ -6,6 +6,7 @@ import java.awt.event.WindowEvent;
 
 import assignment2.globals.Constants;
 
+@SuppressWarnings("serial")
 public class Window extends Frame {
 	
 	public Window(String title)	{

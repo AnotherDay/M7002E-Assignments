@@ -1,7 +1,5 @@
 package assignment2.ui.uiParts;
 
-import java.awt.Color;
-
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
@@ -11,6 +9,7 @@ import javax.swing.text.StyleContext;
 
 import assignment2.globals.Constants;
 
+@SuppressWarnings("serial")
 public class LableText extends JTextPane {
 	public LableText(String text)	{
 		super();

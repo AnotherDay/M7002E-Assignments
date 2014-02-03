@@ -13,9 +13,8 @@ import assignment2.actionListeners.CreatePolygonActionListener;
 import assignment2.actionListeners.SwitchPolygonActionListener;
 import assignment2.globals.Constants;
 import assignment2.openGL.EventListener;
-import assignment2.ui.LeftToolbar;
-import assignment2.ui.Toolbar;
 import assignment2.ui.Window;
+import assignment2.ui.leftToolbar.LeftToolbar;
 
 public class Main {
 
@@ -35,7 +34,6 @@ public class Main {
 		caps.setDoubleBuffered(true);
 		GLCanvas canvas = new GLCanvas(caps);
 		
-		Toolbar toolbar = new Toolbar();
 		leftToolbar = new LeftToolbar();
 
 		JPanel leftPanel = new JPanel();
