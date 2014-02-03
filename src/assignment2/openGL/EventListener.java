@@ -16,7 +16,7 @@ public class EventListener implements GLEventListener {
 
 	private PolygonDrawer polygonDrawer = new PolygonDrawer();
 	private ObjectContainer theObjectContainer = ObjectContainer.getInstance();
-	GLU glu = new GLU();
+	private GLU glu = new GLU();
 	
 	@Override
 	public void display(GLAutoDrawable drawable) {
@@ -24,9 +24,6 @@ public class EventListener implements GLEventListener {
 		
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
 		gl.glLoadIdentity();
-//		polygonDrawer.drawPyramid(gl, -2.3f, -1.0f, -7.0f, 2.0f, 2.0f);
-//		polygonDrawer.drawSquare(gl, 0, 0, -8.0f, 1.0f);
-//		polygonDrawer.draw2dStar(gl, 2.0f, 0, -6.0f, 1.0f);
 
 		Iterator<Pyramid> pyramidIterator = theObjectContainer.getPyramidIterator();
 		Iterator<Square> squareIterator = theObjectContainer.getSquareIterator();
@@ -54,10 +51,7 @@ public class EventListener implements GLEventListener {
 	}
 
 	@Override
-	public void dispose(GLAutoDrawable arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void dispose(GLAutoDrawable arg0) {}
 
 	@Override
 	public void init(GLAutoDrawable drawable) {
@@ -71,14 +65,6 @@ public class EventListener implements GLEventListener {
 
 	@Override
 	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
-//		GL2 gl = drawable.getGL().getGL2();
-//				 
-//		if (height == 0) height = 1;   // prevent divide by zero
-//		float aspect = (float)width / height;
-//		 
-//		gl.glLoadIdentity();
-//		glu.gluPerspective(45.0, aspect, 0.1, 100.0); // fovy, aspect, zNear, zFar
-		
 		GL2 gl = drawable.getGL().getGL2();
         if (height <= 0) {
             height = 1;
