@@ -2,10 +2,6 @@ package assignment2;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLProfile;
@@ -16,10 +12,7 @@ import javax.swing.UIManager;
 import assignment2.actionListeners.CreatePolygonActionListener;
 import assignment2.actionListeners.SwitchPolygonActionListener;
 import assignment2.globals.Constants;
-import assignment2.globals.ObjectContainer;
 import assignment2.openGL.EventListener;
-import assignment2.shapes.Pyramid;
-import assignment2.ui.CustomFocusTraversalPolicy;
 import assignment2.ui.LeftToolbar;
 import assignment2.ui.Toolbar;
 import assignment2.ui.Window;
@@ -39,6 +32,7 @@ public class Main {
 		
 		GLProfile glp = GLProfile.getDefault();
 		GLCapabilities caps = new GLCapabilities(glp);
+		caps.setDoubleBuffered(true);
 		GLCanvas canvas = new GLCanvas(caps);
 		
 		Toolbar toolbar = new Toolbar();
@@ -50,13 +44,12 @@ public class Main {
 		leftPanel.setBackground(Constants.backgroundColor);
 		
 		Window window = new Window("M7002E - Lab 2");
-		window.add(leftPanel, BorderLayout.WEST);
-		window.add(canvas);
-		
+
 		leftToolbar.addPolygonPickerActionListener(new SwitchPolygonActionListener(leftToolbar, window));
-		leftToolbar.addButtonActionListener(new CreatePolygonActionListener(leftToolbar));
+		leftToolbar.addButtonActionListener(new CreatePolygonActionListener(leftToolbar, canvas));
 		
 		canvas.addGLEventListener(new EventListener());
-		
+		window.add(leftPanel, BorderLayout.WEST);
+		window.add(canvas);
 	}
 }
