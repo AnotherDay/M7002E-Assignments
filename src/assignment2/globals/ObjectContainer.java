@@ -48,4 +48,10 @@ public class ObjectContainer {
 	public Iterator<Star> getStarIterator()	{
 		return starList.iterator();
 	}
+	
+	public void clearObjectContainer()	{
+		pyramidList.clear();
+		squareList.clear();
+		starList.clear();
+	}
 }

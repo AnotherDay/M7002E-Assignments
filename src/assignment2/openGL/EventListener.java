@@ -1,16 +1,16 @@
 package assignment2.openGL;
 
-import assignment2.shapes.*;
-
 import java.util.Iterator;
 
-import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.glu.GLU;
 
 import assignment2.globals.ObjectContainer;
+import assignment2.shapes.Pyramid;
+import assignment2.shapes.Square;
+import assignment2.shapes.Star;
 
 public class EventListener implements GLEventListener {
 
@@ -22,6 +22,8 @@ public class EventListener implements GLEventListener {
 	public void display(GLAutoDrawable drawable) {
 		GL2 gl = drawable.getGL().getGL2();
 		
+		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
+		gl.glLoadIdentity();
 //		polygonDrawer.drawPyramid(gl, -2.3f, -1.0f, -7.0f, 2.0f, 2.0f);
 //		polygonDrawer.drawSquare(gl, 0, 0, -8.0f, 1.0f);
 //		polygonDrawer.draw2dStar(gl, 2.0f, 0, -6.0f, 1.0f);

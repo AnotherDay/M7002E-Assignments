@@ -9,17 +9,18 @@ import javax.media.opengl.awt.GLCanvas;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
+import assignment2.actionListeners.ClearCanvasActionListener;
+import assignment2.actionListeners.CloseProgramActionListener;
 import assignment2.actionListeners.CreatePolygonActionListener;
 import assignment2.actionListeners.SwitchPolygonActionListener;
 import assignment2.globals.Constants;
 import assignment2.openGL.EventListener;
 import assignment2.ui.Window;
 import assignment2.ui.leftToolbar.LeftToolbar;
+import assignment2.ui.menuBar.MenuBar;
 
 public class Main {
 
-	private static LeftToolbar leftToolbar;
-	
 	public static void main(String[] args) {
 		
 		//Source: http://stackoverflow.com/a/2592258
@@ -34,9 +35,12 @@ public class Main {
 		caps.setDoubleBuffered(true);
 		GLCanvas canvas = new GLCanvas(caps);
 		
-		leftToolbar = new LeftToolbar();
+		MenuBar menuBar = new MenuBar();
+		menuBar.addQuitActionListener(new CloseProgramActionListener());
+		menuBar.addClearCanvasActionListener(new ClearCanvasActionListener(canvas));
 
 		JPanel leftPanel = new JPanel();
+		LeftToolbar leftToolbar = new LeftToolbar();
 		leftPanel.add(leftToolbar);
 		leftPanel.setPreferredSize(new Dimension(200, 200));
 		leftPanel.setBackground(Constants.backgroundColor);
@@ -47,6 +51,7 @@ public class Main {
 		leftToolbar.addButtonActionListener(new CreatePolygonActionListener(leftToolbar, canvas));
 		
 		canvas.addGLEventListener(new EventListener());
+		window.add(menuBar, BorderLayout.NORTH);
 		window.add(leftPanel, BorderLayout.WEST);
 		window.add(canvas);
 	}
