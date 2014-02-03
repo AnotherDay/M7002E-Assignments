@@ -13,6 +13,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import assignment2.globals.Constants;
+import assignment2.ui.leftToolbar.panels.CoordinatesPanel;
+import assignment2.ui.leftToolbar.panels.PolygonPickerPanel;
+import assignment2.ui.leftToolbar.panels.PyramidSpecificationPanel;
+import assignment2.ui.leftToolbar.panels.SquareSpecificationPanel;
+import assignment2.ui.leftToolbar.panels.StarSpecificationPanel;
 import assignment2.ui.uiParts.LableText;
 
 @SuppressWarnings("serial")
