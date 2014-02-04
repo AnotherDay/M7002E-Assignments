@@ -7,9 +7,9 @@ import javax.media.opengl.awt.GLCanvas;
 
 import assignment2.globals.Constants;
 import assignment2.globals.ObjectContainer;
-import assignment2.shapes.Pyramid;
-import assignment2.shapes.Square;
-import assignment2.shapes.Star;
+import assignment2.shapes.GLPyramidEntity;
+import assignment2.shapes.GLSquareEntity;
+import assignment2.shapes.GLStarEntity;
 import assignment2.ui.leftToolbar.LeftToolbar;
 
 public class CreatePolygonActionListener implements ActionListener {
@@ -29,19 +29,19 @@ public class CreatePolygonActionListener implements ActionListener {
 			String activePolygon = leftToolbar.getActivePolygon();
 			String printOutMessage = "Created: ";
 			if(activePolygon.equals(Constants.PYRAMID_POLYGON))		{
-				theObjectContainer.addPyramid(new Pyramid(leftToolbar.getXCoordinate(), 
+				theObjectContainer.addPyramid(new GLPyramidEntity(leftToolbar.getXCoordinate(), 
 						leftToolbar.getYCoordinate(), leftToolbar.getZCoordinate(), 
 						leftToolbar.getPyramidHeight(), leftToolbar.getPyramidBaseWidth()));
 				System.out.println(printOutMessage + "Pyramid");
 			}
 			else if(activePolygon.equals(Constants.SQUARE_POLYGON))	{
-				theObjectContainer.addSquare(new Square(leftToolbar.getXCoordinate(), 
+				theObjectContainer.addSquare(new GLSquareEntity(leftToolbar.getXCoordinate(), 
 						leftToolbar.getYCoordinate(), leftToolbar.getZCoordinate(), 
 						leftToolbar.getSquareEdgeLength()));
 				System.out.println(printOutMessage + "Square");
 			}
 			else if(activePolygon.equals(Constants.STAR_POLYGON))	{
-				theObjectContainer.addStar(new Star(leftToolbar.getXCoordinate(), 
+				theObjectContainer.addStar(new GLStarEntity(leftToolbar.getXCoordinate(), 
 						leftToolbar.getYCoordinate(), leftToolbar.getZCoordinate(), 
 						leftToolbar.getStarSpan()));
 				System.out.println(printOutMessage + "Star");

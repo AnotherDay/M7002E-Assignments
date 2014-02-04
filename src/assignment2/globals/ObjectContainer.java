@@ -3,9 +3,10 @@ package assignment2.globals;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import assignment2.shapes.Pyramid;
-import assignment2.shapes.Square;
-import assignment2.shapes.Star;
+import assignment2.shapes.GLEntity;
+import assignment2.shapes.GLPyramidEntity;
+import assignment2.shapes.GLSquareEntity;
+import assignment2.shapes.GLStarEntity;
 
 /**
  * Singleton object which contains all the shape objects.
@@ -15,9 +16,8 @@ import assignment2.shapes.Star;
  */
 public class ObjectContainer {
 	private static final ObjectContainer INSTANCE = new ObjectContainer();
-	private ArrayList<Pyramid> pyramidList = new ArrayList<Pyramid>();
-	private ArrayList<Square> squareList = new ArrayList<Square>();
-	private ArrayList<Star> starList = new ArrayList<Star>();
+	
+	private ArrayList<GLEntity> glEntityList = new ArrayList<GLEntity>();
 	
 	private ObjectContainer(){};
 	
@@ -25,33 +25,23 @@ public class ObjectContainer {
 		return INSTANCE;
 	}
 	
-	public void addPyramid(Pyramid pyramid)	{
-		pyramidList.add(pyramid);
+	public void addPyramid(GLPyramidEntity pyramid)	{
+		glEntityList.add(pyramid);
 	}
 	
-	public void addSquare(Square square)	{
-		squareList.add(square);
+	public void addSquare(GLSquareEntity square)	{
+		glEntityList.add(square);
 	}
 	
-	public void addStar(Star star)	{
-		starList.add(star);
+	public void addStar(GLStarEntity star)	{
+		glEntityList.add(star);
 	}
 	
-	public Iterator<Pyramid> getPyramidIterator()	{
-		return pyramidList.iterator();
-	}
-	
-	public Iterator<Square> getSquareIterator()	{
-		return squareList.iterator();
-	}
-	
-	public Iterator<Star> getStarIterator()	{
-		return starList.iterator();
+	public ArrayList<GLEntity> getGLEntityList()	{
+		return glEntityList;
 	}
 	
 	public void clearObjectContainer()	{
-		pyramidList.clear();
-		squareList.clear();
-		starList.clear();
+		glEntityList.clear();
 	}
 }

@@ -17,7 +17,7 @@ import assignment2.actionListeners.SwitchPolygonActionListener;
 import assignment2.globals.Constants;
 import assignment2.globals.ObjectContainer;
 import assignment2.openGL.EventListener;
-import assignment2.shapes.Square;
+import assignment2.shapes.GLSquareEntity;
 import assignment2.ui.Window;
 import assignment2.ui.leftToolbar.LeftToolbar;
 import assignment2.ui.menuBar.MenuBar;
@@ -26,7 +26,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		ObjectContainer theObjectContainer = ObjectContainer.getInstance();
-		theObjectContainer.addSquare(new Square(0, 0, -3, 1));
+		theObjectContainer.addSquare(new GLSquareEntity(0, 0, -3, 1));
 		
 		//Source: http://stackoverflow.com/a/2592258
 		try { 

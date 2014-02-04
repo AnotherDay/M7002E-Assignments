@@ -1,6 +1,6 @@
 package assignment2.openGL;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
@@ -8,9 +8,7 @@ import javax.media.opengl.GLEventListener;
 import javax.media.opengl.glu.GLU;
 
 import assignment2.globals.ObjectContainer;
-import assignment2.shapes.Pyramid;
-import assignment2.shapes.Square;
-import assignment2.shapes.Star;
+import assignment2.shapes.GLEntity;
 
 public class EventListener implements GLEventListener {
 
@@ -24,29 +22,9 @@ public class EventListener implements GLEventListener {
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
 		gl.glLoadIdentity();
 
-		Iterator<Pyramid> pyramidIterator = theObjectContainer.getPyramidIterator();
-		Iterator<Square> squareIterator = theObjectContainer.getSquareIterator();
-		Iterator<Star> starIterator = theObjectContainer.getStarIterator();
-		
-		Pyramid p;
-		while(pyramidIterator.hasNext())	{
-			//TODO: handle illegalArgumentException
-			p = pyramidIterator.next();
-			polygonDrawer.drawPyramid(gl, p.getXPos(), p.getYPos(), p.getZPos(), p.getBaseWidth(), p.getHeight());
+		for(GLEntity glEntity : theObjectContainer.getGLEntityList())	{
+			glEntity.draw(gl, glu);
 		}
-		
-		Square sq;
-		while(squareIterator.hasNext())	{
-			sq = squareIterator.next();
-			polygonDrawer.drawSquare(gl, sq.getXPos(), sq.getYPos(), sq.getZPos(), sq.getEdgeLength());
-		}
-		
-		Star st;
-		while(starIterator.hasNext())	{
-			st = starIterator.next();
-			polygonDrawer.draw2dStar(gl, st.getXPos(), st.getYPos(), st.getZPos(), st.getSpan());
-		}
-		
 	}
 
 	@Override
