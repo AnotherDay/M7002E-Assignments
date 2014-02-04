@@ -12,7 +12,6 @@ public class Window extends Frame {
 	public Window(String title)	{
 		super(title);
 		
-		this.setSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		final Window windowForInnerClass = this;
 		this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
