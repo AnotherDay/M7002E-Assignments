@@ -112,7 +112,7 @@ public class LeftToolbar extends Panel{
 	}
 	
 	public float getStarSpan()	throws IllegalStateException	{
-		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.PYRAMID_POLYGON))	{
+		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.STAR_POLYGON))	{
 			return starSpecPanel.getSpanValue();
 		}
 		else	{
