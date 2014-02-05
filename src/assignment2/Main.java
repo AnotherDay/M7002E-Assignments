@@ -22,6 +22,8 @@ import assignment2.ui.Window;
 import assignment2.ui.leftToolbar.LeftToolbar;
 import assignment2.ui.menuBar.MenuBar;
 
+import com.jogamp.opengl.util.Animator;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -51,16 +53,20 @@ public class Main {
 		leftPanel.setPreferredSize(new Dimension(200, 500));
 		leftPanel.setBackground(Constants.backgroundColor);
 		
-		Window window = new Window("M7002E - Lab 2");
+		Animator animator = new Animator(canvas);
+		Window window = new Window("M7002E - Lab 2", animator);
 
 		leftToolbar.addPolygonPickerActionListener(new SwitchPolygonActionListener(leftToolbar, window));
 		leftToolbar.addButtonActionListener(new CreatePolygonActionListener(leftToolbar, canvas));
 		
-		canvas.addGLEventListener(new EventListener());
+		
+		EventListener eventListener = new EventListener();
+		canvas.addGLEventListener(eventListener);
 		window.add(leftPanel, BorderLayout.WEST);
 		window.add(menuBar, BorderLayout.NORTH);
 		window.add(canvas);
 		window.pack();
-		canvas.addMouseListener(new CanvasMouseListener(canvas.getHeight(), canvas.getWidth()));
+		canvas.addMouseListener(new CanvasMouseListener(canvas.getHeight(), canvas.getWidth(), eventListener));
+		animator.start();
 	}
 }

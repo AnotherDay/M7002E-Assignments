@@ -4,12 +4,12 @@ import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import assignment2.globals.Constants;
+import com.jogamp.opengl.util.Animator;
 
 @SuppressWarnings("serial")
 public class Window extends Frame {
 	
-	public Window(String title)	{
+	public Window(String title, final Animator animator)	{
 		super(title);
 		
 		final Window windowForInnerClass = this;
@@ -18,6 +18,7 @@ public class Window extends Frame {
             	new Thread()	{
 					@Override
 					public void run() {
+						animator.stop();
 						windowForInnerClass.dispose();
 						System.exit(0);
 					}

@@ -46,7 +46,7 @@ public class CreatePolygonActionListener implements ActionListener {
 						leftToolbar.getStarSpan()));
 				System.out.println(printOutMessage + "Star");
 			}
-			canvas.display();
+//			canvas.display();
 		}
 		catch(NumberFormatException nfe)	{
 			//TODO: make a error message in the leftToolbar panel

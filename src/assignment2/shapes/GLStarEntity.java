@@ -21,6 +21,7 @@ public class GLStarEntity extends GLEntity {
 		if(span == 0)	throw new IllegalArgumentException("Span cannot be zero");
 		else	{
 			float innerRadius = span/4;
+			gl.glPushName(id);
 			gl.glPushMatrix();
 			gl.glPushAttrib(GL2.GL_ALL_ATTRIB_BITS);
 				gl.glTranslatef(xPos, yPos, zPos);

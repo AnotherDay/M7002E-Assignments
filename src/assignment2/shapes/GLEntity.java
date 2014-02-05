@@ -34,4 +34,5 @@ public abstract class GLEntity  {
 	}
 	
 	public abstract void draw(GL2 gl, GLU glu);
+	
 }

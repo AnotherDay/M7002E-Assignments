@@ -24,6 +24,7 @@ public class GLPyramidEntity extends GLEntity {
 	public void draw(GL2 gl, GLU glu) {
 		if(baseWidth == 0)	throw new IllegalArgumentException("Base width cannot be zero");
 		float halfWidth = baseWidth/2;
+		gl.glPushName(id);
 		gl.glPushMatrix();
 		gl.glPushAttrib(GL2.GL_ALL_ATTRIB_BITS);
 			gl.glTranslatef(xPos, yPos, zPos);

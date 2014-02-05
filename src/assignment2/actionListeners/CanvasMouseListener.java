@@ -3,13 +3,17 @@ package assignment2.actionListeners;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import assignment2.openGL.EventListener;
+
 public class CanvasMouseListener implements MouseListener {
 
 	private float panelHeight, panelWidth, openGLWindowHeight, openGLWindowWidth;
+	private EventListener eventListener;
 	
-	public CanvasMouseListener(int panelHeight, int panelWidth)	{
+	public CanvasMouseListener(int panelHeight, int panelWidth, EventListener eventListener)	{
 		this.panelHeight = panelHeight;
 		this.panelWidth = panelWidth;
+		this.eventListener = eventListener;
 	}
 	
 	@Override
@@ -26,11 +30,13 @@ public class CanvasMouseListener implements MouseListener {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		//The following conversion from Lecture 2 slide 57
-		float yInv = panelHeight - e.getY();								//1. Invert y to switch origin to bottom left
-		float yUnit = yInv/panelHeight; float xUnit = e.getX()/panelWidth; //2. Rescale to unit box
-		//3. Rescale to OpenGL width & height
-		//4. Offset to OpenGL origin
+//		//THE FOLLOWING CONVERSION FROM LECTURE 2 SLIDE 57
+//		FLOAT YINV = PANELHEIGHT - E.GETY();								//1. INVERT Y TO SWITCH ORIGIN TO BOTTOM LEFT
+//		FLOAT YUNIT = YINV/PANELHEIGHT; FLOAT XUNIT = E.GETX()/PANELWIDTH; //2. RESCALE TO UNIT BOX
+//		//3. RESCALE TO OPENGL WIDTH & HEIGHT
+//		//4. OFFSET TO OPENGL ORIGIN
+//		System.out.println("X-coordinate = " + xUnit + ", Y-Coordinate = " + yUnit);
+		eventListener.registerMouseClick(e.getX(), e.getY(), (int)panelHeight, (int)panelWidth);
 	}
 
 	@Override
