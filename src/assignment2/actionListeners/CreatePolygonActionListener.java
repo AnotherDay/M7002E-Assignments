@@ -7,9 +7,9 @@ import javax.media.opengl.awt.GLCanvas;
 
 import assignment2.globals.Constants;
 import assignment2.globals.ObjectContainer;
-import assignment2.shapes.GLPyramidEntity;
-import assignment2.shapes.GLSquareEntity;
-import assignment2.shapes.GLStarEntity;
+import assignment2.openGL.shapes.GLPyramidEntity;
+import assignment2.openGL.shapes.GLSquareEntity;
+import assignment2.openGL.shapes.GLStarEntity;
 import assignment2.ui.leftToolbar.LeftToolbar;
 
 public class CreatePolygonActionListener implements ActionListener {

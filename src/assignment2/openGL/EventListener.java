@@ -8,7 +8,7 @@ import javax.media.opengl.GLEventListener;
 import javax.media.opengl.glu.GLU;
 
 import assignment2.globals.ObjectContainer;
-import assignment2.shapes.GLEntity;
+import assignment2.openGL.shapes.GLEntity;
 
 import com.jogamp.common.nio.Buffers;
 

@@ -17,7 +17,7 @@ import assignment2.actionListeners.SwitchPolygonActionListener;
 import assignment2.globals.Constants;
 import assignment2.globals.ObjectContainer;
 import assignment2.openGL.EventListener;
-import assignment2.shapes.GLSquareEntity;
+import assignment2.openGL.shapes.GLSquareEntity;
 import assignment2.ui.Window;
 import assignment2.ui.leftToolbar.LeftToolbar;
 import assignment2.ui.menuBar.MenuBar;

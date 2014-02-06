@@ -3,10 +3,10 @@ package assignment2.globals;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import assignment2.shapes.GLEntity;
-import assignment2.shapes.GLPyramidEntity;
-import assignment2.shapes.GLSquareEntity;
-import assignment2.shapes.GLStarEntity;
+import assignment2.openGL.shapes.GLEntity;
+import assignment2.openGL.shapes.GLPyramidEntity;
+import assignment2.openGL.shapes.GLSquareEntity;
+import assignment2.openGL.shapes.GLStarEntity;
 
 /**
  * Singleton object which contains all the shape objects.

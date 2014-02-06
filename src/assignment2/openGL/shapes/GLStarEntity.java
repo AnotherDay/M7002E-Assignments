@@ -1,4 +1,4 @@
-package assignment2.shapes;
+package assignment2.openGL.shapes;
 
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
@@ -26,6 +26,7 @@ public class GLStarEntity extends GLEntity {
 			gl.glPushAttrib(GL2.GL_ALL_ATTRIB_BITS);
 				gl.glTranslatef(xPos, yPos, zPos);
 				gl.glColor3d(0, 255, 0);
+//				gl.glPolygonMode(GL2.GL_FRONT, GL2.GL_FILL);
 				//Starting from the far right vertex and then moving up in a counter clockwise direction
 				gl.glBegin(GL2.GL_LINE_LOOP);  
 					gl.glVertex3f(span, 0, 0);
