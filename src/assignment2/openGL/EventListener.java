@@ -45,7 +45,6 @@ public class EventListener implements GLEventListener {
 				glu.gluPickMatrix(x, (double) (viewPort[3] - y), 5.0d, 5.0d, viewPort, 0);
 				System.out.println("X-Coordiante = " + x + ", Y-Coordinate = " + (double) (viewPort[3] - y));
 				glu.gluOrtho2D(orthoLeft, orthoRight, orthoBotton, orthoTop);
-//				glu.gluOrtho2D(0.0d, 1.0d, 0.0d, 1.0d);
 				drawScene(gl);
 				gl.glFlush();
 				gl.glMatrixMode(GL2.GL_PROJECTION);
@@ -81,21 +80,13 @@ public class EventListener implements GLEventListener {
 	public void init(GLAutoDrawable drawable) {
 		GL2 gl = drawable.getGL().getGL2();
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-//		gl.glMatrixMode(GL2.GL_PROJECTION);
-//		gl.glLoadIdentity();
-//		gl.glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
 	}
 
 	@Override
 	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
 		GL2 gl = drawable.getGL().getGL2();
-//        if (height <= 0) {
-//            height = 1;
-//        }
-//        float h = (float) width / (float) height;
         gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
-//        glu.gluPerspective(50.0f, h, 1.0, 1000.0);
         glu.gluOrtho2D(orthoLeft, orthoRight, orthoBotton, orthoTop);
         gl.glMatrixMode(GL2.GL_MODELVIEW);
         gl.glLoadIdentity();
