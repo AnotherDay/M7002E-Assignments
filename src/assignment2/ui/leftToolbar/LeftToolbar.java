@@ -10,6 +10,8 @@ import java.util.Vector;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import assignment2.globals.Constants;
@@ -54,10 +56,12 @@ public class LeftToolbar extends Panel{
 		
 		this.updateFocusTraversalOrder();
 		
+		this.add(new JSeparator(SwingConstants.HORIZONTAL));
 		this.add(polygonPickerPanel);
 		this.add(coordinatesPanel);
 		this.add(pyramidSpecPanel);
 		this.add(buttonPanel);
+		this.add(new JSeparator(SwingConstants.HORIZONTAL));
 	}
 	
 	public void addButtonActionListener(ActionListener actionLitstener)	{
