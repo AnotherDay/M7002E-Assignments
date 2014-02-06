@@ -16,10 +16,12 @@ public class EventListener implements GLEventListener {
 
 	private ObjectContainer theObjectContainer = ObjectContainer.getInstance();
 	private GLU glu = new GLU();
-	private int mouseX, mouseY, panelHeight, panelWidth;
+	private int mouseX, mouseY;
 	
 	private static final int UPDATE = 1, SELECT = 2;
     private int cmd = UPDATE;
+    private static final float orthoLeft = 0, orthoRight = 2, orthoBotton = 0, orthoTop = 1; 
+    
 	
 	@Override
 	public void display(GLAutoDrawable drawable) {
@@ -40,10 +42,12 @@ public class EventListener implements GLEventListener {
 			gl.glMatrixMode(GL2.GL_PROJECTION);
 			gl.glPushMatrix();
 				gl.glLoadIdentity();
-				glu.gluPickMatrix(x, (double) (viewPort[3] - y), 500.0d, 500.0d, viewPort, 0);
+				glu.gluPickMatrix(x, (double) (viewPort[3] - y), 5.0d, 5.0d, viewPort, 0);
 				System.out.println("X-Coordiante = " + x + ", Y-Coordinate = " + (double) (viewPort[3] - y));
-				glu.gluOrtho2D(0.0d, 1.0d, 0.0d, 1.0d);
+				glu.gluOrtho2D(orthoLeft, orthoRight, orthoBotton, orthoTop);
+//				glu.gluOrtho2D(0.0d, 1.0d, 0.0d, 1.0d);
 				drawScene(gl);
+				gl.glFlush();
 				gl.glMatrixMode(GL2.GL_PROJECTION);
 			gl.glPopMatrix();
 			gl.glFlush();
@@ -67,8 +71,6 @@ public class EventListener implements GLEventListener {
 	public void registerMouseClick(int x, int y, int panelHeight, int panelWidth)	{
 		mouseX = x;
 		mouseY = y;
-		this.panelHeight = panelHeight;
-		this.panelWidth = panelWidth;
 		cmd = SELECT;
 	}
 
@@ -79,22 +81,22 @@ public class EventListener implements GLEventListener {
 	public void init(GLAutoDrawable drawable) {
 		GL2 gl = drawable.getGL().getGL2();
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-		
-		gl.glMatrixMode(GL2.GL_PROJECTION);
-		gl.glLoadIdentity();
-		gl.glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
+//		gl.glMatrixMode(GL2.GL_PROJECTION);
+//		gl.glLoadIdentity();
+//		gl.glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
 	}
 
 	@Override
 	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
 		GL2 gl = drawable.getGL().getGL2();
-        if (height <= 0) {
-            height = 1;
-        }
-        float h = (float) width / (float) height;
+//        if (height <= 0) {
+//            height = 1;
+//        }
+//        float h = (float) width / (float) height;
         gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
-        glu.gluPerspective(50.0f, h, 1.0, 1000.0);
+//        glu.gluPerspective(50.0f, h, 1.0, 1000.0);
+        glu.gluOrtho2D(orthoLeft, orthoRight, orthoBotton, orthoTop);
         gl.glMatrixMode(GL2.GL_MODELVIEW);
         gl.glLoadIdentity();
 	}

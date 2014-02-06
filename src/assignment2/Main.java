@@ -28,10 +28,10 @@ public class Main {
 
 	public static void main(String[] args) {
 		ObjectContainer theObjectContainer = ObjectContainer.getInstance();
-		theObjectContainer.addSquare(new GLSquareEntity(0, 0, -3, 1));
+		theObjectContainer.addSquare(new GLSquareEntity(0.5f, 0.5f, -0.5f, 0.5f));
 		
 		//Source: http://stackoverflow.com/a/2592258
-		try { 
+		try {
 		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
 		    e.printStackTrace();
