@@ -38,6 +38,7 @@ public class LeftToolbar extends Panel{
 	
 	private Vector<Component> order = new Vector<Component>();
 	
+	private final static int SPECIFICATION_PANEL_INDEX = 3;
 	private final static int BOTTOM_MARGIN_SMALL = 10;
 	private final static String START_OF_ILLEGALSTATE_MESSAGE = "Polygon not choosen by the user. Current polygon choosen: ";
 	
@@ -130,31 +131,31 @@ public class LeftToolbar extends Panel{
 	
 	public void changeToPyramidSpecificationPanel()	{
 		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.PYRAMID_POLYGON))	{
-			this.remove(2);
-			this.add(pyramidSpecPanel, 2);
+			this.remove(SPECIFICATION_PANEL_INDEX);
+			this.add(pyramidSpecPanel, SPECIFICATION_PANEL_INDEX);
 			updatePanel();
 		}
 	}
 	
 	public void changeToSquareSpecificationPanel()	{
 		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.SQUARE_POLYGON))	{
-			this.remove(2);
-			this.add(squareSpecPanel, 2);
+			this.remove(SPECIFICATION_PANEL_INDEX);
+			this.add(squareSpecPanel, SPECIFICATION_PANEL_INDEX);
 			updatePanel();
 		}
 	}
 	
 	public void changeToStarSpecificationPanel()	{
 		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.STAR_POLYGON))	{
-			this.remove(2);
-			this.add(starSpecPanel, 2);
+			this.remove(SPECIFICATION_PANEL_INDEX);
+			this.add(starSpecPanel, SPECIFICATION_PANEL_INDEX);
 			updatePanel();
 		}
 	}
 	
 	public void changeToUnspecifiedPolygonLable()	{
-		this.remove(2);
-		this.add(new LableText("Unspecified Polygon"), 2);
+		this.remove(SPECIFICATION_PANEL_INDEX);
+		this.add(new LableText("Unspecified Polygon"), SPECIFICATION_PANEL_INDEX);
 		this.updatePanel();
 	}
 	
