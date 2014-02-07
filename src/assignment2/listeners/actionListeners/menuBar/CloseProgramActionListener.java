@@ -1,4 +1,4 @@
-package assignment2.listeners.actionListeners;
+package assignment2.listeners.actionListeners.menuBar;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
