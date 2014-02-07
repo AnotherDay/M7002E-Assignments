@@ -8,7 +8,7 @@ import assignment2.openGL.shapes.GLSquareEntity;
 import assignment2.openGL.shapes.GLStarEntity;
 
 /**
- * Singleton object which contains all the shape objects.
+ * Singleton object which contains all the GLEntity objects.
  * 
  * @author David Eriksson
  *
@@ -52,6 +52,13 @@ public class ObjectContainer {
 	
 	public ArrayList<GLEntity> getGLEntityList()	{
 		return glEntityList;
+	}
+	
+	public void deleteGLEntity(int id)	{
+		glEntityList.remove(id);
+		for(int i = id; i < glEntityList.size(); i++)	{
+			glEntityList.get(i).setId(glEntityList.get(i).getId()-1);
+		}
 	}
 	
 	public void clearObjectContainer()	{

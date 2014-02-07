@@ -12,7 +12,7 @@ import assignment2.openGL.EventListener;
 public class CanvasMouseListener implements MouseListener, MouseMotionListener {
 
 	private int panelHeight, panelWidth, widthToHeightRatio;
-	private static final int SELECT_SHAPE = 0, SELECT_SHAPE_TO_MOVE = 1, SELECT_NEW_POSITION= 2;
+	private static final int SELECT_SHAPE = 0, SELECT_SHAPE_TO_MOVE = 1, SELECT_NEW_POSITION= 2, DELETE_SHAPE = 3;
 	private int state = SELECT_SHAPE;
 	private EventListener eventListener;
 	private GLCanvas panel;
@@ -37,6 +37,11 @@ public class CanvasMouseListener implements MouseListener, MouseMotionListener {
 		state = SELECT_SHAPE;
 	}
 	
+	public void changeToDeleteState()	{
+		panel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		state = DELETE_SHAPE;
+	}
+	
 	private void changeToSelectNewPositionState()	{
 		state = SELECT_NEW_POSITION;
 		panel.setCursor(new Cursor(Cursor.MOVE_CURSOR));
@@ -58,16 +63,20 @@ public class CanvasMouseListener implements MouseListener, MouseMotionListener {
 	public void mouseReleased(MouseEvent e) {
 		switch(state)	{
 			case SELECT_SHAPE: 
-				eventListener.registerMouseClick(e.getX(), e.getY(), panelHeight, panelWidth);
+				eventListener.registerMouseClick(e.getX(), e.getY());
 				break;
 			case SELECT_SHAPE_TO_MOVE:
-				eventListener.registerMouseClick(e.getX(), e.getY(), panelHeight, panelWidth);
+				eventListener.registerMouseClick(e.getX(), e.getY());
 				changeToSelectNewPositionState();
 				break;
 			case SELECT_NEW_POSITION:
 				float newX = widthToHeightRatio*(e.getX()/(float)panelWidth);
 				float newY = ((float)panelHeight - e.getY())/(float)panelHeight;
 				eventListener.changeSelectedObjectPosition(newX, newY);
+				changeToSelectState();
+				break;
+			case DELETE_SHAPE:
+				eventListener.markObjectForDeletion(e.getX(), e.getY());
 				changeToSelectState();
 				break;
 		}

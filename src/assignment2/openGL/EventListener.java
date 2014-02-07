@@ -24,6 +24,8 @@ public class EventListener implements GLEventListener {
     private int cmd = UPDATE;
     private static final float orthoLeft = 0, orthoRight = 2, orthoBotton = 0, orthoTop = 1; 
     
+    private boolean deleteObject = false;
+    
 	@Override
 	public void display(GLAutoDrawable drawable) {
 		GL2 gl = drawable.getGL().getGL2();
@@ -94,6 +96,13 @@ public class EventListener implements GLEventListener {
           System.out.println("- - - - - - - - - - - -");
         }
       System.out.println("---------------------------------");
+      
+      if(deleteObject)	{
+    	  for(int id : lastSelectedObjects)	{
+    		  theObjectContainer.deleteGLEntity(id);
+    	  }
+    	  deleteObject = false;
+      }
     }
 	
 	/**
@@ -109,6 +118,7 @@ public class EventListener implements GLEventListener {
 		}
 	}
 	
+	
 	private void drawScene(GL2 gl)	{
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
@@ -118,10 +128,18 @@ public class EventListener implements GLEventListener {
 		}
 	}
 	
-	public void registerMouseClick(int x, int y, int panelHeight, int panelWidth)	{
+	public void registerMouseClick(int x, int y)	{
 		mouseX = x;
 		mouseY = y;
 		cmd = SELECT;
+	}
+	
+	/**
+	 * Deletes the last selected objects
+	 */
+	public void markObjectForDeletion(int x, int y)	{
+		deleteObject = true;
+		registerMouseClick(x, y);
 	}
 
 	@Override

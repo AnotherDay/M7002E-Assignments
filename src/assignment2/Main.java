@@ -14,6 +14,7 @@ import assignment2.globals.ObjectContainer;
 import assignment2.listeners.actionListeners.ClearCanvasActionListener;
 import assignment2.listeners.actionListeners.CloseProgramActionListener;
 import assignment2.listeners.actionListeners.CreatePolygonActionListener;
+import assignment2.listeners.actionListeners.DeleteShapeActionListener;
 import assignment2.listeners.actionListeners.MoveGLEntityActionListener;
 import assignment2.listeners.actionListeners.PrintShapeInfoActionListener;
 import assignment2.listeners.actionListeners.SwitchPolygonActionListener;
@@ -72,6 +73,7 @@ public class Main {
 		CanvasMouseListener canvasMouseListener = new CanvasMouseListener(canvas.getHeight(), canvas.getWidth(), eventListener, canvas); 
 		canvas.addMouseListener(canvasMouseListener);
 		menuBar.addMovePolygonActionListener(new MoveGLEntityActionListener(canvasMouseListener));
+		menuBar.addDeleteShapeActionListener(new DeleteShapeActionListener(canvasMouseListener));
 		animator.start();
 	}
 }
