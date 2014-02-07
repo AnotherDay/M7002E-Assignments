@@ -11,7 +11,8 @@ import assignment2.openGL.EventListener;
 
 public class CanvasMouseListener implements MouseListener, MouseMotionListener {
 
-	private int panelHeight, panelWidth, widthToHeightRatio;
+	private int panelHeight, panelWidth;
+	private float widthToHeightRatio;
 	private static final int SELECT_SHAPE = 0, SELECT_SHAPE_TO_MOVE = 1, SELECT_NEW_POSITION= 2, DELETE_SHAPE = 3;
 	private int state = SELECT_SHAPE;
 	private EventListener eventListener;
@@ -24,7 +25,7 @@ public class CanvasMouseListener implements MouseListener, MouseMotionListener {
 		this.eventListener = eventListener;
 		canvas.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		this.panel = canvas;
-		this.widthToHeightRatio = panelWidth/panelHeight;
+		this.widthToHeightRatio = (float)panelWidth/(float)panelHeight;
 	}
 	
 	public void changeToMoveState()		{
