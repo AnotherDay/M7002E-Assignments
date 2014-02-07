@@ -9,6 +9,7 @@ public class GLSquareEntity extends GLEntity {
 	public GLSquareEntity(float xPos, float yPos, float zPos, float edgeLength)	{
 		super(xPos, yPos, zPos);
 		this.edgeLength = edgeLength;
+		this.entityType = "Square";
 	}
 	
 	public float getEdgeLength()	{

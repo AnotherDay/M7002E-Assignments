@@ -10,6 +10,7 @@ public class GLStarEntity extends GLEntity {
 	public GLStarEntity(float xPos, float yPos, float zPos, float span)	{
 		super(xPos, yPos, zPos);
 		this.span = span;
+		this.entityType = "Star";
 	}
 	
 	public float getSpan()	{

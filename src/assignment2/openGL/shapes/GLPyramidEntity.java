@@ -10,6 +10,7 @@ public class GLPyramidEntity extends GLEntity {
 		super(xPos, yPos, zPos);
 		this.height = height;
 		this.baseWidth = baseWidth;
+		this.entityType = "Pyramid";
 	}
 	
 	public float getHeight()	{
