@@ -1,4 +1,4 @@
-package assignment2.actionListeners;
+package assignment2.listeners.actionListeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
