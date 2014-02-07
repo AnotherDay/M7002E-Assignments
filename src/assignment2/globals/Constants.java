@@ -8,7 +8,7 @@ public class Constants {
 	public final static int WINDOW_HEIGHT = 600;
 	
 	public final static String PYRAMID_POLYGON = "Pyramid";
-	public final static String SQUARE_POLYGON = "Rectangle";
+	public final static String SQUARE_POLYGON = "Square";
 	public final static String STAR_POLYGON = "Star";
 	
 	public final static Color backgroundColor = new Color(72, 71, 66);
