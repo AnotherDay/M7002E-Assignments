@@ -31,12 +31,12 @@ public class MenuBar extends JMenuBar {
 	}
 	
 	private void createPolygonMenu()	{
-		polygonMenu = new JMenu("Polygons");
+		polygonMenu = new JMenu("Polygon");
 		polygonMenu.setMargin(menuInsets);
 		this.add(polygonMenu);
-			movePolygon = new JMenuItem("Move Polygon");
+			movePolygon = new JMenuItem("Move");
 			polygonMenu.add(movePolygon);
-			deleteObject = new JMenuItem("Delete Polygon");
+			deleteObject = new JMenuItem("Delete");
 			polygonMenu.add(deleteObject);
 	}
 	
