@@ -34,15 +34,15 @@ public abstract class GLEntity  {
 		return zPos;
 	}
 	
-	public void setXPos(int xPos)	{
+	public void setXPos(float xPos)	{
 		this.xPos = xPos;
 	}
 	
-	public void setYPos(int yPos)	{
+	public void setYPos(float yPos)	{
 		this.yPos = yPos;
 	}
 	
-	public void setZPos(int zPos)	{
+	public void setZPos(float zPos)	{
 		this.zPos = zPos;
 	}
 	

@@ -1,6 +1,7 @@
 package assignment2.openGL;
 
 import java.nio.IntBuffer;
+import java.util.LinkedList;
 
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
@@ -17,25 +18,29 @@ public class EventListener implements GLEventListener {
 	private ObjectContainer theObjectContainer = ObjectContainer.getInstance();
 	private GLU glu = new GLU();
 	private int mouseX, mouseY;
+	private LinkedList<Integer> lastSelectedObjects = new LinkedList<Integer>();
+	private int[] lastViewPort = new int[4];
 	
 	private static final int UPDATE = 1, SELECT = 2;
     private int cmd = UPDATE;
     private static final float orthoLeft = 0, orthoRight = 2, orthoBotton = 0, orthoTop = 1; 
     
-	
 	@Override
 	public void display(GLAutoDrawable drawable) {
 		GL2 gl = drawable.getGL().getGL2();
+		
+		int buffsize = 512;
+		int[] viewPort = new int[4];
+		IntBuffer selectBuffer = Buffers.newDirectIntBuffer(buffsize);
+		gl.glGetIntegerv(GL2.GL_VIEWPORT, viewPort, 0);
+		lastViewPort = viewPort;
+		
 		switch (cmd) {
 		case UPDATE:
 			drawScene(gl);
 			break;
 		case SELECT:
-			int buffsize = 512;
 			double x = (double) mouseX, y = (double) mouseY;
-			int[] viewPort = new int[4];
-			IntBuffer selectBuffer = Buffers.newDirectIntBuffer(buffsize);
-			gl.glGetIntegerv(GL2.GL_VIEWPORT, viewPort, 0);
 			gl.glSelectBuffer(buffsize, selectBuffer);
 			gl.glRenderMode(GL2.GL_SELECT);
 			gl.glInitNames();
@@ -53,8 +58,57 @@ public class EventListener implements GLEventListener {
 			int hits;
 			hits = gl.glRenderMode(GL2.GL_RENDER);
 			cmd = UPDATE;
-			System.out.println("Hits: " + hits);
+			processHits(hits, selectBuffer);
 			break;
+		}
+	}
+	
+	public void processHits(int hits, IntBuffer buffer)
+    {
+		lastSelectedObjects.clear();
+      System.out.println("---------------------------------");
+      System.out.println(" HITS: " + hits);
+      int offset = 0;
+      int names;
+      float z1, z2;
+      for (int i=0;i<hits;i++)
+        {
+          System.out.println("- - - - - - - - - - - -");
+          System.out.println(" hit: " + (i + 1));
+          names = buffer.get(offset); offset++;
+          z1 = (float) (buffer.get(offset)& 0xffffffffL) / 0x7fffffff; offset++;
+          z2 = (float) (buffer.get(offset)& 0xffffffffL) / 0x7fffffff; offset++;
+          System.out.println(" number of names: " + names);
+          System.out.println(" z1: " + z1);
+          System.out.println(" z2: " + z2);
+          System.out.println(" names: ");
+
+          for (int j=0;j<names;j++)
+            {
+              System.out.print("       " + buffer.get(offset)); 
+              if (j==(names-1))	{
+            	lastSelectedObjects.add(buffer.get(offset));
+                System.out.println("<-");
+              }
+              else
+                System.out.println();
+              offset++;
+            }
+          System.out.println("- - - - - - - - - - - -");
+        }
+      System.out.println("---------------------------------");
+    }
+	
+	/**
+	 * Changes the coordinates of the last objects selected
+	 */
+	public void changeSelectedObjectPosition(float newX, float newY)		{
+		GLEntity glEntity;
+		for(int objectId : lastSelectedObjects)	{
+			glEntity = theObjectContainer.getGLEntitiy(objectId);
+			glEntity.setXPos(newX);
+			glEntity.setYPos(newY);
+			System.out.println("Moved " + glEntity.getId() + " to X = " + newX + ", Y = " + newY);
 		}
 	}
 	

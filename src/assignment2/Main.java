@@ -9,13 +9,15 @@ import javax.media.opengl.awt.GLCanvas;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
-import assignment2.actionListeners.CanvasMouseListener;
-import assignment2.actionListeners.ClearCanvasActionListener;
-import assignment2.actionListeners.CloseProgramActionListener;
-import assignment2.actionListeners.CreatePolygonActionListener;
-import assignment2.actionListeners.SwitchPolygonActionListener;
 import assignment2.globals.Constants;
 import assignment2.globals.ObjectContainer;
+import assignment2.listeners.actionListeners.ClearCanvasActionListener;
+import assignment2.listeners.actionListeners.CloseProgramActionListener;
+import assignment2.listeners.actionListeners.CreatePolygonActionListener;
+import assignment2.listeners.actionListeners.MoveGLEntityActionListener;
+import assignment2.listeners.actionListeners.PrintShapeInfoActionListener;
+import assignment2.listeners.actionListeners.SwitchPolygonActionListener;
+import assignment2.listeners.mouseListeners.CanvasMouseListener;
 import assignment2.openGL.EventListener;
 import assignment2.openGL.shapes.GLSquareEntity;
 import assignment2.ui.Window;
@@ -46,6 +48,7 @@ public class Main {
 		MenuBar menuBar = new MenuBar();
 		menuBar.addQuitActionListener(new CloseProgramActionListener());
 		menuBar.addClearCanvasActionListener(new ClearCanvasActionListener(canvas));
+		menuBar.addPrintAllShapeActionListener(new PrintShapeInfoActionListener());
 
 		JPanel leftPanel = new JPanel();
 		LeftToolbar leftToolbar = new LeftToolbar();
@@ -59,14 +62,16 @@ public class Main {
 		leftToolbar.addPolygonPickerActionListener(new SwitchPolygonActionListener(leftToolbar, window));
 		leftToolbar.addButtonActionListener(new CreatePolygonActionListener(leftToolbar, canvas));
 		
-		
 		EventListener eventListener = new EventListener();
 		canvas.addGLEventListener(eventListener);
 		window.add(leftPanel, BorderLayout.WEST);
 		window.add(menuBar, BorderLayout.NORTH);
 		window.add(canvas);
 		window.pack();
-		canvas.addMouseListener(new CanvasMouseListener(canvas.getHeight(), canvas.getWidth(), eventListener));
+		
+		CanvasMouseListener canvasMouseListener = new CanvasMouseListener(canvas.getHeight(), canvas.getWidth(), eventListener, canvas); 
+		canvas.addMouseListener(canvasMouseListener);
+		menuBar.addMovePolygonActionListener(new MoveGLEntityActionListener(canvasMouseListener));
 		animator.start();
 	}
 }
