@@ -15,6 +15,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import assignment2.globals.Constants;
+import assignment2.ui.leftToolbar.panels.ColorPickerPanel;
 import assignment2.ui.leftToolbar.panels.CoordinatesPanel;
 import assignment2.ui.leftToolbar.panels.PolygonPickerPanel;
 import assignment2.ui.leftToolbar.panels.PyramidSpecificationPanel;
@@ -29,6 +30,7 @@ public class LeftToolbar extends Panel{
 	
 	private PolygonPickerPanel polygonPickerPanel = new PolygonPickerPanel();
 	private CoordinatesPanel coordinatesPanel = new CoordinatesPanel();
+	private ColorPickerPanel colorPickerPanel = new ColorPickerPanel();
 
 	private PyramidSpecificationPanel pyramidSpecPanel = new PyramidSpecificationPanel();
 	private SquareSpecificationPanel squareSpecPanel = new SquareSpecificationPanel();
@@ -38,7 +40,7 @@ public class LeftToolbar extends Panel{
 	
 	private Vector<Component> order = new Vector<Component>();
 	
-	private final static int SPECIFICATION_PANEL_INDEX = 3;
+	private final static int SPECIFICATION_PANEL_INDEX = 4;
 	private final static int BOTTOM_MARGIN_SMALL = 10;
 	private final static String START_OF_ILLEGALSTATE_MESSAGE = "Polygon not choosen by the user. Current polygon choosen: ";
 	
@@ -46,9 +48,9 @@ public class LeftToolbar extends Panel{
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setBackground(backgroundColor);
 		
-		polygonPickerPanel = new PolygonPickerPanel();
 		polygonPickerPanel.setBorder(new EmptyBorder(0, 0, BOTTOM_MARGIN_SMALL, 0));
 		coordinatesPanel.setBorder(new EmptyBorder(0, 0, BOTTOM_MARGIN_SMALL, 0));
+		colorPickerPanel.setBorder(new EmptyBorder(0, 0, BOTTOM_MARGIN_SMALL, 0));
 		
 		createPolygonButton = new JButton("Create");
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -60,6 +62,7 @@ public class LeftToolbar extends Panel{
 		this.add(new JSeparator(SwingConstants.HORIZONTAL));
 		this.add(polygonPickerPanel);
 		this.add(coordinatesPanel);
+		this.add(colorPickerPanel);
 		this.add(pyramidSpecPanel);
 		this.add(buttonPanel);
 		this.add(new JSeparator(SwingConstants.HORIZONTAL));
@@ -123,6 +126,10 @@ public class LeftToolbar extends Panel{
 		else	{
 			throw new IllegalStateException(START_OF_ILLEGALSTATE_MESSAGE + polygonPickerPanel.getCurrentPolygon());
 		}
+	}
+	
+	public String getActiveColor()	{
+		return colorPickerPanel.getCurrentColor();
 	}
 	
 	public Vector<Component> getFocusTraversalOrder()	{

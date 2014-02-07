@@ -6,7 +6,9 @@ import java.awt.event.ActionListener;
 import javax.media.opengl.awt.GLCanvas;
 
 import assignment2.globals.Constants;
+import assignment2.globals.Converter;
 import assignment2.globals.ObjectContainer;
+import assignment2.openGL.shapes.GLEntity;
 import assignment2.openGL.shapes.GLPyramidEntity;
 import assignment2.openGL.shapes.GLSquareEntity;
 import assignment2.openGL.shapes.GLStarEntity;
@@ -16,6 +18,7 @@ public class CreatePolygonActionListener implements ActionListener {
 
 	private LeftToolbar leftToolbar;
 	private ObjectContainer theObjectContainer = ObjectContainer.getInstance();
+	private Converter converter = new Converter();
 	
 	public CreatePolygonActionListener(LeftToolbar leftToolbar, GLCanvas canvas)		{
 		this.leftToolbar = leftToolbar;
@@ -26,24 +29,29 @@ public class CreatePolygonActionListener implements ActionListener {
 		try	{
 			String activePolygon = leftToolbar.getActivePolygon();
 			String printOutMessage = "Created: ";
+			GLEntity glEntity;
 			if(activePolygon.equals(Constants.PYRAMID_POLYGON))		{
-				theObjectContainer.addPyramid(new GLPyramidEntity(leftToolbar.getXCoordinate(), 
+				glEntity = new GLPyramidEntity(leftToolbar.getXCoordinate(), 
 						leftToolbar.getYCoordinate(), leftToolbar.getZCoordinate(), 
-						leftToolbar.getPyramidHeight(), leftToolbar.getPyramidBaseWidth()));
+						leftToolbar.getPyramidHeight(), leftToolbar.getPyramidBaseWidth());
 				System.out.println(printOutMessage + "Pyramid");
 			}
 			else if(activePolygon.equals(Constants.SQUARE_POLYGON))	{
-				theObjectContainer.addSquare(new GLSquareEntity(leftToolbar.getXCoordinate(), 
+				glEntity = new GLSquareEntity(leftToolbar.getXCoordinate(), 
 						leftToolbar.getYCoordinate(), leftToolbar.getZCoordinate(), 
-						leftToolbar.getSquareEdgeLength()));
+						leftToolbar.getSquareEdgeLength());
 				System.out.println(printOutMessage + "Square");
 			}
-			else if(activePolygon.equals(Constants.STAR_POLYGON))	{
-				theObjectContainer.addStar(new GLStarEntity(leftToolbar.getXCoordinate(), 
+			else	{
+				glEntity = new GLStarEntity(leftToolbar.getXCoordinate(), 
 						leftToolbar.getYCoordinate(), leftToolbar.getZCoordinate(), 
-						leftToolbar.getStarSpan()));
+						leftToolbar.getStarSpan());
 				System.out.println(printOutMessage + "Star");
 			}
+			String color = leftToolbar.getActiveColor();
+			if(!color.equals(Constants.COLOR_DEFAULT))
+				glEntity.setColor(converter.getColor(color));
+			theObjectContainer.addGLEntity(glEntity);
 		}
 		catch(NumberFormatException nfe)	{
 			//TODO: make a error message in the leftToolbar panel

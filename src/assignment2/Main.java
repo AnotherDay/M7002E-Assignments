@@ -11,15 +11,16 @@ import javax.swing.UIManager;
 
 import assignment2.globals.Constants;
 import assignment2.globals.ObjectContainer;
-import assignment2.listeners.actionListeners.ClearCanvasActionListener;
-import assignment2.listeners.actionListeners.CloseProgramActionListener;
-import assignment2.listeners.actionListeners.CreatePolygonActionListener;
-import assignment2.listeners.actionListeners.DeleteShapeActionListener;
-import assignment2.listeners.actionListeners.MoveGLEntityActionListener;
-import assignment2.listeners.actionListeners.PrintShapeInfoActionListener;
-import assignment2.listeners.actionListeners.SwitchPolygonActionListener;
+import assignment2.listeners.actionListeners.leftToolbar.CreatePolygonActionListener;
+import assignment2.listeners.actionListeners.leftToolbar.SwitchPolygonActionListener;
+import assignment2.listeners.actionListeners.menuBar.ClearCanvasActionListener;
+import assignment2.listeners.actionListeners.menuBar.CloseProgramActionListener;
+import assignment2.listeners.actionListeners.menuBar.DeleteShapeActionListener;
+import assignment2.listeners.actionListeners.menuBar.MoveGLEntityActionListener;
+import assignment2.listeners.actionListeners.menuBar.PrintShapeInfoActionListener;
 import assignment2.listeners.mouseListeners.CanvasMouseListener;
 import assignment2.openGL.EventListener;
+import assignment2.openGL.shapes.GLPyramidEntity;
 import assignment2.openGL.shapes.GLSquareEntity;
 import assignment2.ui.Window;
 import assignment2.ui.leftToolbar.LeftToolbar;
@@ -31,7 +32,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		ObjectContainer theObjectContainer = ObjectContainer.getInstance();
-		theObjectContainer.addSquare(new GLSquareEntity(0.5f, 0.5f, -0.5f, 0.5f));
+		theObjectContainer.addGLEntity(new GLSquareEntity(0.5f, 0.5f, -1.0f, 0.5f));
+		theObjectContainer.addGLEntity(new GLPyramidEntity(0.5f, 0.5f, 0.5f, 0.5f, 0.5f));
 		
 		//Source: http://stackoverflow.com/a/2592258
 		try {

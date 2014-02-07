@@ -26,7 +26,10 @@ public class GLSquareEntity extends GLEntity {
 			gl.glPushAttrib(GL2.GL_ALL_ATTRIB_BITS);
 				gl.glTranslatef(xPos, yPos, zPos);
 				gl.glPolygonMode(GL2.GL_FRONT, GL2.GL_FILL);
-				gl.glColor3d(0, 0, 255);
+				if(color != null) 
+					gl.glColor3d(color.getRed(), color.getGreen(), color.getBlue());
+				else 
+					gl.glColor3d(0, 0, 255);
 				gl.glBegin(GL2.GL_QUADS);
 					gl.glVertex3f(-halfEdgeLength, -halfEdgeLength, 0); //Bottom left vertex
 					gl.glVertex3f(halfEdgeLength, -halfEdgeLength, 0); //Bottom right vertex

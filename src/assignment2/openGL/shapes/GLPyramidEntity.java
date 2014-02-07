@@ -30,9 +30,13 @@ public class GLPyramidEntity extends GLEntity {
 		gl.glPushName(id);
 		gl.glPushMatrix();
 		gl.glPushAttrib(GL2.GL_ALL_ATTRIB_BITS);
+			gl.glRotatef(30, 1, 1, 0);
 			gl.glTranslatef(xPos, yPos, zPos);
 			gl.glPolygonMode(GL2.GL_FRONT_AND_BACK, GL2.GL_LINE);
-			gl.glColor3d(255, 0, 0);
+			if(color != null) 
+				gl.glColor3d(color.getRed(), color.getGreen(), color.getBlue());
+			else 
+				gl.glColor3d(255, 0, 0);
 			gl.glBegin(GL2.GL_TRIANGLES); 
 			
 			// Font-face triangle

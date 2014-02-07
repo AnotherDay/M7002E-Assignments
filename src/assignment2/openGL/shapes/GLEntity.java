@@ -1,5 +1,7 @@
 package assignment2.openGL.shapes;
 
+import java.awt.Color;
+
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
@@ -7,6 +9,7 @@ public abstract class GLEntity  {
 	protected float xPos, yPos, zPos;
 	protected int id;
 	protected String entityType = "Undefined";
+	protected Color color;
 	
 	public GLEntity(float xPos, float yPos, float zPos)	{
 		this.xPos = xPos;
@@ -44,6 +47,10 @@ public abstract class GLEntity  {
 	
 	public void setZPos(float zPos)	{
 		this.zPos = zPos;
+	}
+	
+	public void setColor(Color color)	{
+		this.color = color;
 	}
 	
 	public void printInfo()	{
