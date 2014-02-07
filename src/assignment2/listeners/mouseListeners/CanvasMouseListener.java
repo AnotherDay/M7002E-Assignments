@@ -6,7 +6,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import javax.media.opengl.awt.GLCanvas;
-import javax.swing.JPanel;
 
 import assignment2.openGL.EventListener;
 

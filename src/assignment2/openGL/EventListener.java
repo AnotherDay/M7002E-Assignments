@@ -19,7 +19,6 @@ public class EventListener implements GLEventListener {
 	private GLU glu = new GLU();
 	private int mouseX, mouseY;
 	private LinkedList<Integer> lastSelectedObjects = new LinkedList<Integer>();
-	private int[] lastViewPort = new int[4];
 	
 	private static final int UPDATE = 1, SELECT = 2;
     private int cmd = UPDATE;
@@ -29,18 +28,16 @@ public class EventListener implements GLEventListener {
 	public void display(GLAutoDrawable drawable) {
 		GL2 gl = drawable.getGL().getGL2();
 		
-		int buffsize = 512;
-		int[] viewPort = new int[4];
-		IntBuffer selectBuffer = Buffers.newDirectIntBuffer(buffsize);
-		gl.glGetIntegerv(GL2.GL_VIEWPORT, viewPort, 0);
-		lastViewPort = viewPort;
-		
 		switch (cmd) {
 		case UPDATE:
 			drawScene(gl);
 			break;
 		case SELECT:
 			double x = (double) mouseX, y = (double) mouseY;
+			int buffsize = 512;
+			int[] viewPort = new int[4];
+			IntBuffer selectBuffer = Buffers.newDirectIntBuffer(buffsize);
+			gl.glGetIntegerv(GL2.GL_VIEWPORT, viewPort, 0);
 			gl.glSelectBuffer(buffsize, selectBuffer);
 			gl.glRenderMode(GL2.GL_SELECT);
 			gl.glInitNames();

@@ -16,11 +16,9 @@ public class CreatePolygonActionListener implements ActionListener {
 
 	private LeftToolbar leftToolbar;
 	private ObjectContainer theObjectContainer = ObjectContainer.getInstance();
-	private GLCanvas canvas;
 	
 	public CreatePolygonActionListener(LeftToolbar leftToolbar, GLCanvas canvas)		{
 		this.leftToolbar = leftToolbar;
-		this.canvas = canvas;
 	}
 	
 	@Override
@@ -46,7 +44,6 @@ public class CreatePolygonActionListener implements ActionListener {
 						leftToolbar.getStarSpan()));
 				System.out.println(printOutMessage + "Star");
 			}
-//			canvas.display();
 		}
 		catch(NumberFormatException nfe)	{
 			//TODO: make a error message in the leftToolbar panel
