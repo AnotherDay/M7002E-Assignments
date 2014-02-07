@@ -1,7 +1,6 @@
 package assignment2.globals;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import assignment2.openGL.shapes.GLEntity;
 import assignment2.openGL.shapes.GLPyramidEntity;
@@ -19,32 +18,36 @@ public class ObjectContainer {
 	
 	private ArrayList<GLEntity> glEntityList = new ArrayList<GLEntity>();
 	
-	private int pyramidIdCounter = 100;
-	private int squareIdCounter = 200;
-	private int starIdCounter = 300;
+	private int objectIdCounter; //Matches the objects index value
 	
-	private ObjectContainer(){};
+	private ObjectContainer(){
+		objectIdCounter = 0;
+	};
 	
 	public static ObjectContainer getInstance()	{
 		return INSTANCE;
 	}
 	
 	public void addPyramid(GLPyramidEntity pyramid)	{
-		pyramid.setId(pyramidIdCounter);
-		pyramidIdCounter++;
+		pyramid.setId(objectIdCounter);
+		objectIdCounter++;
 		glEntityList.add(pyramid);
 	}
 	
 	public void addSquare(GLSquareEntity square)	{
-		square.setId(squareIdCounter);
-		squareIdCounter++;
+		square.setId(objectIdCounter);
+		objectIdCounter++;
 		glEntityList.add(square);
 	}
 	
 	public void addStar(GLStarEntity star)	{
-		star.setId(starIdCounter);
-		starIdCounter++;
+		star.setId(objectIdCounter);
+		objectIdCounter++;
 		glEntityList.add(star);
+	}
+	
+	public GLEntity getGLEntitiy(int id)		{
+		return glEntityList.get(id);
 	}
 	
 	public ArrayList<GLEntity> getGLEntityList()	{
@@ -53,8 +56,6 @@ public class ObjectContainer {
 	
 	public void clearObjectContainer()	{
 		glEntityList.clear();
-		pyramidIdCounter = 100;
-		squareIdCounter = 200;
-		starIdCounter = 300;
+		objectIdCounter = 0;
 	}
 }
