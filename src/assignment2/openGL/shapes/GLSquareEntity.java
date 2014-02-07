@@ -37,4 +37,9 @@ public class GLSquareEntity extends GLEntity {
 			gl.glPopMatrix();
 		}
 	}
+
+	@Override
+	public void printShapeSpecifics() {
+		System.out.println("Edge Length = " + edgeLength);
+	}
 }

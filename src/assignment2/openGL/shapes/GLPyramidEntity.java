@@ -3,6 +3,8 @@ package assignment2.openGL.shapes;
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
+import assignment2.globals.Constants;
+
 public class GLPyramidEntity extends GLEntity {
 	private float height, baseWidth;
 	
@@ -10,7 +12,7 @@ public class GLPyramidEntity extends GLEntity {
 		super(xPos, yPos, zPos);
 		this.height = height;
 		this.baseWidth = baseWidth;
-		this.entityType = "Pyramid";
+		this.entityType = Constants.PYRAMID_POLYGON;
 	}
 	
 	public float getHeight()	{
@@ -67,5 +69,11 @@ public class GLPyramidEntity extends GLEntity {
 			gl.glPopAttrib();
 		gl.glEnd(); 
 		gl.glPopMatrix();
+	}
+
+	@Override
+	public void printShapeSpecifics() {
+		System.out.println("Height = " + height);
+		System.out.println("Base width = " + baseWidth);
 	}
 }

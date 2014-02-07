@@ -12,9 +12,12 @@ public class PrintShapeInfoActionListener implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		System.out.println("-------------------Start---------------------");
 		for(GLEntity glEntity : theObjectContainer.getGLEntityList())	{
 			glEntity.printInfo();
 		}
+		System.out.println("- - - - - - - - - - - - - - - - - - - - - - -");
+		System.out.println("-------------------End-----------------------");
 	}
 
 }

@@ -43,4 +43,9 @@ public class GLStarEntity extends GLEntity {
 			gl.glPopMatrix();
 		}
 	}
+
+	@Override
+	public void printShapeSpecifics() {
+		System.out.println("Span = " + span);
+	}
 }

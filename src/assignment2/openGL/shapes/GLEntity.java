@@ -47,13 +47,14 @@ public abstract class GLEntity  {
 	}
 	
 	public void printInfo()	{
-		System.out.println("----------------------------------------------");
+		System.out.println("- - - - - - - - - - - - - - - - - - - - - - -");
 		System.out.println("Id = " + id);
 		System.out.println("Type = " + entityType);
 		System.out.println("X = " + xPos + ", Y = " + yPos + ", Z = " + zPos);
-		System.out.println("----------------------------------------------");
+		printShapeSpecifics();
 	}
 	
 	public abstract void draw(GL2 gl, GLU glu);
 	
+	public abstract void printShapeSpecifics();
 }
