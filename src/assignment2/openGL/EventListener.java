@@ -18,7 +18,7 @@ public class EventListener implements GLEventListener {
 	private LightSourceHandler lightSourceHandler;
 	private GLU glu = new GLU();
 	private int mouseX, mouseY;
-	private LinkedList<Integer> lastSelectedObjects = new LinkedList<Integer>();
+	private int lastSelectedObject = 0;
 	
 	private static final int UPDATE = 1, SELECT = 2, REMOVE_ALL_LIGHT_SOURCES = 3;
     private int cmd = UPDATE;
@@ -74,12 +74,13 @@ public class EventListener implements GLEventListener {
 	
 	public void processHits(int hits, IntBuffer buffer)
     {
-		lastSelectedObjects.clear();
       System.out.println("---------------------------------");
       System.out.println(" HITS: " + hits);
       int offset = 0;
       int names;
       float z1, z2;
+      
+      LinkedList<Integer> objectsHit = new LinkedList<Integer>();
       for (int i=0;i<hits;i++)
         {
           System.out.println("- - - - - - - - - - - -");
@@ -96,7 +97,7 @@ public class EventListener implements GLEventListener {
             {
               System.out.print("       " + buffer.get(offset)); 
               if (j==(names-1))	{
-            	lastSelectedObjects.add(buffer.get(offset));
+            	objectsHit.add(buffer.get(offset));
                 System.out.println("<-");
               }
               else
@@ -107,11 +108,19 @@ public class EventListener implements GLEventListener {
         }
       System.out.println("---------------------------------");
       
-      if(deleteObject)	{
-    	  for(int id : lastSelectedObjects)	{
-    		  theObjectContainer.deleteGLEntity(id);
+      GLEntity glEntity = theObjectContainer.getGLEntitiy(objectsHit.pop());
+      GLEntity glEntityCompare;
+      while(!objectsHit.isEmpty())	{
+    	  glEntityCompare = theObjectContainer.getGLEntitiy(objectsHit.pop());
+    	  if(glEntity.getZPos() < glEntityCompare.getZPos()){
+    		  glEntity = glEntityCompare;
     	  }
-    	  deleteObject = false;
+      }
+      lastSelectedObject = glEntity.getId();
+      
+      if(deleteObject)	{
+    	  theObjectContainer.deleteGLEntity(glEntity.getId());
+    	  lastSelectedObject = 0;
       }
     }
 	
@@ -119,13 +128,10 @@ public class EventListener implements GLEventListener {
 	 * Changes the coordinates of the last objects selected
 	 */
 	public void changeSelectedObjectPosition(float newX, float newY)		{
-		GLEntity glEntity;
-		for(int objectId : lastSelectedObjects)	{
-			glEntity = theObjectContainer.getGLEntitiy(objectId);
-			glEntity.setXPos(newX);
-			glEntity.setYPos(newY);
-			System.out.println("Moved " + glEntity.getId() + " to X = " + newX + ", Y = " + newY);
-		}
+		GLEntity glEntity = theObjectContainer.getGLEntitiy(lastSelectedObject);
+		glEntity.setXPos(newX);
+		glEntity.setYPos(newY);
+		System.out.println("Moved " + glEntity.getId() + " to X = " + newX + ", Y = " + newY);
 	}
 	
 	
