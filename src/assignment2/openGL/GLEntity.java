@@ -95,4 +95,6 @@ public abstract class GLEntity  {
 	public abstract void draw(GL2 gl, GLU glu);
 	
 	public abstract void printShapeSpecifics();
+	
+	public abstract void resizeObject(float scaleFactor);
 }

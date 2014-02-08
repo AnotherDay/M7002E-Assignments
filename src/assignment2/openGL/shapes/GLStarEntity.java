@@ -51,4 +51,10 @@ public class GLStarEntity extends GLEntity {
 	public void printShapeSpecifics() {
 		System.out.println("Span = " + span);
 	}
+
+	@Override
+	public void resizeObject(float scaleFactor) {
+		// TODO Auto-generated method stub
+		
+	}
 }

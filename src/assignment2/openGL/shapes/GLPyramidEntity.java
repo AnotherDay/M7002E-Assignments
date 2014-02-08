@@ -79,4 +79,10 @@ public class GLPyramidEntity extends GLEntity {
 		System.out.println("Height = " + height);
 		System.out.println("Base width = " + baseWidth);
 	}
+
+	@Override
+	public void resizeObject(float scaleFactor) {
+		height = height * scaleFactor;
+		baseWidth = height * scaleFactor;
+	}
 }

@@ -58,4 +58,7 @@ public class GLLightSourceEntity extends GLEntity {
 		}
 		throw new IllegalArgumentException("Can only have 7 light sources");
 	}
+
+	@Override
+	public void resizeObject(float scaleFactor) {}
 }

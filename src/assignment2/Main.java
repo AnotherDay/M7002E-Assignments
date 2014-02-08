@@ -19,6 +19,7 @@ import assignment2.listeners.actionListeners.menuBar.CloseProgramActionListener;
 import assignment2.listeners.actionListeners.menuBar.DeleteShapeActionListener;
 import assignment2.listeners.actionListeners.menuBar.MoveGLEntityActionListener;
 import assignment2.listeners.actionListeners.menuBar.PrintShapeInfoActionListener;
+import assignment2.listeners.actionListeners.menuBar.ResizeObjectActionListener;
 import assignment2.listeners.mouseListeners.CanvasMouseListener;
 import assignment2.openGL.EventListener;
 import assignment2.openGL.GLLightSourceEntity;
@@ -37,7 +38,8 @@ public class Main {
 		ObjectContainer theObjectContainer = ObjectContainer.getInstance();
 //		theObjectContainer.addGLEntity(new GLSquareEntity(0.5f, 0.5f, -1.0f, 0.5f));
 //		theObjectContainer.addGLEntity(new GLPyramidEntity(0.5f, 0.5f, 0.5f, 0.5f, 0.5f));
-		theObjectContainer.addGLEntity(new GLSphereEntity(0.5f, 0.5f, -0.5f, 0.2f));
+		GLSphereEntity sphere = new GLSphereEntity(0.5f, 0.5f, -0.5f, 0.2f);
+		theObjectContainer.addGLEntity(sphere);
 		theObjectContainer.addLightSource(new GLLightSourceEntity(1, 1, 1));
 		
 		//Source: http://stackoverflow.com/a/2592258
@@ -79,10 +81,11 @@ public class Main {
 		window.add(canvas);
 		window.pack();
 		
-		CanvasMouseListener canvasMouseListener = new CanvasMouseListener(canvas.getHeight(), canvas.getWidth(), eventListener, canvas); 
+		CanvasMouseListener canvasMouseListener = new CanvasMouseListener(canvas.getHeight(), canvas.getWidth(), eventListener, canvas, window); 
 		canvas.addMouseListener(canvasMouseListener);
 		menuBar.addMovePolygonActionListener(new MoveGLEntityActionListener(canvasMouseListener));
 		menuBar.addDeleteShapeActionListener(new DeleteShapeActionListener(canvasMouseListener));
+		menuBar.addResizeObjectActionListener(new ResizeObjectActionListener(canvasMouseListener));
 		animator.start();
 	}
 }

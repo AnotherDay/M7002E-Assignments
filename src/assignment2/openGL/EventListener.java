@@ -8,6 +8,7 @@ import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.glu.GLU;
 
+import jogamp.opengl.glu.mipmap.ScaleInternal;
 import assignment2.globals.ObjectContainer;
 
 import com.jogamp.common.nio.Buffers;
@@ -18,13 +19,14 @@ public class EventListener implements GLEventListener {
 	private LightSourceHandler lightSourceHandler;
 	private GLU glu = new GLU();
 	private int mouseX, mouseY;
-	private int lastSelectedObject = 0;
+	private int lastSelectedObject = -1;
 	
 	private static final int UPDATE = 1, SELECT = 2, REMOVE_ALL_LIGHT_SOURCES = 3;
     private int cmd = UPDATE;
     private static final float orthoLeft = 0, orthoRight = 2, orthoBotton = 0, orthoTop = 1; 
     
-    private boolean deleteObject = false;
+    private boolean deleteObject = false, resizeObject = false;
+    private float scalingFactor = 1;
 
     final float[] colorBlack = {0.0f,0.0f,0.0f,1.0f},
     		colorWhite = {1.0f,1.0f,1.0f,1.0f},
@@ -108,19 +110,24 @@ public class EventListener implements GLEventListener {
         }
       System.out.println("---------------------------------");
       
-      GLEntity glEntity = theObjectContainer.getGLEntitiy(objectsHit.pop());
-      GLEntity glEntityCompare;
-      while(!objectsHit.isEmpty())	{
-    	  glEntityCompare = theObjectContainer.getGLEntitiy(objectsHit.pop());
-    	  if(glEntity.getZPos() < glEntityCompare.getZPos()){
-    		  glEntity = glEntityCompare;
+      if(objectsHit.size() != 0)	{
+    	  GLEntity glEntity = theObjectContainer.getGLEntitiy(objectsHit.pop());
+    	  GLEntity glEntityCompare;
+    	  while(!objectsHit.isEmpty())	{
+    		  glEntityCompare = theObjectContainer.getGLEntitiy(objectsHit.pop());
+    		  if(glEntity.getZPos() < glEntityCompare.getZPos()){
+    			  glEntity = glEntityCompare;
+    		  }
     	  }
-      }
-      lastSelectedObject = glEntity.getId();
-      
-      if(deleteObject)	{
-    	  theObjectContainer.deleteGLEntity(glEntity.getId());
-    	  lastSelectedObject = 0;
+    	  lastSelectedObject = glEntity.getId();
+    	  
+    	  if(deleteObject)	{
+    		  theObjectContainer.deleteGLEntity(lastSelectedObject);
+    		  lastSelectedObject = -1;
+    	  }
+    	  else if(resizeObject)	{
+    		  theObjectContainer.getGLEntitiy(lastSelectedObject).resizeObject(scalingFactor);
+    	  }
       }
     }
 	
@@ -155,6 +162,12 @@ public class EventListener implements GLEventListener {
 	 */
 	public void markObjectForDeletion(int x, int y)	{
 		deleteObject = true;
+		registerMouseClick(x, y);
+	}
+	
+	public void markObjectForRescaling(int x, int y, float scalingFactor)	{
+		resizeObject = true;
+		this.scalingFactor = scalingFactor;
 		registerMouseClick(x, y);
 	}
 	

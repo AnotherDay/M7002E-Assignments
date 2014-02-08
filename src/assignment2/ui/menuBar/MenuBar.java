@@ -7,6 +7,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import jogamp.opengl.glu.mipmap.ScaleInternal;
+
 @SuppressWarnings("serial")
 public class MenuBar extends JMenuBar {
 	
@@ -15,7 +17,7 @@ public class MenuBar extends JMenuBar {
 	//Application Menu
 	private JMenuItem quit;
 	//Polygon Menu
-	private JMenuItem movePolygon, deleteObject;
+	private JMenuItem movePolygon, deleteObject, resizeObject;
 	//Canvas Menu
 	private JMenuItem clearCanvas, clearLightSources, printAllShapeInfo; 
 
@@ -44,6 +46,8 @@ public class MenuBar extends JMenuBar {
 			polygonMenu.add(movePolygon);
 			deleteObject = new JMenuItem("Delete");
 			polygonMenu.add(deleteObject);
+			resizeObject = new JMenuItem("Rezise");
+			polygonMenu.add(resizeObject);
 	}
 	
 	private void createCanvasMenu()	{
@@ -80,5 +84,9 @@ public class MenuBar extends JMenuBar {
 	
 	public void addClearLightSourcesActionListener(ActionListener actionListener)	{
 		clearLightSources.addActionListener(actionListener);
+	}
+	
+	public void addResizeObjectActionListener(ActionListener actionListener)	{
+		resizeObject.addActionListener(actionListener);
 	}
 }

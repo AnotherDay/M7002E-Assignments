@@ -45,4 +45,9 @@ public class GLSquareEntity extends GLEntity {
 	public void printShapeSpecifics() {
 		System.out.println("Edge Length = " + edgeLength);
 	}
+
+	@Override
+	public void resizeObject(float scaleFactor) {
+		edgeLength = edgeLength * scaleFactor;
+	}
 }

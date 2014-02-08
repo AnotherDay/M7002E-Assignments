@@ -1,6 +1,7 @@
 package assignment2.listeners.mouseListeners;
 
 import java.awt.Cursor;
+import java.awt.Frame;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -8,21 +9,25 @@ import java.awt.event.MouseMotionListener;
 import javax.media.opengl.awt.GLCanvas;
 
 import assignment2.openGL.EventListener;
+import assignment2.ui.dialogBoxes.ResizeDialogBox;
 
 public class CanvasMouseListener implements MouseListener, MouseMotionListener {
 
 	private int panelHeight, panelWidth;
 	private float widthToHeightRatio;
-	private static final int SELECT_SHAPE = 0, SELECT_SHAPE_TO_MOVE = 1, SELECT_NEW_POSITION= 2, DELETE_SHAPE = 3;
+	private static final int SELECT_SHAPE = 0, SELECT_SHAPE_TO_MOVE = 1, 
+			SELECT_NEW_POSITION= 2, DELETE_SHAPE = 3, SELECT_SHAPE_TO_RESIZE = 4;
 	private int state = SELECT_SHAPE;
 	private EventListener eventListener;
 	private GLCanvas panel;
+	private Frame frame;
 	
 	
-	public CanvasMouseListener(int panelHeight, int panelWidth, EventListener eventListener, GLCanvas canvas)	{
+	public CanvasMouseListener(int panelHeight, int panelWidth, EventListener eventListener, GLCanvas canvas, Frame frame)	{
 		this.panelHeight = panelHeight;
 		this.panelWidth = panelWidth;
 		this.eventListener = eventListener;
+		this.frame = frame;
 		canvas.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		this.panel = canvas;
 		this.widthToHeightRatio = (float)panelWidth/(float)panelHeight;
@@ -46,6 +51,22 @@ public class CanvasMouseListener implements MouseListener, MouseMotionListener {
 	private void changeToSelectNewPositionState()	{
 		state = SELECT_NEW_POSITION;
 		panel.setCursor(new Cursor(Cursor.MOVE_CURSOR));
+	}
+	
+	public void changeToResizeObjectState()	{
+		state = SELECT_SHAPE_TO_RESIZE;
+		panel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+	}
+	
+	private void createRezisePopup(int xPos, int yPos)	{
+		ResizeDialogBox resizeDialogBox = new ResizeDialogBox(frame);
+		try	{
+			float scaleFactor = resizeDialogBox.getDialogValue();
+			eventListener.markObjectForRescaling(xPos, yPos, scaleFactor);
+		}
+		catch(NumberFormatException nfe)	{
+			changeToSelectState();
+		}
 	}
 	
 	@Override
@@ -78,6 +99,10 @@ public class CanvasMouseListener implements MouseListener, MouseMotionListener {
 				break;
 			case DELETE_SHAPE:
 				eventListener.markObjectForDeletion(e.getX(), e.getY());
+				changeToSelectState();
+				break;
+			case SELECT_SHAPE_TO_RESIZE:
+				createRezisePopup(e.getX(), e.getY());
 				changeToSelectState();
 				break;
 		}

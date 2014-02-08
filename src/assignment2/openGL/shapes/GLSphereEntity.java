@@ -37,4 +37,9 @@ public class GLSphereEntity extends GLEntity {
 	public void printShapeSpecifics() {
 		System.out.println("Radius = " + radius);
 	}
+
+	@Override
+	public void resizeObject(float scaleFactor) {
+		radius = radius * scaleFactor;
+	}
 }
