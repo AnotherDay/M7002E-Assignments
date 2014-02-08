@@ -18,7 +18,7 @@ public class ObjectContainer {
 	private GLLightSourceEntity[] lightSourceArray = new GLLightSourceEntity[8];
 	private boolean[] takenLightSlots = new boolean[8];
 	
-	private int objectIdCounter; //Matches the objects index value
+	private int objectIdCounter; 
 	private int lightSourceCounter;
 	
 	private ObjectContainer(){
@@ -35,8 +35,13 @@ public class ObjectContainer {
 		glEntityList.add(glEntity);
 	}
 	
-	public GLEntity getGLEntitiy(int id)		{
-		return glEntityList.get(id);
+	public GLEntity getGLEntitiy(int id) throws RuntimeException	{
+		for(GLEntity glEntity : glEntityList)	{
+			if(glEntity.getId() == id)		{
+				return glEntity;
+			}
+		}
+		throw new RuntimeException("Object not in object container");
 	}
 	
 	public ArrayList<GLEntity> getGLEntityList()	{
@@ -44,10 +49,10 @@ public class ObjectContainer {
 	}
 	
 	public void deleteGLEntity(int id)	{
-		glEntityList.remove(id);
-		if(id <= glEntityList.size())	{
-			for(int i = id; i <= glEntityList.size(); i++)	{
-				glEntityList.get(i).setId(glEntityList.get(i).getId()-1);
+		for(GLEntity glEntity : glEntityList)	{
+			if(glEntity.getId() == id)	{
+				glEntityList.remove(glEntity);
+				break;
 			}
 		}
 	}
@@ -58,6 +63,8 @@ public class ObjectContainer {
 			if(takenLightSlots[i] == false)	{
 				glLightSourceEntity.setLightSourceId(i);
 				lightSourceArray[i] = glLightSourceEntity;
+				takenLightSlots[i] = true;
+				break;
 			}
 			else if(i == takenLightSlots.length-1 && takenLightSlots[i] == true)	{
 				throw new RuntimeException("Can only have 8 light sources");
@@ -67,14 +74,17 @@ public class ObjectContainer {
 	
 	public ArrayList<GLLightSourceEntity> getLightSourceList()	{
 		ArrayList<GLLightSourceEntity> lightSourceList = new ArrayList<GLLightSourceEntity>();
-		for(GLLightSourceEntity lightSource : lightSourceArray)	{
-			lightSourceList.add(lightSource);
+		for(int i = 0; i < takenLightSlots.length; i++)	{
+			if(takenLightSlots[i] == true)		{
+				lightSourceList.add(lightSourceArray[i]);
+			}
 		}
 		return lightSourceList;
 	}
 	
 	public void clearLightSources()	{
 		lightSourceArray = new GLLightSourceEntity[8];
+		takenLightSlots = new boolean[8];
 	}
 	
 	public void clearObjectContainer()	{
