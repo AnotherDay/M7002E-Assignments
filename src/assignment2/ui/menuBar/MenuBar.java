@@ -11,7 +11,13 @@ import javax.swing.JMenuItem;
 public class MenuBar extends JMenuBar {
 	
 	private JMenu applicationMenu, canvasMenu, polygonMenu;
-	private JMenuItem quit, clearCanvas, movePolygon, printAllShapeInfo, deleteObject;
+	
+	//Application Menu
+	private JMenuItem quit;
+	//Polygon Menu
+	private JMenuItem movePolygon, deleteObject;
+	//Canvas Menu
+	private JMenuItem clearCanvas, clearLightSources, printAllShapeInfo; 
 
 	private int menuMarginSides = 5, menuMarginTop = 7, menuMarginBottom = 7;
 	private Insets menuInsets = new Insets(menuMarginTop, menuMarginSides, menuMarginBottom, menuMarginTop);
@@ -44,8 +50,10 @@ public class MenuBar extends JMenuBar {
 		canvasMenu = new JMenu("Canvas");
 		canvasMenu.setMargin(menuInsets);
 		this.add(canvasMenu);
-			clearCanvas = new JMenuItem("Clear");
+			clearCanvas = new JMenuItem("Clear Objects");
 			canvasMenu.add(clearCanvas);
+			clearLightSources = new JMenuItem("Clear Light Sources");
+			canvasMenu.add(clearLightSources);
 			printAllShapeInfo = new JMenuItem("Print All Shapes");
 			canvasMenu.add(printAllShapeInfo);
 	}
@@ -68,5 +76,9 @@ public class MenuBar extends JMenuBar {
 	
 	public void addDeleteShapeActionListener(ActionListener actionListener)		{
 		deleteObject.addActionListener(actionListener);
+	}
+	
+	public void addClearLightSourcesActionListener(ActionListener actionListener)	{
+		clearLightSources.addActionListener(actionListener);
 	}
 }

@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import assignment2.globals.ObjectContainer;
-import assignment2.openGL.shapes.GLEntity;
+import assignment2.openGL.GLEntity;
 
 public class PrintShapeInfoActionListener implements ActionListener {
 

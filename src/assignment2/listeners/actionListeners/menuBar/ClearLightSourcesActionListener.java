@@ -3,17 +3,21 @@ package assignment2.listeners.actionListeners.menuBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.media.opengl.awt.GLCanvas;
-
 import assignment2.globals.ObjectContainer;
+import assignment2.openGL.EventListener;
 
-public class ClearCanvasActionListener implements ActionListener {
+public class ClearLightSourcesActionListener implements ActionListener {
 
 	private ObjectContainer theObjectContainer = ObjectContainer.getInstance();
+	private EventListener eventListener;
+	
+	public ClearLightSourcesActionListener(EventListener eventListener)	{
+		this.eventListener = eventListener;
+	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		theObjectContainer.clearObjectContainer();
+		eventListener.removeAllLightSources();
 	}
 
 }

@@ -10,7 +10,8 @@ public class Constants {
 	public final static String 
 			PYRAMID_POLYGON = "Pyramid", 
 			SQUARE_POLYGON = "Square",
-			STAR_POLYGON = "Star";
+			STAR_POLYGON = "Star",
+			LIGHT_SOURCE = "Light source";
 	
 	//Color string constants
 	public final static String 
@@ -29,5 +30,11 @@ public class Constants {
 		LinkedList<String> colorConstants = new LinkedList<String>();
 		colorConstants.addAll(Arrays.asList(COLOR_RED, COLOR_BLUE, COLOR_GREEN, COLOR_YELLOW, COLOR_WHITE));
 		return colorConstants;
+	}
+	
+	public static LinkedList<String> getObjectList()	{
+		LinkedList<String> objectList = new LinkedList<String>();
+		objectList.addAll(Arrays.asList(PYRAMID_POLYGON, SQUARE_POLYGON, STAR_POLYGON, LIGHT_SOURCE));
+		return objectList;
 	}
 }

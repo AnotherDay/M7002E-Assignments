@@ -7,18 +7,19 @@ import javax.media.opengl.awt.GLCanvas;
 
 import assignment2.globals.Constants;
 import assignment2.globals.ObjectContainer;
-import assignment2.openGL.shapes.GLEntity;
+import assignment2.openGL.GLEntity;
+import assignment2.openGL.GLLightSourceEntity;
 import assignment2.openGL.shapes.GLPyramidEntity;
 import assignment2.openGL.shapes.GLSquareEntity;
 import assignment2.openGL.shapes.GLStarEntity;
 import assignment2.ui.leftToolbar.LeftToolbar;
 
-public class CreatePolygonActionListener implements ActionListener {
+public class CreateActionListener implements ActionListener {
 
 	private LeftToolbar leftToolbar;
 	private ObjectContainer theObjectContainer = ObjectContainer.getInstance();
 	
-	public CreatePolygonActionListener(LeftToolbar leftToolbar, GLCanvas canvas)		{
+	public CreateActionListener(LeftToolbar leftToolbar, GLCanvas canvas)		{
 		this.leftToolbar = leftToolbar;
 	}
 	
@@ -27,24 +28,29 @@ public class CreatePolygonActionListener implements ActionListener {
 		try	{
 			String activePolygon = leftToolbar.getActivePolygon();
 			String printOutMessage = "Created: ";
+			
 			GLEntity glEntity;
+			float xPos = leftToolbar.getXCoordinate();
+			float yPos = leftToolbar.getYCoordinate();
+			float zPos = leftToolbar.getZCoordinate();
 			if(activePolygon.equals(Constants.PYRAMID_POLYGON))		{
-				glEntity = new GLPyramidEntity(leftToolbar.getXCoordinate(), 
-						leftToolbar.getYCoordinate(), leftToolbar.getZCoordinate(), 
+				glEntity = new GLPyramidEntity(xPos, yPos, zPos, 
 						leftToolbar.getPyramidHeight(), leftToolbar.getPyramidBaseWidth());
-				System.out.println(printOutMessage + "Pyramid");
+				printOutMessage = printOutMessage + Constants.PYRAMID_POLYGON;
 			}
 			else if(activePolygon.equals(Constants.SQUARE_POLYGON))	{
-				glEntity = new GLSquareEntity(leftToolbar.getXCoordinate(), 
-						leftToolbar.getYCoordinate(), leftToolbar.getZCoordinate(), 
+				glEntity = new GLSquareEntity(xPos, yPos, zPos, 
 						leftToolbar.getSquareEdgeLength());
-				System.out.println(printOutMessage + "Square");
+				printOutMessage = printOutMessage + Constants.SQUARE_POLYGON;
+			}
+			else if(activePolygon.equals(Constants.STAR_POLYGON))	{
+				glEntity = new GLStarEntity(xPos, yPos, zPos, 
+						leftToolbar.getStarSpan());
+				printOutMessage = printOutMessage + Constants.STAR_POLYGON;
 			}
 			else	{
-				glEntity = new GLStarEntity(leftToolbar.getXCoordinate(), 
-						leftToolbar.getYCoordinate(), leftToolbar.getZCoordinate(), 
-						leftToolbar.getStarSpan());
-				System.out.println(printOutMessage + "Star");
+				glEntity = new GLLightSourceEntity(xPos, yPos, zPos);
+				printOutMessage = printOutMessage + Constants.LIGHT_SOURCE;
 			}
 			try	{
 				glEntity.setAmbientRGBA(leftToolbar.ambientPanel.getRGBAValue());
@@ -52,9 +58,10 @@ public class CreatePolygonActionListener implements ActionListener {
 				glEntity.setDiffuseRGBA(leftToolbar.diffusePanel.getRGBAValue());
 			}
 			catch(NumberFormatException nfe)	{
-				System.out.println("Detected empty string, using default values");
+				System.out.println("Empty boxes in ambient, specular or diffuse. Using default values");
 			}
 			theObjectContainer.addGLEntity(glEntity);
+			System.out.println(printOutMessage);
 		}
 		catch(NumberFormatException nfe)	{
 			//TODO: make a error message in the leftToolbar panel

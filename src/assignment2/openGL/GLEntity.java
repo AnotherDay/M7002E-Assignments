@@ -1,4 +1,4 @@
-package assignment2.openGL.shapes;
+package assignment2.openGL;
 
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;

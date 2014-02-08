@@ -3,6 +3,8 @@ package assignment2.openGL.shapes;
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
+import assignment2.openGL.GLEntity;
+
 public class GLSquareEntity extends GLEntity {
 	private float edgeLength;
 	

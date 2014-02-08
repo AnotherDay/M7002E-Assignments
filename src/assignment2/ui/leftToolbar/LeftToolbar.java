@@ -15,11 +15,10 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import assignment2.globals.Constants;
-import assignment2.ui.leftToolbar.panels.RGBAPanel;
-import assignment2.ui.leftToolbar.panels.ColorPickerPanel;
 import assignment2.ui.leftToolbar.panels.CoordinatesPanel;
-import assignment2.ui.leftToolbar.panels.PolygonPickerPanel;
+import assignment2.ui.leftToolbar.panels.ObjectPickerPanel;
 import assignment2.ui.leftToolbar.panels.PyramidSpecificationPanel;
+import assignment2.ui.leftToolbar.panels.RGBAPanel;
 import assignment2.ui.leftToolbar.panels.SquareSpecificationPanel;
 import assignment2.ui.leftToolbar.panels.StarSpecificationPanel;
 import assignment2.ui.uiParts.LableText;
@@ -29,7 +28,7 @@ public class LeftToolbar extends Panel{
 	
 	private Color backgroundColor = Constants.backgroundColor;
 	
-	private PolygonPickerPanel polygonPickerPanel = new PolygonPickerPanel();
+	private ObjectPickerPanel polygonPickerPanel = new ObjectPickerPanel();
 	private CoordinatesPanel coordinatesPanel = new CoordinatesPanel();
 	public RGBAPanel ambientPanel = new RGBAPanel("Ambient");
 	public RGBAPanel specualPanel = new RGBAPanel("Specular");
@@ -160,6 +159,16 @@ public class LeftToolbar extends Panel{
 		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.STAR_POLYGON))	{
 			this.remove(SPECIFICATION_PANEL_INDEX);
 			this.add(starSpecPanel, SPECIFICATION_PANEL_INDEX);
+			updatePanel();
+		}
+	}
+	
+	public void changeToLightSpecificationPanel()	{
+		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.LIGHT_SOURCE))	{
+			this.remove(SPECIFICATION_PANEL_INDEX);
+			JPanel placeHolder = new JPanel();
+			placeHolder.setBackground(backgroundColor);
+			this.add(placeHolder, SPECIFICATION_PANEL_INDEX); 
 			updatePanel();
 		}
 	}

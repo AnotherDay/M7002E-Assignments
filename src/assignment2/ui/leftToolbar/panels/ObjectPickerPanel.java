@@ -10,16 +10,17 @@ import javax.swing.JPanel;
 import assignment2.globals.Constants;
 
 @SuppressWarnings("serial")
-public class PolygonPickerPanel extends JPanel {
+public class ObjectPickerPanel extends JPanel {
 	
 	private JComboBox<String> comboBox;
 	
-	public PolygonPickerPanel()	{
+	public ObjectPickerPanel()	{
 		super(new FlowLayout(FlowLayout.LEFT));
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
-		model.addElement(Constants.PYRAMID_POLYGON);
-		model.addElement(Constants.SQUARE_POLYGON);
-		model.addElement(Constants.STAR_POLYGON);
+		
+		for(String objectString : Constants.getObjectList())	{
+			model.addElement(objectString);
+		}
 		
 		comboBox = new JComboBox<String>(model);
 		this.add(comboBox);

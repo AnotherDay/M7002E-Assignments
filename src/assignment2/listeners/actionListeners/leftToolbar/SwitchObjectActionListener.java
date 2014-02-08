@@ -8,13 +8,13 @@ import assignment2.globals.Constants;
 import assignment2.ui.CustomFocusTraversalPolicy;
 import assignment2.ui.leftToolbar.LeftToolbar;
 
-public class SwitchPolygonActionListener implements ActionListener {
+public class SwitchObjectActionListener implements ActionListener {
 
 	private LeftToolbar leftToolbar;
 	private Frame window;
 	private CustomFocusTraversalPolicy traversalPolicy;
 	
-	public SwitchPolygonActionListener(LeftToolbar leftToolbar, Frame window)	{
+	public SwitchObjectActionListener(LeftToolbar leftToolbar, Frame window)	{
 		this.window = window;
 		this.leftToolbar = leftToolbar;
 		traversalPolicy = new CustomFocusTraversalPolicy(leftToolbar.getFocusTraversalOrder());
@@ -32,6 +32,9 @@ public class SwitchPolygonActionListener implements ActionListener {
 		}
 		else if(polygonName.equals(Constants.STAR_POLYGON))	{
 			leftToolbar.changeToStarSpecificationPanel();
+		}
+		else if(polygonName.equals(Constants.LIGHT_SOURCE))	{
+			leftToolbar.changeToLightSpecificationPanel();
 		}
 		else	{
 			leftToolbar.changeToUnspecifiedPolygonLable();

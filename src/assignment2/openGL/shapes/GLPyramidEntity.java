@@ -4,6 +4,7 @@ import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
 import assignment2.globals.Constants;
+import assignment2.openGL.GLEntity;
 
 public class GLPyramidEntity extends GLEntity {
 	private float height, baseWidth;
