@@ -1,7 +1,5 @@
 package assignment2.openGL.shapes;
 
-import java.awt.Color;
-
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
@@ -9,7 +7,9 @@ public abstract class GLEntity  {
 	protected float xPos, yPos, zPos;
 	protected int id;
 	protected String entityType = "Undefined";
-	protected Color color;
+	protected float[] ambientRGBA = {0,0,0,0}, 
+		specularRGBA = {0,0,0,0}, 
+		diffuseRGBA = {0,0,0,0};
 	
 	public GLEntity(float xPos, float yPos, float zPos)	{
 		this.xPos = xPos;
@@ -49,8 +49,28 @@ public abstract class GLEntity  {
 		this.zPos = zPos;
 	}
 	
-	public void setColor(Color color)	{
-		this.color = color;
+	public void setAmbientRGBA(float red, float blue, float green, float alpha)	{
+		ambientRGBA = new float[]{red, blue, green, alpha};
+	}
+	
+	public void setAmbientRGBA(float[] rgba)	{
+		ambientRGBA = rgba;
+	}
+	
+	public void setSpecularRGBA(float red, float blue, float green, float alpha)	{
+		specularRGBA = new float[]{red, blue, green, alpha};
+	}
+	
+	public void setSpecularRGBA(float[] rgba)	{
+		specularRGBA = rgba;
+	}
+	
+	public void setdDiffuseRGBA(float red, float blue, float green, float alpha)	{
+		ambientRGBA = new float[]{red, blue, green, alpha};
+	}
+	
+	public void setDiffuseRGBA(float[] rgba)	{
+		ambientRGBA = rgba;
 	}
 	
 	public void printInfo()	{
@@ -59,6 +79,12 @@ public abstract class GLEntity  {
 		System.out.println("Type = " + entityType);
 		System.out.println("X = " + xPos + ", Y = " + yPos + ", Z = " + zPos);
 		printShapeSpecifics();
+	}
+	
+	protected void drawMaterial(GL2 gl, int face, int paramOffset)	{
+		gl.glMaterialfv( face, GL2.GL_AMBIENT, ambientRGBA, paramOffset );
+		gl.glMaterialfv(face, GL2.GL_DIFFUSE, diffuseRGBA, paramOffset );
+		gl.glMaterialfv(face, GL2.GL_SPECULAR, specularRGBA, paramOffset );
 	}
 	
 	public abstract void draw(GL2 gl, GLU glu);

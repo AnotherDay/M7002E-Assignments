@@ -13,6 +13,7 @@ public class GLPyramidEntity extends GLEntity {
 		this.height = height;
 		this.baseWidth = baseWidth;
 		this.entityType = Constants.PYRAMID_POLYGON;
+		this.setAmbientRGBA(1.0f, 0, 0, 1.0f);
 	}
 	
 	public float getHeight()	{
@@ -31,12 +32,9 @@ public class GLPyramidEntity extends GLEntity {
 		gl.glPushMatrix();
 		gl.glPushAttrib(GL2.GL_ALL_ATTRIB_BITS);
 			gl.glRotatef(30, 1, 1, 0);
+			drawMaterial(gl, GL2.GL_FRONT_AND_BACK, 0);
 			gl.glTranslatef(xPos, yPos, zPos);
 			gl.glPolygonMode(GL2.GL_FRONT_AND_BACK, GL2.GL_LINE);
-			if(color != null) 
-				gl.glColor3d(color.getRed(), color.getGreen(), color.getBlue());
-			else 
-				gl.glColor3d(255, 0, 0);
 			gl.glBegin(GL2.GL_TRIANGLES); 
 			
 			// Font-face triangle

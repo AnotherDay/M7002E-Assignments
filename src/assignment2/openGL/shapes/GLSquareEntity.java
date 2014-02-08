@@ -10,6 +10,7 @@ public class GLSquareEntity extends GLEntity {
 		super(xPos, yPos, zPos);
 		this.edgeLength = edgeLength;
 		this.entityType = "Square";
+		this.setAmbientRGBA(0, 0.0f, 1.0f, 1.0f);
 	}
 	
 	public float getEdgeLength()	{
@@ -20,17 +21,14 @@ public class GLSquareEntity extends GLEntity {
 	public void draw(GL2 gl, GLU glu) {
 		if(edgeLength == 0) throw new IllegalArgumentException("Radius cannot be zero");
 		else	{
-			float halfEdgeLength = edgeLength/2;
 			gl.glPushName(id);
 			gl.glPushMatrix();
 			gl.glPushAttrib(GL2.GL_ALL_ATTRIB_BITS);
 				gl.glTranslatef(xPos, yPos, zPos);
+				drawMaterial(gl, GL2.GL_FRONT_AND_BACK, 0);
 				gl.glPolygonMode(GL2.GL_FRONT, GL2.GL_FILL);
-				if(color != null) 
-					gl.glColor3d(color.getRed(), color.getGreen(), color.getBlue());
-				else 
-					gl.glColor3d(0, 0, 255);
 				gl.glBegin(GL2.GL_QUADS);
+					float halfEdgeLength = edgeLength/2;
 					gl.glVertex3f(-halfEdgeLength, -halfEdgeLength, 0); //Bottom left vertex
 					gl.glVertex3f(halfEdgeLength, -halfEdgeLength, 0); //Bottom right vertex
 					gl.glVertex3f(halfEdgeLength, halfEdgeLength, 0); //Top right vertex

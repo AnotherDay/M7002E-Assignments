@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import javax.media.opengl.awt.GLCanvas;
 
 import assignment2.globals.Constants;
-import assignment2.globals.Converter;
 import assignment2.globals.ObjectContainer;
 import assignment2.openGL.shapes.GLEntity;
 import assignment2.openGL.shapes.GLPyramidEntity;
@@ -18,7 +17,6 @@ public class CreatePolygonActionListener implements ActionListener {
 
 	private LeftToolbar leftToolbar;
 	private ObjectContainer theObjectContainer = ObjectContainer.getInstance();
-	private Converter converter = new Converter();
 	
 	public CreatePolygonActionListener(LeftToolbar leftToolbar, GLCanvas canvas)		{
 		this.leftToolbar = leftToolbar;
@@ -48,9 +46,14 @@ public class CreatePolygonActionListener implements ActionListener {
 						leftToolbar.getStarSpan());
 				System.out.println(printOutMessage + "Star");
 			}
-			String color = leftToolbar.getActiveColor();
-			if(!color.equals(Constants.COLOR_DEFAULT))
-				glEntity.setColor(converter.getColor(color));
+			try	{
+				glEntity.setAmbientRGBA(leftToolbar.ambientPanel.getRGBAValue());
+				glEntity.setSpecularRGBA(leftToolbar.specualPanel.getRGBAValue());
+				glEntity.setDiffuseRGBA(leftToolbar.diffusePanel.getRGBAValue());
+			}
+			catch(NumberFormatException nfe)	{
+				System.out.println("Detected empty string, using default values");
+			}
 			theObjectContainer.addGLEntity(glEntity);
 		}
 		catch(NumberFormatException nfe)	{
@@ -58,5 +61,5 @@ public class CreatePolygonActionListener implements ActionListener {
 			System.out.println("Number format error");
 		}
 	}
-
+	
 }

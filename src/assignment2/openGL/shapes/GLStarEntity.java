@@ -11,6 +11,7 @@ public class GLStarEntity extends GLEntity {
 		super(xPos, yPos, zPos);
 		this.span = span;
 		this.entityType = "Star";
+		this.setAmbientRGBA(0, 1.0f, 0.0f, 1.0f);
 	}
 	
 	public float getSpan()	{
@@ -26,10 +27,7 @@ public class GLStarEntity extends GLEntity {
 			gl.glPushMatrix();
 			gl.glPushAttrib(GL2.GL_ALL_ATTRIB_BITS);
 				gl.glTranslatef(xPos, yPos, zPos);
-				if(color != null) 
-					gl.glColor3d(color.getRed(), color.getGreen(), color.getBlue());
-				else 
-					gl.glColor3d(0, 255, 0);
+				drawMaterial(gl, GL2.GL_FRONT_AND_BACK, 0);
 //				gl.glPolygonMode(GL2.GL_FRONT, GL2.GL_FILL);
 				//Starting from the far right vertex and then moving up in a counter clockwise direction
 				gl.glBegin(GL2.GL_LINE_LOOP);  

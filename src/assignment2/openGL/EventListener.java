@@ -1,5 +1,7 @@
 package assignment2.openGL;
 
+import static javax.media.opengl.fixedfunc.GLLightingFunc.GL_SMOOTH;
+
 import java.nio.IntBuffer;
 import java.util.LinkedList;
 
@@ -25,6 +27,10 @@ public class EventListener implements GLEventListener {
     private static final float orthoLeft = 0, orthoRight = 2, orthoBotton = 0, orthoTop = 1; 
     
     private boolean deleteObject = false;
+
+    final float[] colorBlack = {0.0f,0.0f,0.0f,1.0f},
+    		colorWhite = {1.0f,1.0f,1.0f,1.0f},
+    		colorRed= {1.0f,0.0f,0.0f,1.0f};
     
 	@Override
 	public void display(GLAutoDrawable drawable) {
@@ -149,6 +155,29 @@ public class EventListener implements GLEventListener {
 	public void init(GLAutoDrawable drawable) {
 		GL2 gl = drawable.getGL().getGL2();
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+//		gl.glShadeModel(GL_SMOOTH); // blends colors nicely, and smoothes out lighting
+		
+		// Some global ambient light
+		float lmodel_ambient[] = { 0f, 0f, 0f, 1.0f };
+		gl.glLightModelfv( GL2.GL_LIGHT_MODEL_AMBIENT, lmodel_ambient, 0 );
+		// LOCAL_VIEWER TRUE gives specular reflection calculated from the point of
+		//view of the viewer, more realistic
+		gl.glLightModeli( GL2.GL_LIGHT_MODEL_LOCAL_VIEWER, GL2.GL_TRUE );
+		gl.glLightModeli( GL2.GL_LIGHT_MODEL_TWO_SIDE, GL2.GL_FALSE );
+		// Switch lighting and the light on.
+		gl.glEnable( GL2.GL_LIGHTING );
+		gl.glEnable( GL2.GL_LIGHT0 );
+		
+		gl.glEnable(GL2.GL_DEPTH_TEST);
+		gl.glDepthFunc(GL2.GL_LESS);
+		
+		// Light 0.
+		gl.glLightfv( GL2.GL_LIGHT0, GL2.GL_AMBIENT, colorWhite, 0 );
+		gl.glLightfv( GL2.GL_LIGHT0, GL2.GL_DIFFUSE, colorWhite, 0 );
+		gl.glLightfv( GL2.GL_LIGHT0, GL2.GL_SPECULAR, colorWhite, 0 );
+		gl.glLightfv( GL2.GL_LIGHT0, GL2.GL_POSITION, new float[]{1.0f, 1.0f, 1.0f, 0.0f}, 0);
+//		gl.glLightf( GL2.GL_LIGHT3, GL2.GL_CONSTANT_ATTENUATION, 0.3f );
+		
 	}
 
 	@Override

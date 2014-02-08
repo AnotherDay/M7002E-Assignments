@@ -15,6 +15,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import assignment2.globals.Constants;
+import assignment2.ui.leftToolbar.panels.RGBAPanel;
 import assignment2.ui.leftToolbar.panels.ColorPickerPanel;
 import assignment2.ui.leftToolbar.panels.CoordinatesPanel;
 import assignment2.ui.leftToolbar.panels.PolygonPickerPanel;
@@ -30,7 +31,9 @@ public class LeftToolbar extends Panel{
 	
 	private PolygonPickerPanel polygonPickerPanel = new PolygonPickerPanel();
 	private CoordinatesPanel coordinatesPanel = new CoordinatesPanel();
-	private ColorPickerPanel colorPickerPanel = new ColorPickerPanel();
+	public RGBAPanel ambientPanel = new RGBAPanel("Ambient");
+	public RGBAPanel specualPanel = new RGBAPanel("Specular");
+	public RGBAPanel diffusePanel = new RGBAPanel("Diffuse");
 
 	private PyramidSpecificationPanel pyramidSpecPanel = new PyramidSpecificationPanel();
 	private SquareSpecificationPanel squareSpecPanel = new SquareSpecificationPanel();
@@ -40,17 +43,20 @@ public class LeftToolbar extends Panel{
 	
 	private Vector<Component> order = new Vector<Component>();
 	
-	private final static int SPECIFICATION_PANEL_INDEX = 4;
-	private final static int BOTTOM_MARGIN_SMALL = 10;
+	private final static int SPECIFICATION_PANEL_INDEX = 6;
+	private final static int BOTTOM_MARGIN_SMALL = 4;
 	private final static String START_OF_ILLEGALSTATE_MESSAGE = "Polygon not choosen by the user. Current polygon choosen: ";
 	
 	public LeftToolbar() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setBackground(backgroundColor);
 		
-		polygonPickerPanel.setBorder(new EmptyBorder(0, 0, BOTTOM_MARGIN_SMALL, 0));
-		coordinatesPanel.setBorder(new EmptyBorder(0, 0, BOTTOM_MARGIN_SMALL, 0));
-		colorPickerPanel.setBorder(new EmptyBorder(0, 0, BOTTOM_MARGIN_SMALL, 0));
+		EmptyBorder panelBorder = new EmptyBorder(0, 0, BOTTOM_MARGIN_SMALL, 0);
+		polygonPickerPanel.setBorder(panelBorder);
+		coordinatesPanel.setBorder(panelBorder);
+		ambientPanel.setBorder(panelBorder);
+		specualPanel.setBorder(panelBorder);
+		diffusePanel.setBorder(panelBorder);
 		
 		createPolygonButton = new JButton("Create");
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -62,7 +68,9 @@ public class LeftToolbar extends Panel{
 		this.add(new JSeparator(SwingConstants.HORIZONTAL));
 		this.add(polygonPickerPanel);
 		this.add(coordinatesPanel);
-		this.add(colorPickerPanel);
+		this.add(ambientPanel);
+		this.add(specualPanel);
+		this.add(diffusePanel);
 		this.add(pyramidSpecPanel);
 		this.add(buttonPanel);
 		this.add(new JSeparator(SwingConstants.HORIZONTAL));
@@ -128,10 +136,6 @@ public class LeftToolbar extends Panel{
 		}
 	}
 	
-	public String getActiveColor()	{
-		return colorPickerPanel.getCurrentColor();
-	}
-	
 	public Vector<Component> getFocusTraversalOrder()	{
 		return order;
 	}
@@ -175,6 +179,9 @@ public class LeftToolbar extends Panel{
 	private void updateFocusTraversalOrder()	{
 		order = new Vector<Component>();
 		order.addAll(coordinatesPanel.getFocusTraversalOrder());
+		order.addAll(ambientPanel.getFocusTraversalOrder());
+		order.addAll(specualPanel.getFocusTraversalOrder());
+		order.addAll(diffusePanel.getFocusTraversalOrder());
 		switch(polygonPickerPanel.getCurrentPolygon())	{
 			case Constants.PYRAMID_POLYGON:
 				order.addAll(pyramidSpecPanel.getFocusTraversalOrder());
