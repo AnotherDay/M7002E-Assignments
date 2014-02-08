@@ -12,6 +12,7 @@ public class GLLightSourceEntity extends GLEntity {
 		ambientRGBA = new float[]{1,1,1,1};
 		diffuseRGBA = new float[]{1,1,1,1};
 		specularRGBA = new float[]{1,1,1,1};
+		this.entityType = "Light Source";
 	}
 
 	@Override

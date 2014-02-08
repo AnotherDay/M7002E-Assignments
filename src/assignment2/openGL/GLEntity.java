@@ -1,5 +1,7 @@
 package assignment2.openGL;
 
+import java.util.Arrays;
+
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
@@ -78,6 +80,9 @@ public abstract class GLEntity  {
 		System.out.println("Id = " + id);
 		System.out.println("Type = " + entityType);
 		System.out.println("X = " + xPos + ", Y = " + yPos + ", Z = " + zPos);
+		System.out.println("Ambient = " + Arrays.toString(ambientRGBA));
+		System.out.println("Specular = " + Arrays.toString(specularRGBA));
+		System.out.println("Diffuse = " + Arrays.toString(diffuseRGBA));
 		printShapeSpecifics();
 	}
 	
