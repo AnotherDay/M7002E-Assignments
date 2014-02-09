@@ -47,7 +47,7 @@ public class GLPyramidEntity extends GLEntity {
 	}
 
 	@Override
-	public void drawSpecial(GL2 gl, GLU glu) {
+	public void innerDrawMethod(GL2 gl, GLU glu) {
 		if(baseWidth == 0)	throw new IllegalArgumentException("Base width cannot be zero");
 		float halfWidth = baseWidth/2;
 //		gl.glRotatef(30, 1, 1, 0); //Beware rotation after translation

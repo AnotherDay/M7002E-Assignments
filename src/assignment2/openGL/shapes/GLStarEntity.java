@@ -32,7 +32,7 @@ public class GLStarEntity extends GLEntity {
 	}
 
 	@Override
-	public void drawSpecial(GL2 gl, GLU glu) {
+	public void innerDrawMethod(GL2 gl, GLU glu) {
 		if(span == 0)	throw new IllegalArgumentException("Span cannot be zero");
 		else	{
 			float innerRadius = span/4;

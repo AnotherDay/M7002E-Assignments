@@ -31,7 +31,7 @@ public class GLSphereEntity extends GLEntity {
 	}
 
 	@Override
-	public void drawSpecial(GL2 gl, GLU glu) {
+	public void innerDrawMethod(GL2 gl, GLU glu) {
 		gl.glPolygonMode(GL2.GL_FRONT_AND_BACK, GL2.GL_FILL);
 		drawMaterial(gl, GL2.GL_FRONT_AND_BACK, 0);
 		glut.glutSolidSphere(radius, 20, 20);

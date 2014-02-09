@@ -30,7 +30,7 @@ public class GLSquareEntity extends GLEntity {
 	}
 
 	@Override
-	public void drawSpecial(GL2 gl, GLU glu) {
+	public void innerDrawMethod(GL2 gl, GLU glu) {
 		drawMaterial(gl, GL2.GL_FRONT_AND_BACK, 0);
 		gl.glPolygonMode(GL2.GL_FRONT, GL2.GL_FILL);
 		gl.glBegin(GL2.GL_QUADS);

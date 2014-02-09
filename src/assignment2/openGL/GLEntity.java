@@ -97,12 +97,12 @@ public abstract class GLEntity  {
 		gl.glPushMatrix();
 		gl.glPushAttrib(GL2.GL_ALL_ATTRIB_BITS);
 			gl.glTranslatef(xPos, yPos, zPos);
-			drawSpecial(gl, glu);
+			innerDrawMethod(gl, glu);
 		gl.glPopAttrib(); 
 		gl.glPopMatrix();
 	}
 	
-	public abstract void drawSpecial(GL2 gl, GLU glu);
+	public abstract void innerDrawMethod(GL2 gl, GLU glu);
 	
 	public abstract void printShapeSpecifics();
 	

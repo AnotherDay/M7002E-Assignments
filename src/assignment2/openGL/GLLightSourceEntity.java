@@ -63,5 +63,5 @@ public class GLLightSourceEntity extends GLEntity {
 	public void resizeObject(float scaleFactor) {}
 
 	@Override
-	public void drawSpecial(GL2 gl, GLU glu) {}
+	public void innerDrawMethod(GL2 gl, GLU glu) {}
 }
