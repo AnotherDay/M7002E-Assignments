@@ -12,7 +12,7 @@ import jogamp.opengl.glu.mipmap.ScaleInternal;
 @SuppressWarnings("serial")
 public class MenuBar extends JMenuBar {
 	
-	private JMenu applicationMenu, canvasMenu, polygonMenu;
+	private JMenu applicationMenu, canvasMenu, manipulateMenu;
 	
 	//Application Menu
 	private JMenuItem quit;
@@ -39,15 +39,15 @@ public class MenuBar extends JMenuBar {
 	}
 	
 	private void createPolygonMenu()	{
-		polygonMenu = new JMenu("Polygon");
-		polygonMenu.setMargin(menuInsets);
-		this.add(polygonMenu);
+		manipulateMenu = new JMenu("Manipulate");
+		manipulateMenu.setMargin(menuInsets);
+		this.add(manipulateMenu);
 			movePolygon = new JMenuItem("Move");
-			polygonMenu.add(movePolygon);
+			manipulateMenu.add(movePolygon);
 			deleteObject = new JMenuItem("Delete");
-			polygonMenu.add(deleteObject);
+			manipulateMenu.add(deleteObject);
 			resizeObject = new JMenuItem("Rezise");
-			polygonMenu.add(resizeObject);
+			manipulateMenu.add(resizeObject);
 	}
 	
 	private void createCanvasMenu()	{
