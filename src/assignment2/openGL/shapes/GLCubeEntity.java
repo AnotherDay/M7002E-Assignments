@@ -35,8 +35,7 @@ public class GLCubeEntity extends GLEntity {
 
 	@Override
 	public void resizeObject(float scaleFactor) {
-		// TODO Auto-generated method stub
-
+		radius = scaleFactor * radius;
 	}
 
 }
