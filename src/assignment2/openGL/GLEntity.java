@@ -92,7 +92,17 @@ public abstract class GLEntity  {
 		gl.glMaterialfv(face, GL2.GL_SPECULAR, specularRGBA, paramOffset );
 	}
 	
-	public abstract void draw(GL2 gl, GLU glu);
+	public void draw(GL2 gl, GLU glu)	{
+		gl.glPushName(id);
+		gl.glPushMatrix();
+		gl.glPushAttrib(GL2.GL_ALL_ATTRIB_BITS);
+			gl.glTranslatef(xPos, yPos, zPos);
+			drawSpecial(gl, glu);
+		gl.glPopAttrib(); 
+		gl.glPopMatrix();
+	}
+	
+	public abstract void drawSpecial(GL2 gl, GLU glu);
 	
 	public abstract void printShapeSpecifics();
 	

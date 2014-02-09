@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import assignment2.globals.Constants;
+import assignment2.globals.ObjectContainer;
 import assignment2.listeners.actionListeners.leftToolbar.CreateActionListener;
 import assignment2.listeners.actionListeners.leftToolbar.SwitchObjectActionListener;
 import assignment2.listeners.actionListeners.menuBar.ClearCanvasActionListener;
@@ -21,6 +22,8 @@ import assignment2.listeners.actionListeners.menuBar.PrintShapeInfoActionListene
 import assignment2.listeners.actionListeners.menuBar.ResizeObjectActionListener;
 import assignment2.listeners.mouseListeners.CanvasMouseListener;
 import assignment2.openGL.EventListener;
+import assignment2.openGL.GLLightSourceEntity;
+import assignment2.openGL.shapes.GLSphereEntity;
 import assignment2.ui.Window;
 import assignment2.ui.leftToolbar.LeftToolbar;
 import assignment2.ui.menuBar.MenuBar;
@@ -40,6 +43,11 @@ public class Main {
 	private static CanvasMouseListener canvasMouseListener;
 	
 	public static void main(String[] args) {
+		
+		ObjectContainer theObjectContainer = ObjectContainer.getInstance();
+		theObjectContainer.addLightSource(new GLLightSourceEntity(1, 1, 1));
+		theObjectContainer.addGLEntity(new GLSphereEntity(0.5f, 0.5f, 0.5f, 0.2f));
+		
 		//Source: http://stackoverflow.com/a/2592258
 		try {
 		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

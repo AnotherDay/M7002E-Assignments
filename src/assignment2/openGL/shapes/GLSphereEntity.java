@@ -21,19 +21,6 @@ public class GLSphereEntity extends GLEntity {
 	}
 
 	@Override
-	public void draw(GL2 gl, GLU glu) {
-		gl.glPushName(id);
-		gl.glPushMatrix();
-		gl.glPushAttrib(GL2.GL_ALL_ATTRIB_BITS);
-			gl.glTranslatef(xPos, yPos, zPos);
-			gl.glPolygonMode(GL2.GL_FRONT_AND_BACK, GL2.GL_FILL);
-			drawMaterial(gl, GL2.GL_FRONT_AND_BACK, 0);
-			glut.glutSolidSphere(radius, 20, 20);
-		gl.glEnd(); 
-		gl.glPopMatrix();
-	}
-
-	@Override
 	public void printShapeSpecifics() {
 		System.out.println("Radius = " + radius);
 	}
@@ -41,5 +28,12 @@ public class GLSphereEntity extends GLEntity {
 	@Override
 	public void resizeObject(float scaleFactor) {
 		radius = radius * scaleFactor;
+	}
+
+	@Override
+	public void drawSpecial(GL2 gl, GLU glu) {
+		gl.glPolygonMode(GL2.GL_FRONT_AND_BACK, GL2.GL_FILL);
+		drawMaterial(gl, GL2.GL_FRONT_AND_BACK, 0);
+		glut.glutSolidSphere(radius, 20, 20);
 	}
 }

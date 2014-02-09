@@ -21,33 +21,6 @@ public class GLStarEntity extends GLEntity {
 	}
 
 	@Override
-	public void draw(GL2 gl, GLU glu) {
-		if(span == 0)	throw new IllegalArgumentException("Span cannot be zero");
-		else	{
-			float innerRadius = span/4;
-			gl.glPushName(id);
-			gl.glPushMatrix();
-			gl.glPushAttrib(GL2.GL_ALL_ATTRIB_BITS);
-				gl.glTranslatef(xPos, yPos, zPos);
-				drawMaterial(gl, GL2.GL_FRONT_AND_BACK, 0);
-//				gl.glPolygonMode(GL2.GL_FRONT, GL2.GL_FILL);
-				//Starting from the far right vertex and then moving up in a counter clockwise direction
-				gl.glBegin(GL2.GL_LINE_LOOP);  
-					gl.glVertex3f(span, 0, 0);
-					gl.glVertex3f(innerRadius, innerRadius, 0);
-					gl.glVertex3f(0, span, 0);
-					gl.glVertex3f(-innerRadius, innerRadius, 0);
-					gl.glVertex3f(-span, 0, 0);
-					gl.glVertex3f(-innerRadius, -innerRadius, 0);
-					gl.glVertex3f(0, -span, 0);
-					gl.glVertex3f(innerRadius, -innerRadius, 0);
-				gl.glEnd();
-			gl.glPopAttrib();
-			gl.glPopMatrix();
-		}
-	}
-
-	@Override
 	public void printShapeSpecifics() {
 		System.out.println("Span = " + span);
 	}
@@ -56,5 +29,25 @@ public class GLStarEntity extends GLEntity {
 	public void resizeObject(float scaleFactor) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void drawSpecial(GL2 gl, GLU glu) {
+		if(span == 0)	throw new IllegalArgumentException("Span cannot be zero");
+		else	{
+			float innerRadius = span/4;
+			drawMaterial(gl, GL2.GL_FRONT_AND_BACK, 0);
+			//Starting from the far right vertex and then moving up in a counter clockwise direction
+			gl.glBegin(GL2.GL_LINE_LOOP);  
+				gl.glVertex3f(span, 0, 0);
+				gl.glVertex3f(innerRadius, innerRadius, 0);
+				gl.glVertex3f(0, span, 0);
+				gl.glVertex3f(-innerRadius, innerRadius, 0);
+				gl.glVertex3f(-span, 0, 0);
+				gl.glVertex3f(-innerRadius, -innerRadius, 0);
+				gl.glVertex3f(0, -span, 0);
+				gl.glVertex3f(innerRadius, -innerRadius, 0);
+			gl.glEnd();
+		}
 	}
 }

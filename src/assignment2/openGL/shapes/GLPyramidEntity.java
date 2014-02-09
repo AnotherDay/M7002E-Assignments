@@ -27,50 +27,10 @@ public class GLPyramidEntity extends GLEntity {
 
 	@Override
 	public void draw(GL2 gl, GLU glu) {
-		if(baseWidth == 0)	throw new IllegalArgumentException("Base width cannot be zero");
-		float halfWidth = baseWidth/2;
 		gl.glPushName(id);
 		gl.glPushMatrix();
 		gl.glPushAttrib(GL2.GL_ALL_ATTRIB_BITS);
-			gl.glRotatef(30, 1, 1, 0);
-			drawMaterial(gl, GL2.GL_FRONT_AND_BACK, 0);
-			gl.glTranslatef(xPos, yPos, zPos);
-			gl.glPolygonMode(GL2.GL_FRONT_AND_BACK, GL2.GL_LINE);
-			gl.glBegin(GL2.GL_TRIANGLES); 
 			
-			// Font-face triangle
-//			gl.glVertex3f(0.0f, 1.0f, 0.0f);
-//			gl.glVertex3f(-1.0f, -1.0f, 1.0f);
-//			gl.glVertex3f(1.0f, -1.0f, 1.0f);
-			gl.glVertex3f(0.0f, height, 0.0f);
-			gl.glVertex3f(-halfWidth, 0.0f, halfWidth);
-			gl.glVertex3f(halfWidth, 0.0f, halfWidth);
-			
-			// Right-face triangle
-//			gl.glVertex3f(0.0f, 1.0f, 0.0f);
-//			gl.glVertex3f(1.0f, -1.0f, 1.0f);
-//			gl.glVertex3f(1.0f, -1.0f, -1.0f);
-			gl.glVertex3f(0.0f, height, 0.0f);
-			gl.glVertex3f(halfWidth, 0.0f, halfWidth);
-			gl.glVertex3f(halfWidth, 0.0f, -halfWidth);
-			
-			// Back-face triangle
-//			gl.glVertex3f(0.0f, 1.0f, 0.0f);
-//			gl.glVertex3f(1.0f, -1.0f, -1.0f);
-//			gl.glVertex3f(-1.0f, -1.0f, -1.0f);
-			gl.glVertex3f(0.0f, height, 0.0f);
-			gl.glVertex3f(halfWidth, 0.0f, -halfWidth);
-			gl.glVertex3f(-halfWidth, 0.0f, -halfWidth);
-			
-			// Left-face triangle
-//			gl.glVertex3f(0.0f, 1.0f, 0.0f);
-//			gl.glVertex3f(-1.0f, -1.0f, -1.0f);
-//			gl.glVertex3f(-1.0f, -1.0f, 1.0f);
-			gl.glVertex3f(0.0f, height, 0.0f);
-			gl.glVertex3f(-halfWidth, 0.0f, -halfWidth);
-			gl.glVertex3f(-halfWidth, 0.0f, halfWidth);
-			gl.glPopAttrib();
-		gl.glEnd(); 
 		gl.glPopMatrix();
 	}
 
@@ -84,5 +44,48 @@ public class GLPyramidEntity extends GLEntity {
 	public void resizeObject(float scaleFactor) {
 		height = height * scaleFactor;
 		baseWidth = height * scaleFactor;
+	}
+
+	@Override
+	public void drawSpecial(GL2 gl, GLU glu) {
+		if(baseWidth == 0)	throw new IllegalArgumentException("Base width cannot be zero");
+		float halfWidth = baseWidth/2;
+//		gl.glRotatef(30, 1, 1, 0); //Beware rotation after translation
+		drawMaterial(gl, GL2.GL_FRONT_AND_BACK, 0);
+		gl.glPolygonMode(GL2.GL_FRONT_AND_BACK, GL2.GL_LINE);
+		gl.glBegin(GL2.GL_TRIANGLES); 
+			// Font-face triangle
+	//		gl.glVertex3f(0.0f, 1.0f, 0.0f);
+	//		gl.glVertex3f(-1.0f, -1.0f, 1.0f);
+	//		gl.glVertex3f(1.0f, -1.0f, 1.0f);
+			gl.glVertex3f(0.0f, height, 0.0f);
+			gl.glVertex3f(-halfWidth, 0.0f, halfWidth);
+			gl.glVertex3f(halfWidth, 0.0f, halfWidth);
+			
+			// Right-face triangle
+	//		gl.glVertex3f(0.0f, 1.0f, 0.0f);
+	//		gl.glVertex3f(1.0f, -1.0f, 1.0f);
+	//		gl.glVertex3f(1.0f, -1.0f, -1.0f);
+			gl.glVertex3f(0.0f, height, 0.0f);
+			gl.glVertex3f(halfWidth, 0.0f, halfWidth);
+			gl.glVertex3f(halfWidth, 0.0f, -halfWidth);
+			
+			// Back-face triangle
+	//		gl.glVertex3f(0.0f, 1.0f, 0.0f);
+	//		gl.glVertex3f(1.0f, -1.0f, -1.0f);
+	//		gl.glVertex3f(-1.0f, -1.0f, -1.0f);
+			gl.glVertex3f(0.0f, height, 0.0f);
+			gl.glVertex3f(halfWidth, 0.0f, -halfWidth);
+			gl.glVertex3f(-halfWidth, 0.0f, -halfWidth);
+			
+			// Left-face triangle
+	//		gl.glVertex3f(0.0f, 1.0f, 0.0f);
+	//		gl.glVertex3f(-1.0f, -1.0f, -1.0f);
+	//		gl.glVertex3f(-1.0f, -1.0f, 1.0f);
+			gl.glVertex3f(0.0f, height, 0.0f);
+			gl.glVertex3f(-halfWidth, 0.0f, -halfWidth);
+			gl.glVertex3f(-halfWidth, 0.0f, halfWidth);
+			gl.glPopAttrib();
+		gl.glEnd(); 
 	}
 }
