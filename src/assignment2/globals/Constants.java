@@ -12,6 +12,7 @@ public class Constants {
 			SQUARE_POLYGON = "Square",
 			STAR_POLYGON = "Star",
 			SPHERE_POLYGON = "Sphere",
+			CUBE_POLYGON = "Cube",
 			LIGHT_SOURCE = "Light source";
 	
 	//Color string constants
@@ -35,7 +36,7 @@ public class Constants {
 	
 	public static LinkedList<String> getObjectList()	{
 		LinkedList<String> objectList = new LinkedList<String>();
-		objectList.addAll(Arrays.asList(PYRAMID_POLYGON, SQUARE_POLYGON, SPHERE_POLYGON, STAR_POLYGON, LIGHT_SOURCE));
+		objectList.addAll(Arrays.asList(PYRAMID_POLYGON, SQUARE_POLYGON, SPHERE_POLYGON, CUBE_POLYGON, STAR_POLYGON, LIGHT_SOURCE));
 		return objectList;
 	}
 }

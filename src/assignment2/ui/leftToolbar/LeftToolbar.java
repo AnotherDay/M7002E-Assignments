@@ -37,6 +37,7 @@ public class LeftToolbar extends Panel{
 	private SingleFloatInputBoxPanel starSpecPanel = new SingleFloatInputBoxPanel("Span: ", "");
 	private SingleFloatInputBoxPanel squareSpecPanel = new SingleFloatInputBoxPanel("Edge Lenght: ", "");
 	private SingleFloatInputBoxPanel sphereSpecPanel = new SingleFloatInputBoxPanel("Radius: ", "");
+	private SingleFloatInputBoxPanel cubeSpecPanel = new SingleFloatInputBoxPanel("Edge Lenght: ", "");
 	
 	private JButton createPolygonButton;
 	
@@ -144,6 +145,15 @@ public class LeftToolbar extends Panel{
 		}
 	}
 	
+	public float getCubeEdgeLenght()	throws IllegalStateException	{
+		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.CUBE_POLYGON))	{
+			return cubeSpecPanel.getValue();
+		}
+		else	{
+			throw new IllegalStateException(START_OF_ILLEGALSTATE_MESSAGE + polygonPickerPanel.getCurrentPolygon());
+		}
+	}
+	
 	public Vector<Component> getFocusTraversalOrder()	{
 		return order;
 	}
@@ -176,6 +186,14 @@ public class LeftToolbar extends Panel{
 		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.SPHERE_POLYGON))	{
 			this.remove(SPECIFICATION_PANEL_INDEX);
 			this.add(sphereSpecPanel, SPECIFICATION_PANEL_INDEX);
+			updatePanel();
+		}
+	}
+	
+	public void changeToCubeSpecificationPanel()	{
+		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.CUBE_POLYGON))	{
+			this.remove(SPECIFICATION_PANEL_INDEX);
+			this.add(cubeSpecPanel, SPECIFICATION_PANEL_INDEX);
 			updatePanel();
 		}
 	}
@@ -217,6 +235,8 @@ public class LeftToolbar extends Panel{
 				order.addAll(starSpecPanel.getFocusTraversalOrder());
 			case Constants.SPHERE_POLYGON:
 				order.addAll(sphereSpecPanel.getFocusTraversalOrder());
+			case Constants.CUBE_POLYGON:
+				order.addAll(cubeSpecPanel.getFocusTraversalOrder());
 		}
 	}
 	

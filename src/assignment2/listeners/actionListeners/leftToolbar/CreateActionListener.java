@@ -9,6 +9,7 @@ import assignment2.globals.Constants;
 import assignment2.globals.ObjectContainer;
 import assignment2.openGL.GLEntity;
 import assignment2.openGL.GLLightSourceEntity;
+import assignment2.openGL.shapes.GLCubeEntity;
 import assignment2.openGL.shapes.GLPyramidEntity;
 import assignment2.openGL.shapes.GLSphereEntity;
 import assignment2.openGL.shapes.GLSquareEntity;
@@ -53,6 +54,11 @@ public class CreateActionListener implements ActionListener {
 				glEntity = new GLSphereEntity(xPos, yPos, zPos, 
 						leftToolbar.getSphereRadius());
 				printOutMessage = printOutMessage + Constants.SPHERE_POLYGON;
+			}
+			else if(activePolygon.equals(Constants.CUBE_POLYGON))	{
+				glEntity = new GLCubeEntity(xPos, yPos, zPos, 
+						leftToolbar.getCubeEdgeLenght());
+				printOutMessage = printOutMessage + Constants.CUBE_POLYGON;
 			}
 			else	{
 				glEntity = new GLLightSourceEntity(xPos, yPos, zPos);

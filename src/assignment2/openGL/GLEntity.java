@@ -5,6 +5,8 @@ import java.util.Arrays;
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
+import assignment2.globals.Constants;
+
 public abstract class GLEntity  {
 	protected float xPos, yPos, zPos;
 	protected int id;
@@ -96,6 +98,8 @@ public abstract class GLEntity  {
 		gl.glPushName(id);
 		gl.glPushMatrix();
 		gl.glPushAttrib(GL2.GL_ALL_ATTRIB_BITS);
+			if(entityType.equals(Constants.CUBE_POLYGON)) gl.glRotatef(15, 1, 1, 0);
+			if(entityType.equals(Constants.PYRAMID_POLYGON)) gl.glRotatef(30, 1, 1, 0);
 			gl.glTranslatef(xPos, yPos, zPos);
 			innerDrawMethod(gl, glu);
 		gl.glPopAttrib(); 

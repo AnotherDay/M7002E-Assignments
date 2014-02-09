@@ -3,6 +3,7 @@ package assignment2.openGL.shapes;
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
+import assignment2.globals.Constants;
 import assignment2.openGL.GLEntity;
 
 import com.jogamp.opengl.util.gl2.GLUT;
@@ -17,6 +18,7 @@ public class GLCubeEntity extends GLEntity {
 		this.radius = radius;
 		this.ambientRGBA = new float[]{0, 0, 0.2f, 1.0f};
 		this.diffuseRGBA = new float[]{ 0.1f, 0.5f, 0.8f, 1.0f };
+		this.entityType = Constants.CUBE_POLYGON;
 	}
 
 	@Override
