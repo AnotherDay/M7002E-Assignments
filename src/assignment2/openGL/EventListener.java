@@ -32,6 +32,10 @@ public class EventListener implements GLEventListener {
     		colorWhite = {1.0f,1.0f,1.0f,1.0f},
     		colorRed= {1.0f,0.0f,0.0f,1.0f};
     
+    /**
+     * The following display method is based on the Picking.java demo file.
+     * Source: http://jogamp.org/deployment/jogamp-current/archive/.
+     */
 	@Override
 	public void display(GLAutoDrawable drawable) {
 		GL2 gl = drawable.getGL().getGL2();
@@ -59,7 +63,6 @@ public class EventListener implements GLEventListener {
 			gl.glPushMatrix();
 				gl.glLoadIdentity();
 				glu.gluPickMatrix(x, (double) (viewPort[3] - y), 5.0d, 5.0d, viewPort, 0);
-				System.out.println("X-Coordiante = " + x + ", Y-Coordinate = " + (double) (viewPort[3] - y));
 				glu.gluOrtho2D(orthoLeft, orthoRight, orthoBotton, orthoTop);
 				drawScene(gl);
 				gl.glFlush();
@@ -74,41 +77,31 @@ public class EventListener implements GLEventListener {
 		}
 	}
 	
-	public void processHits(int hits, IntBuffer buffer)
+	/**
+	 * The following method is base on the processHits() method in the Picking.java demo.
+	 * Source: http://jogamp.org/deployment/jogamp-current/archive/. 
+	 * 
+	 * @param hits, number of objects hit.
+	 * @param buffer, the select buffer.
+	 */
+	private void processHits(int hits, IntBuffer buffer)
     {
-      System.out.println("---------------------------------");
-      System.out.println(" HITS: " + hits);
       int offset = 0;
       int names;
-      float z1, z2;
       
       LinkedList<Integer> objectsHit = new LinkedList<Integer>();
       for (int i=0;i<hits;i++)
         {
-          System.out.println("- - - - - - - - - - - -");
-          System.out.println(" hit: " + (i + 1));
-          names = buffer.get(offset); offset++;
-          z1 = (float) (buffer.get(offset)& 0xffffffffL) / 0x7fffffff; offset++;
-          z2 = (float) (buffer.get(offset)& 0xffffffffL) / 0x7fffffff; offset++;
-          System.out.println(" number of names: " + names);
-          System.out.println(" z1: " + z1);
-          System.out.println(" z2: " + z2);
-          System.out.println(" names: ");
-
+          names = buffer.get(offset); 
+          offset+=3;
           for (int j=0;j<names;j++)
             {
-              System.out.print("       " + buffer.get(offset)); 
               if (j==(names-1))	{
             	objectsHit.add(buffer.get(offset));
-                System.out.println("<-");
               }
-              else
-                System.out.println();
               offset++;
             }
-          System.out.println("- - - - - - - - - - - -");
         }
-      System.out.println("---------------------------------");
       
       if(objectsHit.size() != 0)	{
     	  GLEntity glEntity = theObjectContainer.getGLEntitiy(objectsHit.pop());
@@ -127,6 +120,7 @@ public class EventListener implements GLEventListener {
     	  }
     	  else if(resizeObject)	{
     		  theObjectContainer.getGLEntitiy(lastSelectedObject).resizeObject(scalingFactor);
+    		  System.out.println("Resized " + lastSelectedObject);
     	  }
       }
     }
@@ -140,7 +134,6 @@ public class EventListener implements GLEventListener {
 		glEntity.setYPos(newY);
 		System.out.println("Moved " + glEntity.getId() + " to X = " + newX + ", Y = " + newY);
 	}
-	
 	
 	private void drawScene(GL2 gl)	{
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
