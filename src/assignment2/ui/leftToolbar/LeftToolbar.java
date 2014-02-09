@@ -19,6 +19,7 @@ import assignment2.ui.leftToolbar.panels.CoordinatesPanel;
 import assignment2.ui.leftToolbar.panels.ObjectPickerPanel;
 import assignment2.ui.leftToolbar.panels.PyramidSpecificationPanel;
 import assignment2.ui.leftToolbar.panels.RGBAPanel;
+import assignment2.ui.leftToolbar.panels.SphereSpecificationPanel;
 import assignment2.ui.leftToolbar.panels.SquareSpecificationPanel;
 import assignment2.ui.leftToolbar.panels.StarSpecificationPanel;
 import assignment2.ui.uiParts.LableText;
@@ -37,6 +38,7 @@ public class LeftToolbar extends Panel{
 	private PyramidSpecificationPanel pyramidSpecPanel = new PyramidSpecificationPanel();
 	private SquareSpecificationPanel squareSpecPanel = new SquareSpecificationPanel();
 	private StarSpecificationPanel starSpecPanel = new StarSpecificationPanel();
+	private SphereSpecificationPanel sphereSpecPanel = new SphereSpecificationPanel();
 	
 	private JButton createPolygonButton;
 	
@@ -135,6 +137,15 @@ public class LeftToolbar extends Panel{
 		}
 	}
 	
+	public float getSphereRadius()	throws IllegalStateException	{
+		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.SPHERE_POLYGON))	{
+			return sphereSpecPanel.getSphereRadius();
+		}
+		else	{
+			throw new IllegalStateException(START_OF_ILLEGALSTATE_MESSAGE + polygonPickerPanel.getCurrentPolygon());
+		}
+	}
+	
 	public Vector<Component> getFocusTraversalOrder()	{
 		return order;
 	}
@@ -159,6 +170,14 @@ public class LeftToolbar extends Panel{
 		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.STAR_POLYGON))	{
 			this.remove(SPECIFICATION_PANEL_INDEX);
 			this.add(starSpecPanel, SPECIFICATION_PANEL_INDEX);
+			updatePanel();
+		}
+	}
+	
+	public void changeToSphereSpecificationPanel()	{
+		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.SPHERE_POLYGON))	{
+			this.remove(SPECIFICATION_PANEL_INDEX);
+			this.add(sphereSpecPanel, SPECIFICATION_PANEL_INDEX);
 			updatePanel();
 		}
 	}
@@ -198,6 +217,8 @@ public class LeftToolbar extends Panel{
 				order.addAll(squareSpecPanel.getFocusTraversalOrder());
 			case Constants.STAR_POLYGON:
 				order.addAll(starSpecPanel.getFocusTraversalOrder());
+			case Constants.SPHERE_POLYGON:
+				order.addAll(sphereSpecPanel.getFocusTraversalOrder());
 		}
 	}
 	

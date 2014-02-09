@@ -36,6 +36,9 @@ public class SwitchObjectActionListener implements ActionListener {
 		else if(polygonName.equals(Constants.LIGHT_SOURCE))	{
 			leftToolbar.changeToLightSpecificationPanel();
 		}
+		else if(polygonName.equals(Constants.SPHERE_POLYGON))	{
+			leftToolbar.changeToSphereSpecificationPanel();
+		}
 		else	{
 			leftToolbar.changeToUnspecifiedPolygonLable();
 		}

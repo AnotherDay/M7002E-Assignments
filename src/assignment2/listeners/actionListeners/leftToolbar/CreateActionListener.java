@@ -10,6 +10,7 @@ import assignment2.globals.ObjectContainer;
 import assignment2.openGL.GLEntity;
 import assignment2.openGL.GLLightSourceEntity;
 import assignment2.openGL.shapes.GLPyramidEntity;
+import assignment2.openGL.shapes.GLSphereEntity;
 import assignment2.openGL.shapes.GLSquareEntity;
 import assignment2.openGL.shapes.GLStarEntity;
 import assignment2.ui.leftToolbar.LeftToolbar;
@@ -48,6 +49,11 @@ public class CreateActionListener implements ActionListener {
 						leftToolbar.getStarSpan());
 				printOutMessage = printOutMessage + Constants.STAR_POLYGON;
 			}
+			else if(activePolygon.equals(Constants.SPHERE_POLYGON))	{
+				glEntity = new GLSphereEntity(xPos, yPos, zPos, 
+						leftToolbar.getSphereRadius());
+				printOutMessage = printOutMessage + Constants.SPHERE_POLYGON;
+			}
 			else	{
 				glEntity = new GLLightSourceEntity(xPos, yPos, zPos);
 				printOutMessage = printOutMessage + Constants.LIGHT_SOURCE;
@@ -65,6 +71,7 @@ public class CreateActionListener implements ActionListener {
 		}
 		catch(NumberFormatException nfe)	{
 			//TODO: make a error message in the leftToolbar panel
+			nfe.printStackTrace();
 			System.out.println("Number format error");
 		}
 	}
