@@ -34,7 +34,6 @@ public class LeftToolbar extends Panel{
 	public RGBAPanel diffusePanel = new RGBAPanel("Diffuse");
 
 	private PyramidSpecificationPanel pyramidSpecPanel = new PyramidSpecificationPanel();
-	private SingleFloatInputBoxPanel starSpecPanel = new SingleFloatInputBoxPanel("Span: ", "");
 	private SingleFloatInputBoxPanel squareSpecPanel = new SingleFloatInputBoxPanel("Edge Lenght: ", "");
 	private SingleFloatInputBoxPanel sphereSpecPanel = new SingleFloatInputBoxPanel("Radius: ", "");
 	private SingleFloatInputBoxPanel cubeSpecPanel = new SingleFloatInputBoxPanel("Edge Lenght: ", "");
