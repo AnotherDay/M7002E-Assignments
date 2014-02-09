@@ -127,15 +127,6 @@ public class LeftToolbar extends Panel{
 		}
 	}
 	
-	public float getStarSpan()	throws IllegalStateException	{
-		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.STAR_POLYGON))	{
-			return starSpecPanel.getValue();
-		}
-		else	{
-			throw new IllegalStateException(START_OF_ILLEGALSTATE_MESSAGE + polygonPickerPanel.getCurrentPolygon());
-		}
-	}
-	
 	public float getSphereRadius()	throws IllegalStateException	{
 		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.SPHERE_POLYGON))	{
 			return sphereSpecPanel.getValue();
@@ -170,14 +161,6 @@ public class LeftToolbar extends Panel{
 		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.SQUARE_POLYGON))	{
 			this.remove(SPECIFICATION_PANEL_INDEX);
 			this.add(squareSpecPanel, SPECIFICATION_PANEL_INDEX);
-			updatePanel();
-		}
-	}
-	
-	public void changeToStarSpecificationPanel()	{
-		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.STAR_POLYGON))	{
-			this.remove(SPECIFICATION_PANEL_INDEX);
-			this.add(starSpecPanel, SPECIFICATION_PANEL_INDEX);
 			updatePanel();
 		}
 	}
@@ -231,8 +214,6 @@ public class LeftToolbar extends Panel{
 				order.addAll(pyramidSpecPanel.getFocusTraversalOrder());
 			case Constants.SQUARE_POLYGON:
 				order.addAll(squareSpecPanel.getFocusTraversalOrder());
-			case Constants.STAR_POLYGON:
-				order.addAll(starSpecPanel.getFocusTraversalOrder());
 			case Constants.SPHERE_POLYGON:
 				order.addAll(sphereSpecPanel.getFocusTraversalOrder());
 			case Constants.CUBE_POLYGON:

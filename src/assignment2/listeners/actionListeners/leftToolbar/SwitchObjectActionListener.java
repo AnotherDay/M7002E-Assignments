@@ -30,9 +30,6 @@ public class SwitchObjectActionListener implements ActionListener {
 		else if(polygonName.equals(Constants.SQUARE_POLYGON))	{
 			leftToolbar.changeToSquareSpecificationPanel();
 		}
-		else if(polygonName.equals(Constants.STAR_POLYGON))	{
-			leftToolbar.changeToStarSpecificationPanel();
-		}
 		else if(polygonName.equals(Constants.LIGHT_SOURCE))	{
 			leftToolbar.changeToLightSpecificationPanel();
 		}

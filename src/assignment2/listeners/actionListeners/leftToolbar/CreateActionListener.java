@@ -13,7 +13,6 @@ import assignment2.openGL.shapes.GLCubeEntity;
 import assignment2.openGL.shapes.GLPyramidEntity;
 import assignment2.openGL.shapes.GLSphereEntity;
 import assignment2.openGL.shapes.GLSquareEntity;
-import assignment2.openGL.shapes.GLStarEntity;
 import assignment2.ui.leftToolbar.LeftToolbar;
 
 public class CreateActionListener implements ActionListener {
@@ -44,11 +43,6 @@ public class CreateActionListener implements ActionListener {
 				glEntity = new GLSquareEntity(xPos, yPos, zPos, 
 						leftToolbar.getSquareEdgeLength());
 				printOutMessage = printOutMessage + Constants.SQUARE_POLYGON;
-			}
-			else if(activePolygon.equals(Constants.STAR_POLYGON))	{
-				glEntity = new GLStarEntity(xPos, yPos, zPos, 
-						leftToolbar.getStarSpan());
-				printOutMessage = printOutMessage + Constants.STAR_POLYGON;
 			}
 			else if(activePolygon.equals(Constants.SPHERE_POLYGON))	{
 				glEntity = new GLSphereEntity(xPos, yPos, zPos, 
