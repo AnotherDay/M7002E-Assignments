@@ -23,6 +23,7 @@ import assignment2.listeners.actionListeners.menuBar.ResizeObjectActionListener;
 import assignment2.listeners.mouseListeners.CanvasMouseListener;
 import assignment2.openGL.EventListener;
 import assignment2.openGL.GLLightSourceEntity;
+import assignment2.openGL.shapes.GLCubeEntity;
 import assignment2.openGL.shapes.GLSphereEntity;
 import assignment2.ui.Window;
 import assignment2.ui.leftToolbar.LeftToolbar;
