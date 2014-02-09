@@ -3,6 +3,8 @@ Assignment 2
 
 [Github page](https://github.com/AnotherDay/M7002E-Assignments/tree/master/src/assignment2)
 
+Name of the zip file: daveri-9_Assignment2_M7002E.zip
+
 Implemented features
 ---------------------
 
