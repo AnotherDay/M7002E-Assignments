@@ -8,7 +8,6 @@ public class Constants {
 	
 	//Shape string constants
 	public final static String 
-			PYRAMID_POLYGON = "Pyramid", 
 			SQUARE_POLYGON = "Square",
 			SPHERE_POLYGON = "Sphere",
 			CUBE_POLYGON = "Cube",
@@ -35,7 +34,7 @@ public class Constants {
 	
 	public static LinkedList<String> getObjectList()	{
 		LinkedList<String> objectList = new LinkedList<String>();
-		objectList.addAll(Arrays.asList(PYRAMID_POLYGON, SQUARE_POLYGON, SPHERE_POLYGON, CUBE_POLYGON, LIGHT_SOURCE));
+		objectList.addAll(Arrays.asList(SQUARE_POLYGON, SPHERE_POLYGON, CUBE_POLYGON, LIGHT_SOURCE));
 		return objectList;
 	}
 }

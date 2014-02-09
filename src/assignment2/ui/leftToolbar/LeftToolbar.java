@@ -17,7 +17,6 @@ import javax.swing.border.EmptyBorder;
 import assignment2.globals.Constants;
 import assignment2.ui.leftToolbar.panels.CoordinatesPanel;
 import assignment2.ui.leftToolbar.panels.ObjectPickerPanel;
-import assignment2.ui.leftToolbar.panels.PyramidSpecificationPanel;
 import assignment2.ui.leftToolbar.panels.RGBAPanel;
 import assignment2.ui.leftToolbar.panels.SingleFloatInputBoxPanel;
 import assignment2.ui.uiParts.LableText;
@@ -33,7 +32,6 @@ public class LeftToolbar extends Panel{
 	public RGBAPanel specualPanel = new RGBAPanel("Specular");
 	public RGBAPanel diffusePanel = new RGBAPanel("Diffuse");
 
-	private PyramidSpecificationPanel pyramidSpecPanel = new PyramidSpecificationPanel();
 	private SingleFloatInputBoxPanel squareSpecPanel = new SingleFloatInputBoxPanel("Edge Lenght: ", "");
 	private SingleFloatInputBoxPanel sphereSpecPanel = new SingleFloatInputBoxPanel("Radius: ", "");
 	private SingleFloatInputBoxPanel cubeSpecPanel = new SingleFloatInputBoxPanel("Edge Lenght: ", "");
@@ -70,7 +68,7 @@ public class LeftToolbar extends Panel{
 		this.add(ambientPanel);
 		this.add(specualPanel);
 		this.add(diffusePanel);
-		this.add(pyramidSpecPanel);
+		this.add(squareSpecPanel);
 		this.add(buttonPanel);
 		this.add(new JSeparator(SwingConstants.HORIZONTAL));
 	}
@@ -97,24 +95,6 @@ public class LeftToolbar extends Panel{
 	
 	public float getZCoordinate() throws NumberFormatException	{
 		return coordinatesPanel.getZValue();
-	}
-	
-	public float getPyramidHeight()	throws IllegalStateException	{
-		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.PYRAMID_POLYGON))	{
-			return pyramidSpecPanel.getPyramidHeight();
-		}
-		else	{
-			throw new IllegalStateException(START_OF_ILLEGALSTATE_MESSAGE + polygonPickerPanel.getCurrentPolygon());
-		}
-	}
-	
-	public float getPyramidBaseWidth()	throws IllegalStateException	{
-		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.PYRAMID_POLYGON))	{
-			return pyramidSpecPanel.getPyramidBaseWidth();
-		}
-		else	{
-			throw new IllegalStateException(START_OF_ILLEGALSTATE_MESSAGE + polygonPickerPanel.getCurrentPolygon());
-		}
 	}
 	
 	public float getSquareEdgeLength()	throws IllegalStateException	{
@@ -146,14 +126,6 @@ public class LeftToolbar extends Panel{
 	
 	public Vector<Component> getFocusTraversalOrder()	{
 		return order;
-	}
-	
-	public void changeToPyramidSpecificationPanel()	{
-		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.PYRAMID_POLYGON))	{
-			this.remove(SPECIFICATION_PANEL_INDEX);
-			this.add(pyramidSpecPanel, SPECIFICATION_PANEL_INDEX);
-			updatePanel();
-		}
 	}
 	
 	public void changeToSquareSpecificationPanel()	{
@@ -209,8 +181,6 @@ public class LeftToolbar extends Panel{
 		order.addAll(specualPanel.getFocusTraversalOrder());
 		order.addAll(diffusePanel.getFocusTraversalOrder());
 		switch(polygonPickerPanel.getCurrentPolygon())	{
-			case Constants.PYRAMID_POLYGON:
-				order.addAll(pyramidSpecPanel.getFocusTraversalOrder());
 			case Constants.SQUARE_POLYGON:
 				order.addAll(squareSpecPanel.getFocusTraversalOrder());
 			case Constants.SPHERE_POLYGON:

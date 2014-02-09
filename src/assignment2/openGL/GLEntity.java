@@ -99,7 +99,6 @@ public abstract class GLEntity  {
 		gl.glPushMatrix();
 		gl.glPushAttrib(GL2.GL_ALL_ATTRIB_BITS);
 			if(entityType.equals(Constants.CUBE_POLYGON)) gl.glRotatef(15, 1, 1, 0);
-			if(entityType.equals(Constants.PYRAMID_POLYGON)) gl.glRotatef(30, 1, 1, 0);
 			gl.glTranslatef(xPos, yPos, zPos);
 			innerDrawMethod(gl, glu);
 		gl.glPopAttrib(); 

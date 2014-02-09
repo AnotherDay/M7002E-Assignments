@@ -10,7 +10,6 @@ import assignment2.globals.ObjectContainer;
 import assignment2.openGL.GLEntity;
 import assignment2.openGL.GLLightSourceEntity;
 import assignment2.openGL.shapes.GLCubeEntity;
-import assignment2.openGL.shapes.GLPyramidEntity;
 import assignment2.openGL.shapes.GLSphereEntity;
 import assignment2.openGL.shapes.GLSquareEntity;
 import assignment2.ui.leftToolbar.LeftToolbar;
@@ -34,12 +33,7 @@ public class CreateActionListener implements ActionListener {
 			float xPos = leftToolbar.getXCoordinate();
 			float yPos = leftToolbar.getYCoordinate();
 			float zPos = leftToolbar.getZCoordinate();
-			if(activePolygon.equals(Constants.PYRAMID_POLYGON))		{
-				glEntity = new GLPyramidEntity(xPos, yPos, zPos, 
-						leftToolbar.getPyramidHeight(), leftToolbar.getPyramidBaseWidth());
-				printOutMessage = printOutMessage + Constants.PYRAMID_POLYGON;
-			}
-			else if(activePolygon.equals(Constants.SQUARE_POLYGON))	{
+			if(activePolygon.equals(Constants.SQUARE_POLYGON))	{
 				glEntity = new GLSquareEntity(xPos, yPos, zPos, 
 						leftToolbar.getSquareEdgeLength());
 				printOutMessage = printOutMessage + Constants.SQUARE_POLYGON;

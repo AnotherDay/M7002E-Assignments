@@ -24,10 +24,7 @@ public class SwitchObjectActionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String polygonName = leftToolbar.getActivePolygon();
-		if(polygonName.equals(Constants.PYRAMID_POLYGON))	{
-			leftToolbar.changeToPyramidSpecificationPanel();
-		}
-		else if(polygonName.equals(Constants.SQUARE_POLYGON))	{
+		if(polygonName.equals(Constants.SQUARE_POLYGON))	{
 			leftToolbar.changeToSquareSpecificationPanel();
 		}
 		else if(polygonName.equals(Constants.LIGHT_SOURCE))	{

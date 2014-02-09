@@ -10,6 +10,7 @@ import javax.swing.JTextField;
 import assignment2.globals.Constants;
 import assignment2.ui.uiParts.LableText;
 
+@SuppressWarnings("serial")
 public class SingleFloatInputBoxPanel extends JPanel {
 
 	private JTextField input;
