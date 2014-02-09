@@ -19,9 +19,7 @@ import assignment2.ui.leftToolbar.panels.CoordinatesPanel;
 import assignment2.ui.leftToolbar.panels.ObjectPickerPanel;
 import assignment2.ui.leftToolbar.panels.PyramidSpecificationPanel;
 import assignment2.ui.leftToolbar.panels.RGBAPanel;
-import assignment2.ui.leftToolbar.panels.SphereSpecificationPanel;
-import assignment2.ui.leftToolbar.panels.SquareSpecificationPanel;
-import assignment2.ui.leftToolbar.panels.StarSpecificationPanel;
+import assignment2.ui.leftToolbar.panels.SingleFloatInputBoxPanel;
 import assignment2.ui.uiParts.LableText;
 
 @SuppressWarnings("serial")
@@ -36,9 +34,9 @@ public class LeftToolbar extends Panel{
 	public RGBAPanel diffusePanel = new RGBAPanel("Diffuse");
 
 	private PyramidSpecificationPanel pyramidSpecPanel = new PyramidSpecificationPanel();
-	private SquareSpecificationPanel squareSpecPanel = new SquareSpecificationPanel();
-	private StarSpecificationPanel starSpecPanel = new StarSpecificationPanel();
-	private SphereSpecificationPanel sphereSpecPanel = new SphereSpecificationPanel();
+	private SingleFloatInputBoxPanel starSpecPanel = new SingleFloatInputBoxPanel("Span: ", "");
+	private SingleFloatInputBoxPanel squareSpecPanel = new SingleFloatInputBoxPanel("Edge Lenght: ", "");
+	private SingleFloatInputBoxPanel sphereSpecPanel = new SingleFloatInputBoxPanel("Radius: ", "");
 	
 	private JButton createPolygonButton;
 	
@@ -121,7 +119,7 @@ public class LeftToolbar extends Panel{
 	
 	public float getSquareEdgeLength()	throws IllegalStateException	{
 		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.SQUARE_POLYGON))	{
-			return squareSpecPanel.getEdgeLength();
+			return squareSpecPanel.getValue();
 		}
 		else	{
 			throw new IllegalStateException(START_OF_ILLEGALSTATE_MESSAGE + polygonPickerPanel.getCurrentPolygon());
@@ -130,7 +128,7 @@ public class LeftToolbar extends Panel{
 	
 	public float getStarSpan()	throws IllegalStateException	{
 		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.STAR_POLYGON))	{
-			return starSpecPanel.getSpanValue();
+			return starSpecPanel.getValue();
 		}
 		else	{
 			throw new IllegalStateException(START_OF_ILLEGALSTATE_MESSAGE + polygonPickerPanel.getCurrentPolygon());
@@ -139,7 +137,7 @@ public class LeftToolbar extends Panel{
 	
 	public float getSphereRadius()	throws IllegalStateException	{
 		if(polygonPickerPanel.getCurrentPolygon().equals(Constants.SPHERE_POLYGON))	{
-			return sphereSpecPanel.getSphereRadius();
+			return sphereSpecPanel.getValue();
 		}
 		else	{
 			throw new IllegalStateException(START_OF_ILLEGALSTATE_MESSAGE + polygonPickerPanel.getCurrentPolygon());
