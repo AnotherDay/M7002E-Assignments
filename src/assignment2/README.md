@@ -22,7 +22,7 @@ Implemented features
     - Clear all light sources, can also be found under the Canvas option in the menu bar.
     - Print information about all shapes, prints out the information about all the objects and the light sources in the console. This feature can be found under the Canvas option in the menu bar.
  
- Known bugs
- ----------
+Known bugs
+----------
 
- * There is a bug which causes the drop down menu in the left tool bar to close before the user has time to select an object. The workaround for this is to double click on the drop down menu before going down with the mouse to select an item. 
+* There is a bug which causes the drop down menu in the left tool bar to close before the user has time to select an object. The workaround for this is to double click on the drop down menu before going down with the mouse to select an item. 
