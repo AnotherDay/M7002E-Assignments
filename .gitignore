@@ -21,3 +21,7 @@ project.properties
 
 # Gedit backup files
 *~
+
+# JMonkey assetManager files
+liblwjgl64.so
+libopenal64.so
