@@ -5,7 +5,7 @@ import com.jme3.asset.AssetManager;
 public class Roof extends BuildingBlock {
 
 	private static String materialDefinitionFile = "Common/MatDefs/Misc/Unshaded.j3md";
-	private static String materialTextureFile = "Textures/Sky/Lagoon/lagoon_up.jpg";
+	private static String materialTextureFile = "Textures/wood_roof.jpg";
 	
 	public Roof(float xLength, float yLength, float zLength, AssetManager assetManager)	{
 		super(xLength, yLength, zLength, assetManager, materialDefinitionFile, materialTextureFile);

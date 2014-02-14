@@ -11,7 +11,7 @@ import com.jme3.renderer.Camera;
 
 public class Player implements ActionListener {
 	
-	private CapsuleCollisionShape capsuleShape = new CapsuleCollisionShape(1.5f, 3f, 1);
+	private CapsuleCollisionShape capsuleShape = new CapsuleCollisionShape(1.5f, 2f, 1);
 	private CharacterControl player = new CharacterControl(capsuleShape, 0.05f);
 	private InputManager inputManager;
 	private Camera cam;

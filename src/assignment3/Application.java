@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import assignment3.buildingBlocks.BuildingBlock;
-import assignment3.buildingBlocks.Crate;
 import assignment3.buildingBlocks.Floor;
 import assignment3.buildingBlocks.Roof;
 import assignment3.buildingBlocks.Wall;
+import assignment3.objects.Crate;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.asset.plugins.FileLocator;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.font.BitmapText;
 import com.jme3.math.Vector2f;
@@ -17,12 +18,12 @@ import com.jme3.math.Vector3f;
 
 public class Application extends SimpleApplication {
 
-	private float halfWallHeight = 5.0f, halfFloorWidth = 20.0f, materialThickness = 0.2f;
-	private Vector2f wallTextureScaleFactor = new Vector2f(7, 2f);
+	private float halfWallHeight = 8.0f, halfFloorWidth = 20.0f, materialThickness = 0.2f;
+	private Vector2f wallTextureScaleFactor = new Vector2f(7, 3);
 	
 	private BulletAppState bulletAppState;
 	private Player player;
-	private ArrayList<BuildingBlock> boxList = new ArrayList<BuildingBlock>();
+	private ArrayList<Abstract3dObject> boxList = new ArrayList<Abstract3dObject>();
  
 	@Override
 	public void simpleInitApp() {
@@ -30,6 +31,7 @@ public class Application extends SimpleApplication {
 		bulletAppState = new BulletAppState();
 		stateManager.attach(bulletAppState);
 		//bulletAppState.getPhysicsSpace().enableDebug(assetManager);
+		assetManager.registerLocator("src/assignment3/assets", FileLocator.class);
 		
 		flyCam.setMoveSpeed(3f);
 		cam.setLocation(new Vector3f(0f, 4f, 0f));
@@ -39,12 +41,12 @@ public class Application extends SimpleApplication {
 		initRoom();
 		initCrossHairs();
 		
-//		Crate crate = new Crate(5, 5, 5, assetManager);
-//		crate.translate(0, 10, 5);
-//		boxList.add(crate);
+		Crate crate = new Crate(2, 2, 2, 1, assetManager);
+		crate.translate(0, 5, -5);
+		boxList.add(crate);
 		
-		addPhysics(boxList.toArray(new BuildingBlock[boxList.size()]));
-		attachToRootNode(boxList.toArray(new BuildingBlock[boxList.size()]));
+		addPhysics(boxList.toArray(new Abstract3dObject[boxList.size()]));
+		attachToRootNode(boxList.toArray(new Abstract3dObject[boxList.size()]));
 	}
 	
 	private void initRoom()	{
@@ -69,6 +71,7 @@ public class Application extends SimpleApplication {
 		
 		Roof roof = new Roof(halfFloorWidth, materialThickness, halfFloorWidth, assetManager);
 		roof.translate(0, 2*halfWallHeight, 0);
+		roof.scaleTexture(new Vector2f(4, 4));
 		
 		boxList.addAll(Arrays.asList(floor, southWall, northWall, westWall, eastWall, roof));
 	}
@@ -86,14 +89,14 @@ public class Application extends SimpleApplication {
 		guiNode.attachChild(ch);
 	}
 	
-	private void attachToRootNode(BuildingBlock... abstractBoxList)	{
-		for(BuildingBlock abstractBox : abstractBoxList)	{
+	private void attachToRootNode(Abstract3dObject... abstractBoxList)	{
+		for(Abstract3dObject abstractBox : abstractBoxList)	{
 			rootNode.attachChild(abstractBox.getGeometry());
 		}
 	}
 	
-	private void addPhysics(BuildingBlock... abstractBoxList)	{
-		for(BuildingBlock abstractBox : abstractBoxList)	{
+	private void addPhysics(Abstract3dObject... abstractBoxList)	{
+		for(Abstract3dObject abstractBox : abstractBoxList)	{
 			bulletAppState.getPhysicsSpace().add(abstractBox.getPhysics());
 		}
 	}
