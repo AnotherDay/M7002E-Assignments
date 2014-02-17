@@ -11,7 +11,7 @@ import com.jme3.renderer.Camera;
 
 public class Player implements ActionListener {
 	
-	private CapsuleCollisionShape capsuleShape = new CapsuleCollisionShape(1.5f, 2f, 1);
+	private CapsuleCollisionShape capsuleShape = new CapsuleCollisionShape(1.5f,2f);
 	private CharacterControl player = new CharacterControl(capsuleShape, 0.05f);
 	private InputManager inputManager;
 	private Camera cam;
@@ -20,11 +20,11 @@ public class Player implements ActionListener {
 	public Player(InputManager inputManager, Camera cam)	{
 		this.inputManager = inputManager;
 		this.cam = cam;
+		this.cam.setFrustumPerspective(45, (float)this.cam.getWidth()/this.cam.getHeight(), 0.01f, 1000f);
 		
 		player.setJumpSpeed(20);
 		player.setFallSpeed(30);
-		player.setGravity(30);
-		player.setPhysicsLocation(new Vector3f(0, 10, 0));
+		player.setPhysicsLocation(new Vector3f(0, 1, 0));
 		
 		initKeys();
 	}
