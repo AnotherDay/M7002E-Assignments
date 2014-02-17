@@ -75,6 +75,10 @@ public class Application extends SimpleApplication {
 		
 		boxList.addAll(Arrays.asList(floor, southWall, northWall, westWall, eastWall, roof));
 	}
+	
+	private void initButton()	{
+		
+	}
  
 	/** A plus sign used as crosshairs to help the player with aiming.*/
 	private void initCrossHairs() {
