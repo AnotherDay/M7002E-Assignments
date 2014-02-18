@@ -8,9 +8,6 @@ import com.jme3.scene.Mesh;
 
 public abstract class Abstract3dObject {
 
-	protected String materialDefinitionFile;
-	protected String materialTextureFile;
-	
 	protected Mesh mesh;
 	protected Geometry meshGeometry;
 	protected RigidBodyControl meshPhysics;
