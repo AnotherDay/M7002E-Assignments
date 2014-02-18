@@ -3,18 +3,21 @@ package assignment3;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import assignment3.buildingBlocks.BuildingBlock;
 import assignment3.buildingBlocks.Floor;
 import assignment3.buildingBlocks.Roof;
 import assignment3.buildingBlocks.Wall;
 import assignment3.objects.Crate;
+import assignment3.objects.Torch;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.plugins.FileLocator;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.font.BitmapText;
+import com.jme3.light.DirectionalLight;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.plugins.blender.BlenderModelLoader;
 
 public class Application extends SimpleApplication {
 
@@ -28,21 +31,25 @@ public class Application extends SimpleApplication {
 	@Override
 	public void simpleInitApp() {
 		/** Set up Physics Game */
+		rootNode.detachAllChildren();
 		bulletAppState = new BulletAppState();
 		stateManager.attach(bulletAppState);
+		bulletAppState.getPhysicsSpace().setGravity(new Vector3f(0, -9.82f, 0));
 		//bulletAppState.getPhysicsSpace().enableDebug(assetManager);
+		
 		assetManager.registerLocator("src/assignment3/assets", FileLocator.class);
+		assetManager.registerLoader(BlenderModelLoader.class, "blend");
 		
 		flyCam.setMoveSpeed(3f);
-		cam.setLocation(new Vector3f(0f, 4f, 0f));
 		
 		player = new Player(inputManager, cam);
 		bulletAppState.getPhysicsSpace().add(player.getCharacterControl());
 		initRoom();
+		initTorch();
 		initCrossHairs();
 		
 		Crate crate = new Crate(2, 2, 2, 1, assetManager);
-		crate.translate(0, 5, -5);
+		crate.translate(0, 10, -10);
 		boxList.add(crate);
 		
 		addPhysics(boxList.toArray(new Abstract3dObject[boxList.size()]));
@@ -76,6 +83,18 @@ public class Application extends SimpleApplication {
 		boxList.addAll(Arrays.asList(floor, southWall, northWall, westWall, eastWall, roof));
 	}
 	
+	private void initTorch()	{
+		Torch torch = new Torch("Torch", assetManager);
+		torch.translate(0, 5, 5);
+		rootNode.attachChild(torch.getTorchNode());
+		
+//		 /** Must add a light to make the lit object visible! */
+//	    DirectionalLight sun = new DirectionalLight();
+//	    sun.setDirection(new Vector3f(1,0,-2).normalizeLocal());
+//	    sun.setColor(ColorRGBA.White);
+//	    rootNode.addLight(sun);
+	}
+	
 	private void initButton()	{
 		
 	}
@@ -89,6 +108,17 @@ public class Application extends SimpleApplication {
 		ch.setText("+");        // fake crosshairs :)
 		ch.setLocalTranslation( // center
 		settings.getWidth() / 2 - guiFont.getCharSet().getRenderedSize() / 3 * 2,
+		settings.getHeight() / 2 + ch.getLineHeight() / 2, 0);
+		guiNode.attachChild(ch);
+	}
+	
+	private void updateCoordinatesDisplay()	{
+		guiNode.detachAllChildren();
+		BitmapText ch = new BitmapText(guiFont, false);
+		ch.setSize(guiFont.getCharSet().getRenderedSize() * 2);
+		ch.setText("X: " + cam.getLocation().getX() + "\n Y: " + cam.getLocation().getY()); // fake crosshairs :)
+		ch.setLocalTranslation( 
+		- guiFont.getCharSet().getRenderedSize() / 3 * 2,
 		settings.getHeight() / 2 + ch.getLineHeight() / 2, 0);
 		guiNode.attachChild(ch);
 	}
@@ -115,5 +145,6 @@ public class Application extends SimpleApplication {
 	@Override
 	public void simpleUpdate(float tpf) {
 		player.updateWalkingDirection();
+		updateCoordinatesDisplay();
 	}
 }
