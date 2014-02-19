@@ -58,7 +58,6 @@ public class Torch {
 	    
 	    pointLight = new PointLight();
 	    pointLight.setColor(new ColorRGBA(1.0f, 0.6f, 0, 1.0f));
-//	    pointLight.setColor(ColorRGBA.Yellow);
 	    pointLight.setRadius(60f);
 	    pointLight.setPosition(new Vector3f(pointLightOffsetX, pointLightOffsetY, pointLightOffsetZ));
 	    torchNode.addLight(pointLight);
@@ -69,11 +68,20 @@ public class Torch {
 		torchNode.setLocalTranslation(x, y, z);
 	}
 	
+	public void rotate(float xAngle, float yAngle, float zAngle)	{
+		torchNode.rotate(xAngle, yAngle, zAngle);
+		Vector3f torchLocation = torchNode.getLocalTranslation();
+		torchLocation.x = torchLocation.x + pointLightOffsetX;
+		torchLocation.y = torchLocation.y + pointLightOffsetY;
+		torchLocation.z = torchLocation.z + pointLightOffsetZ;
+		pointLight.setPosition(torchLocation);
+	}
+	
 	public PointLight getLight()	{
 		return pointLight;
 	}
 	
-	public Node getTorchNode()	{
+	public Node getNode()	{
 		return torchNode;
 	}
 }
