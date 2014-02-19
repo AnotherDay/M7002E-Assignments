@@ -13,11 +13,10 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.asset.plugins.FileLocator;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.font.BitmapText;
-import com.jme3.light.DirectionalLight;
-import com.jme3.light.PointLight;
-import com.jme3.math.ColorRGBA;
+import com.jme3.light.Light;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Node;
 import com.jme3.scene.plugins.blender.BlenderModelLoader;
 
 public class Application extends SimpleApplication {
@@ -28,6 +27,7 @@ public class Application extends SimpleApplication {
 	private BulletAppState bulletAppState;
 	private Player player;
 	private ArrayList<Abstract3dObject> boxList = new ArrayList<Abstract3dObject>();
+	private ArrayList<Torch> torchList = new ArrayList<Torch>();
  
 	@Override
 	public void simpleInitApp() {
@@ -85,27 +85,28 @@ public class Application extends SimpleApplication {
 	}
 	
 	private void initTorch()	{
-		Torch torch = new Torch("Torch", assetManager);
-		torch.translate(0, 5, -halfFloorWidth+0.5f);
-		rootNode.attachChild(torch.getTorchNode());
-		rootNode.addLight(torch.getLight());
+		Torch northTorch = new Torch("NorthTorch", assetManager);
+		northTorch.translate(0, 5, -halfFloorWidth+0.5f);
 		
-//		PointLight pointLight = new PointLight();
-//	    pointLight.setColor(ColorRGBA.White);
-//	    pointLight.setPosition(new Vector3f(0, 3f, 0f));
-//	    rootNode.addLight(pointLight);
+		Torch southTorch = new Torch("SouthTorch", assetManager);
+		southTorch.rotate(0, (float)Math.PI, 0);
+		southTorch.translate(0, 5, halfFloorWidth-0.5f);
 		
-//		 /** Must add a light to make the lit object visible! */
-//	    DirectionalLight sun = new DirectionalLight();
-//	    sun.setDirection(new Vector3f(1,-2,-2).normalizeLocal());
-//	    sun.setColor(ColorRGBA.White);
-//	    rootNode.addLight(sun);
+		Torch westTorch = new Torch("EastTorch", assetManager);
+		westTorch.rotate(0, (float)(Math.PI/2), 0);
+		westTorch.translate(-halfFloorWidth+0.5f, 5, 0);
+		
+		Torch eastTorch = new Torch("WestTorch", assetManager);
+		eastTorch.rotate(0, -(float)(Math.PI/2), 0);
+		eastTorch.translate(halfFloorWidth-0.5f, 5, 0);
+		
+		torchList.addAll(Arrays.asList(northTorch, southTorch, westTorch, eastTorch));
+		for(Torch torch : torchList)	{
+			rootNode.attachChild(torch.getNode());
+			rootNode.addLight(torch.getLight());
+		}
 	}
 	
-	private void initButton()	{
-		
-	}
- 
 	/** A plus sign used as crosshairs to help the player with aiming.*/
 	private void initCrossHairs() {
 		guiNode.detachAllChildren();
@@ -136,8 +137,8 @@ public class Application extends SimpleApplication {
 		}
 	}
 	
-	private void addPhysics(Abstract3dObject... abstractBoxList)	{
-		for(Abstract3dObject abstractBox : abstractBoxList)	{
+	private void addPhysics(Abstract3dObject... abstractBoxArray)	{
+		for(Abstract3dObject abstractBox : abstractBoxArray)	{
 			bulletAppState.getPhysicsSpace().add(abstractBox.getPhysics());
 		}
 	}
