@@ -15,13 +15,20 @@ import com.jme3.texture.Texture.WrapMode;
 
 public abstract class BuildingBlock extends Abstract3dObject {
 
-	protected String materialDefinitionFile;
+	protected String materialDefinitionFile = "Common/MatDefs/Light/Lighting.j3md";
 	protected String materialTextureFile;
 	
 	public BuildingBlock(float xValue, float yValue, float zValue, 
 			AssetManager assetManager, String materialDefinitionFile, String materialTextureFile)	{
 		super(new Box(xValue, yValue, zValue), "Box", 0);
 		this.materialDefinitionFile = materialDefinitionFile;
+		this.materialTextureFile = materialTextureFile;
+		setMaterial(assetManager);
+	}
+	
+	public BuildingBlock(float xValue, float yValue, float zValue, 
+			AssetManager assetManager, String materialTextureFile)	{
+		super(new Box(xValue, yValue, zValue), "Box", 0);
 		this.materialTextureFile = materialTextureFile;
 		setMaterial(assetManager);
 	}
