@@ -24,6 +24,7 @@ public class Torch {
 	private Spatial torch;
 	private ParticleEmitter fire; 
 	private PointLight pointLight;
+	private float pointLightOffsetX = 2, pointLightOffsetY = 3.5f, pointLightOffsetZ = 2.5f; 
 	
 	public Torch(String name, AssetManager assetManager)	{
 		torchNode = new Node(name);
@@ -59,17 +60,13 @@ public class Torch {
 	    pointLight.setColor(new ColorRGBA(1.0f, 0.6f, 0, 1.0f));
 //	    pointLight.setColor(ColorRGBA.Yellow);
 	    pointLight.setRadius(60f);
-	    pointLight.setPosition(new Vector3f(0, 1.5f, 0.5f));
+	    pointLight.setPosition(new Vector3f(pointLightOffsetX, pointLightOffsetY, pointLightOffsetZ));
 	    torchNode.addLight(pointLight);
 	}
 	
 	public void translate(float x, float y, float z)	{
-		pointLight.setPosition(new Vector3f(x+2, y+2, z+2));
+		pointLight.setPosition(new Vector3f(x+pointLightOffsetX, y+pointLightOffsetY, z+pointLightOffsetZ));
 		torchNode.setLocalTranslation(x, y, z);
-	}
-	
-	public void translate(Vector3f location)	{
-		torchNode.setLocalTranslation(location);
 	}
 	
 	public PointLight getLight()	{
