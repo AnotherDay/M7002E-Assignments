@@ -11,7 +11,7 @@ import com.jme3.texture.Texture;
 
 public class Crate extends Abstract3dObject {
 	
-	private static String materialDefinitionFile = "Common/MatDefs/Misc/Unshaded.j3md";
+	private static String materialDefinitionFile = "Common/MatDefs/Light/Lighting.j3md";
 	private static String materialTextureFile = "Textures/crate.png"; //In the project asset manager folder
 
 	public Crate(float xLength, float yLength, float zLength, float mass, AssetManager assetManager) {
@@ -25,7 +25,7 @@ public class Crate extends Abstract3dObject {
 	    textureKey.setGenerateMips(true);
 	    Texture tex3 = assetManager.loadTexture(textureKey);
 //	    tex3.setWrap(WrapMode.Repeat);
-	    boxMaterial.setTexture("ColorMap", tex3);
+	    boxMaterial.setTexture("DiffuseMap", tex3);
 	    meshGeometry.setMaterial(boxMaterial);
 	}
 

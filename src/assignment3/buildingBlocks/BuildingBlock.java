@@ -32,7 +32,7 @@ public abstract class BuildingBlock extends Abstract3dObject {
 	    textureKey.setGenerateMips(true);
 	    Texture tex3 = assetManager.loadTexture(textureKey);
 	    tex3.setWrap(WrapMode.Repeat);
-	    boxMaterial.setTexture("ColorMap", tex3);
+	    boxMaterial.setTexture("DiffuseMap", tex3);
 	    meshGeometry.setMaterial(boxMaterial);
 	}
 }

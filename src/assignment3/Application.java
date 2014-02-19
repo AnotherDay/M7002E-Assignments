@@ -14,6 +14,7 @@ import com.jme3.asset.plugins.FileLocator;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.font.BitmapText;
 import com.jme3.light.DirectionalLight;
+import com.jme3.light.PointLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
@@ -85,12 +86,18 @@ public class Application extends SimpleApplication {
 	
 	private void initTorch()	{
 		Torch torch = new Torch("Torch", assetManager);
-		torch.translate(0, 5, 5);
+		torch.translate(0, 5, -halfFloorWidth+0.5f);
 		rootNode.attachChild(torch.getTorchNode());
+		rootNode.addLight(torch.getLight());
+		
+//		PointLight pointLight = new PointLight();
+//	    pointLight.setColor(ColorRGBA.White);
+//	    pointLight.setPosition(new Vector3f(0, 3f, 0f));
+//	    rootNode.addLight(pointLight);
 		
 //		 /** Must add a light to make the lit object visible! */
 //	    DirectionalLight sun = new DirectionalLight();
-//	    sun.setDirection(new Vector3f(1,0,-2).normalizeLocal());
+//	    sun.setDirection(new Vector3f(1,-2,-2).normalizeLocal());
 //	    sun.setColor(ColorRGBA.White);
 //	    rootNode.addLight(sun);
 	}
