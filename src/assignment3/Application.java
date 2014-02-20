@@ -17,15 +17,9 @@ import com.jme3.input.KeyInput;
 import com.jme3.input.MouseInput;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.input.controls.MouseButtonTrigger;
-import com.jme3.light.Light;
-import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
-import com.jme3.scene.plugins.blender.BlenderModelLoader;
-import com.jme3.scene.shape.Sphere;
 
 public class Application extends SimpleApplication {
 
@@ -45,7 +39,6 @@ public class Application extends SimpleApplication {
 		bulletAppState = new BulletAppState();
 		stateManager.attach(bulletAppState);
 		bulletAppState.getPhysicsSpace().setGravity(new Vector3f(0, -9.82f, 0));
-		//bulletAppState.getPhysicsSpace().enableDebug(assetManager);
 
 		assetManager.registerLocator("src/assignment3/assets", FileLocator.class);
 		
@@ -57,24 +50,7 @@ public class Application extends SimpleApplication {
 		initTorch();
 		initCrossHairs();
 		initPicker();
-		
-		Crate crate1 = new Crate("Crate1", 2, 2, 2, 1, assetManager);
-		crate1.translate(0, 2, -10);
-		shootablesNode.attachChild(crate1.getGeometry());
-		rootNode.attachChild(shootablesNode);
-		addPhysics(crate1);
-		
-		Crate crate2 = new Crate("Crate2", 2, 2, 2, 1, assetManager);
-		crate2.translate(10, 2, -10);
-		shootablesNode.attachChild(crate2.getGeometry());
-		rootNode.attachChild(shootablesNode);
-		addPhysics(crate2);
-		
-		Crate crate3 = new Crate("Crate3", 2, 2, 2, 1, assetManager);
-		crate3.translate(-10, 2, -10);
-		shootablesNode.attachChild(crate3.getGeometry());
-		rootNode.attachChild(shootablesNode);
-		addPhysics(crate3);
+		initBoxes();
 	}
 	
 	private void initRoom()	{
@@ -140,6 +116,26 @@ public class Application extends SimpleApplication {
 		settings.getWidth() / 2 - guiFont.getCharSet().getRenderedSize() / 3 * 2,
 		settings.getHeight() / 2 + ch.getLineHeight() / 2, 0);
 		guiNode.attachChild(ch);
+	}
+	
+	private void initBoxes()	{
+		Crate crate1 = new Crate("Crate1", 2, 2, 2, 1, assetManager);
+		crate1.translate(0, 2, -10);
+		shootablesNode.attachChild(crate1.getGeometry());
+		rootNode.attachChild(shootablesNode);
+		addPhysics(crate1);
+		
+		Crate crate2 = new Crate("Crate2", 2, 2, 2, 1, assetManager);
+		crate2.translate(10, 2, -10);
+		shootablesNode.attachChild(crate2.getGeometry());
+		rootNode.attachChild(shootablesNode);
+		addPhysics(crate2);
+		
+		Crate crate3 = new Crate("Crate3", 2, 2, 2, 1, assetManager);
+		crate3.translate(-10, 2, -10);
+		shootablesNode.attachChild(crate3.getGeometry());
+		rootNode.attachChild(shootablesNode);
+		addPhysics(crate3);
 	}
 	
 	private void initPicker()	{

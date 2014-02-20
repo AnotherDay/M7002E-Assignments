@@ -1,8 +1,5 @@
 package assignment3;
 
-import javax.vecmath.Matrix3d;
-import javax.vecmath.Matrix3f;
-
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.control.RigidBodyControl;
