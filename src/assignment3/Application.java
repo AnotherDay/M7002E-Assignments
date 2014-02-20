@@ -13,11 +13,19 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.asset.plugins.FileLocator;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.font.BitmapText;
+import com.jme3.input.KeyInput;
+import com.jme3.input.MouseInput;
+import com.jme3.input.controls.KeyTrigger;
+import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.light.Light;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.plugins.blender.BlenderModelLoader;
+import com.jme3.scene.shape.Sphere;
 
 public class Application extends SimpleApplication {
 
@@ -26,8 +34,9 @@ public class Application extends SimpleApplication {
 	
 	private BulletAppState bulletAppState;
 	private Player player;
-	private ArrayList<Abstract3dObject> boxList = new ArrayList<Abstract3dObject>();
 	private ArrayList<Torch> torchList = new ArrayList<Torch>();
+	private Node shootablesNode = new Node();
+	private CombinedActionListener actionListener;
  
 	@Override
 	public void simpleInitApp() {
@@ -37,9 +46,8 @@ public class Application extends SimpleApplication {
 		stateManager.attach(bulletAppState);
 		bulletAppState.getPhysicsSpace().setGravity(new Vector3f(0, -9.82f, 0));
 		//bulletAppState.getPhysicsSpace().enableDebug(assetManager);
-		
+
 		assetManager.registerLocator("src/assignment3/assets", FileLocator.class);
-		assetManager.registerLoader(BlenderModelLoader.class, "blend");
 		
 		flyCam.setMoveSpeed(3f);
 		
@@ -48,13 +56,25 @@ public class Application extends SimpleApplication {
 		initRoom();
 		initTorch();
 		initCrossHairs();
+		initPicker();
 		
-		Crate crate = new Crate(2, 2, 2, 1, assetManager);
-		crate.translate(0, 10, -10);
-		boxList.add(crate);
+		Crate crate1 = new Crate("Crate1", 2, 2, 2, 1, assetManager);
+		crate1.translate(0, 2, -10);
+		shootablesNode.attachChild(crate1.getGeometry());
+		rootNode.attachChild(shootablesNode);
+		addPhysics(crate1);
 		
-		addPhysics(boxList.toArray(new Abstract3dObject[boxList.size()]));
-		attachToRootNode(boxList.toArray(new Abstract3dObject[boxList.size()]));
+		Crate crate2 = new Crate("Crate2", 2, 2, 2, 1, assetManager);
+		crate2.translate(10, 2, -10);
+		shootablesNode.attachChild(crate2.getGeometry());
+		rootNode.attachChild(shootablesNode);
+		addPhysics(crate2);
+		
+		Crate crate3 = new Crate("Crate3", 2, 2, 2, 1, assetManager);
+		crate3.translate(-10, 2, -10);
+		shootablesNode.attachChild(crate3.getGeometry());
+		rootNode.attachChild(shootablesNode);
+		addPhysics(crate3);
 	}
 	
 	private void initRoom()	{
@@ -81,7 +101,9 @@ public class Application extends SimpleApplication {
 		roof.translate(0, 2*halfWallHeight, 0);
 		roof.scaleTexture(new Vector2f(4, 4));
 		
-		boxList.addAll(Arrays.asList(floor, southWall, northWall, westWall, eastWall, roof));
+		Abstract3dObject[] roomList = new Abstract3dObject[]{floor, southWall, northWall, westWall, eastWall, roof};
+		attachToRootNode(roomList);
+		addPhysics(roomList);
 	}
 	
 	private void initTorch()	{
@@ -120,16 +142,29 @@ public class Application extends SimpleApplication {
 		guiNode.attachChild(ch);
 	}
 	
-	private void updateCoordinatesDisplay()	{
-		guiNode.detachAllChildren();
-		BitmapText ch = new BitmapText(guiFont, false);
-		ch.setSize(guiFont.getCharSet().getRenderedSize() * 2);
-		ch.setText("X: " + cam.getLocation().getX() + "\n Y: " + cam.getLocation().getY()); // fake crosshairs :)
-		ch.setLocalTranslation( 
-		- guiFont.getCharSet().getRenderedSize() / 3 * 2,
-		settings.getHeight() / 2 + ch.getLineHeight() / 2, 0);
-		guiNode.attachChild(ch);
+	private void initPicker()	{
+	    inputManager.addMapping(Constants.PICK, new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+	    inputManager.addMapping(Constants.PUSH_AWAY, new KeyTrigger(KeyInput.KEY_I));
+	    inputManager.addMapping(Constants.PULL_TOWARDS, new KeyTrigger(KeyInput.KEY_K));
+	    inputManager.addMapping(Constants.PUSH_LEFT, new KeyTrigger(KeyInput.KEY_J));
+	    inputManager.addMapping(Constants.PUSH_RIGHT, new KeyTrigger(KeyInput.KEY_L));
+	    actionListener = new CombinedActionListener(shootablesNode, cam, rootNode, assetManager, bulletAppState); 
+	    inputManager.addListener(actionListener, Constants.getMappingNames());
 	}
+	
+	/**
+	 * For debugging, updated by simpleUpdate()
+	 */
+//	private void updateCoordinatesDisplay()	{
+//		guiNode.detachAllChildren();
+//		BitmapText ch = new BitmapText(guiFont, false);
+//		ch.setSize(guiFont.getCharSet().getRenderedSize() * 2);
+//		ch.setText("X: " + cam.getLocation().getX() + "\n Y: " + cam.getLocation().getY()); // fake crosshairs :)
+//		ch.setLocalTranslation( 
+//		- guiFont.getCharSet().getRenderedSize() / 3 * 2,
+//		settings.getHeight() / 2 + ch.getLineHeight() / 2, 0);
+//		guiNode.attachChild(ch);
+//	}
 	
 	private void attachToRootNode(Abstract3dObject... abstractBoxList)	{
 		for(Abstract3dObject abstractBox : abstractBoxList)	{
@@ -153,6 +188,7 @@ public class Application extends SimpleApplication {
 	@Override
 	public void simpleUpdate(float tpf) {
 		player.updateWalkingDirection();
-		updateCoordinatesDisplay();
+		actionListener.updateHighlightingPosition();
+//		updateCoordinatesDisplay();
 	}
 }

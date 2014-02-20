@@ -13,8 +13,8 @@ public class Crate extends Abstract3dObject {
 	private static String materialDefinitionFile = "Common/MatDefs/Light/Lighting.j3md";
 	private static String materialTextureFile = "Textures/crate.png"; //In the project asset manager folder
 
-	public Crate(float xLength, float yLength, float zLength, float mass, AssetManager assetManager) {
-		super(new Box(xLength, yLength, zLength), "Crate", mass);
+	public Crate(String name ,float xLength, float yLength, float zLength, float mass, AssetManager assetManager) {
+		super(new Box(xLength, yLength, zLength), name, mass);
 		setMaterial(assetManager);
 	}
 	
