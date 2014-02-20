@@ -5,6 +5,7 @@ import assignment3.Abstract3dObject;
 import com.jme3.asset.AssetManager;
 import com.jme3.asset.TextureKey;
 import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
 import com.jme3.scene.shape.Box;
 import com.jme3.texture.Texture;
 
@@ -24,6 +25,9 @@ public class Crate extends Abstract3dObject {
 	    textureKey.setGenerateMips(true);
 	    Texture tex3 = assetManager.loadTexture(textureKey);
 	    boxMaterial.setTexture("DiffuseMap", tex3);
+	    boxMaterial.setColor("Diffuse",ColorRGBA.White);
+	    boxMaterial.setColor("Specular",ColorRGBA.White);
+	    boxMaterial.setFloat("Shininess", 64f);  // [0,128]
 	    meshGeometry.setMaterial(boxMaterial);
 	}
 
