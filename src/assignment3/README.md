@@ -1,7 +1,7 @@
 Assignment 3
 =============
 
-[Github page](https://github.com/AnotherDay/M7002E-Assignments/tree/master/src/assignment2)
+[Github page](https://github.com/AnotherDay/M7002E-Assignments/tree/master/src/assignment3)
 
 Name of the zip file: daveri-9_Assignment3_M7002E.zip
 
