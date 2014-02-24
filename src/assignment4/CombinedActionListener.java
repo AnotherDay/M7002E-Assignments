@@ -115,6 +115,7 @@ public class CombinedActionListener implements ActionListener {
 	}
 	
 	private void removeSelectedObject()	{
+		pickedObjectControll.setGravity(oldGravityValue);
 		rootNode.detachChild(highlighting);
 		highlighting = null;
 		pickedObject = null;
