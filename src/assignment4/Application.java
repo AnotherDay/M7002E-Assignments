@@ -133,6 +133,8 @@ public class Application extends SimpleApplication {
 	    inputManager.addMapping(Constants.PULL_TOWARDS, new KeyTrigger(KeyInput.KEY_K));
 	    inputManager.addMapping(Constants.PUSH_LEFT, new KeyTrigger(KeyInput.KEY_J));
 	    inputManager.addMapping(Constants.PUSH_RIGHT, new KeyTrigger(KeyInput.KEY_L));
+	    inputManager.addMapping(Constants.PUSH_UP, new KeyTrigger(KeyInput.KEY_U));
+	    inputManager.addMapping(Constants.PUSH_DOWN, new KeyTrigger(KeyInput.KEY_O));
 	    inputManager.addMapping(Constants.GOD_MODE, new KeyTrigger(KeyInput.KEY_G));
 	    actionListener = new CombinedActionListener(shootablesNode, cam, rootNode, guiManager, assetManager); 
 	    inputManager.addListener(actionListener, Constants.getMappingNames());

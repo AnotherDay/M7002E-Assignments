@@ -25,6 +25,7 @@ public class CombinedActionListener implements ActionListener {
 	private float pushForce = 8f;
 	private boolean godMode = false;
 	private GuiManager guiManger;
+	private Vector3f oldGravityValue = Vector3f.UNIT_X;
 	
 	public CombinedActionListener(Node shootablesNode, Camera cam, Node rootNode, GuiManager guiManager, AssetManager assetManager)	{
 		this.shootablesNode = shootablesNode;
@@ -47,16 +48,24 @@ public class CombinedActionListener implements ActionListener {
 					pickObject();
 				}
 				else if(name.equals(Constants.PUSH_AWAY))	{
-					pickedObjectControll.applyImpulse(cam.getDirection().mult(pushForce), new Vector3f(0,0,0));
+					pickedObjectControll.applyImpulse(cam.getDirection().mult(pushForce), Vector3f.ZERO);
 				}
 				else if(name.equals(Constants.PULL_TOWARDS))	{
-					pickedObjectControll.applyImpulse(cam.getDirection().mult(pushForce).negate(), new Vector3f(0,0,0));
+					pickedObjectControll.applyImpulse(cam.getDirection().mult(pushForce).negate(), Vector3f.ZERO);
 				}
 				else if(name.equals(Constants.PUSH_LEFT))	{
-					pickedObjectControll.applyImpulse(getRotatedCameraDirection().mult(pushForce/2), new Vector3f(0,0,0));
+					pickedObjectControll.applyImpulse(directionVectorRotatedAroundZAxis().mult(pushForce/2), Vector3f.ZERO);
 				}
 				else if(name.equals(Constants.PUSH_RIGHT))	{
-					pickedObjectControll.applyImpulse(getRotatedCameraDirection().mult(pushForce/2).negate(), new Vector3f(0,0,0));
+					pickedObjectControll.applyImpulse(directionVectorRotatedAroundZAxis().mult(pushForce/2).negate(), Vector3f.ZERO);
+				}
+				else if(name.equals(Constants.PUSH_UP))	{
+					oldGravityValue = pickedObjectControll.getGravity();
+					pickedObjectControll.setGravity(Vector3f.ZERO);
+					pickedObjectControll.applyImpulse(directionVectorRotatedAroundXAxis().mult(pushForce/10), Vector3f.ZERO);
+				}
+				else if(name.equals(Constants.PUSH_DOWN))	{
+					pickedObjectControll.setGravity(oldGravityValue);
 				}
 			}
 			else if(name.equals(Constants.GOD_MODE) && isPressed)	{
@@ -117,7 +126,7 @@ public class CombinedActionListener implements ActionListener {
 	 * 
 	 * @return the direction vector rotated 90 around the z-axis
 	 */
-	private Vector3f getRotatedCameraDirection()	{
+	private Vector3f directionVectorRotatedAroundZAxis()	{
 		float x = pickedObject.getLocalTranslation().x - cam.getLocation().x;
 		float y = pickedObject.getLocalTranslation().y - cam.getLocation().y;
 		float z = pickedObject.getLocalTranslation().z - cam.getLocation().z;
@@ -125,6 +134,23 @@ public class CombinedActionListener implements ActionListener {
 		float rX = z/10;
 		float rY = y/10;
 		float rZ = -x/10;
+		
+		return new Vector3f(rX, rY, rZ);
+	}
+	
+	/**
+	 * Rotates the vector between the camera and the selected object 90 degrees around the x-axis
+	 * 
+	 * @return the direction vector rotated 90 around the x-axis
+	 */
+	private Vector3f directionVectorRotatedAroundXAxis()	{
+		float x = pickedObject.getLocalTranslation().x - cam.getLocation().x;
+		float y = pickedObject.getLocalTranslation().y - cam.getLocation().y;
+		float z = pickedObject.getLocalTranslation().z - cam.getLocation().z;
+		
+		float rX = x/10;
+		float rY = -z/10;
+		float rZ = y/10;
 		
 		return new Vector3f(rX, rY, rZ);
 	}
