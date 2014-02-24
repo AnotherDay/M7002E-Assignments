@@ -29,7 +29,7 @@ public class Application extends SimpleApplication {
 	private Player player;
 	private ArrayList<Torch> torchList = new ArrayList<Torch>();
 	private Node shootablesNode = new Node();
-	private CombinedActionListener actionListener;
+	private MoveObjectListener actionListener; 
 	private GuiManager guiManager;
  
 	@Override
@@ -136,23 +136,9 @@ public class Application extends SimpleApplication {
 	    inputManager.addMapping(Constants.PUSH_UP, new KeyTrigger(KeyInput.KEY_U));
 	    inputManager.addMapping(Constants.PUSH_DOWN, new KeyTrigger(KeyInput.KEY_O));
 	    inputManager.addMapping(Constants.GOD_MODE, new KeyTrigger(KeyInput.KEY_G));
-	    actionListener = new CombinedActionListener(shootablesNode, cam, rootNode, guiManager, assetManager); 
+	    actionListener = new MoveObjectListener(shootablesNode, cam, rootNode, guiManager, assetManager);
 	    inputManager.addListener(actionListener, Constants.getMappingNames());
 	}
-	
-	/**
-	 * For debugging, updated by simpleUpdate()
-	 */
-//	private void updateCoordinatesDisplay()	{
-//		guiNode.detachAllChildren();
-//		BitmapText ch = new BitmapText(guiFont, false);
-//		ch.setSize(guiFont.getCharSet().getRenderedSize() * 2);
-//		ch.setText("X: " + cam.getLocation().getX() + "\n Y: " + cam.getLocation().getY()); // fake crosshairs :)
-//		ch.setLocalTranslation( 
-//		- guiFont.getCharSet().getRenderedSize() / 3 * 2,
-//		settings.getHeight() / 2 + ch.getLineHeight() / 2, 0);
-//		guiNode.attachChild(ch);
-//	}
 	
 	private void attachToRootNode(Abstract3dObject... abstractBoxList)	{
 		for(Abstract3dObject abstractBox : abstractBoxList)	{
@@ -177,6 +163,5 @@ public class Application extends SimpleApplication {
 	public void simpleUpdate(float tpf) {
 		player.updateWalkingDirection();
 		actionListener.updateHighlightingPosition();
-//		updateCoordinatesDisplay();
 	}
 }

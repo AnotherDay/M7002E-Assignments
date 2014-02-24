@@ -4,6 +4,7 @@ import com.jme3.asset.AssetManager;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.collision.CollisionResults;
 import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.AnalogListener;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Ray;
@@ -13,7 +14,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
-public class CombinedActionListener implements ActionListener {
+public class MoveObjectListener implements AnalogListener, ActionListener {
 
 	private Node shootablesNode;
 	private Node rootNode;
@@ -23,11 +24,11 @@ public class CombinedActionListener implements ActionListener {
 	private Material highlightMaterial;
 	private RigidBodyControl pickedObjectControll;
 	private float pushForce = 8f;
-	private boolean godMode = false;
+	private boolean inGodMode = false;
 	private GuiManager guiManger;
-	private Vector3f oldGravityValue = Vector3f.UNIT_X;
+	private Vector3f gravityVector = new Vector3f(0, -9.82f, 0);
 	
-	public CombinedActionListener(Node shootablesNode, Camera cam, Node rootNode, GuiManager guiManager, AssetManager assetManager)	{
+	public MoveObjectListener(Node shootablesNode, Camera cam, Node rootNode, GuiManager guiManager, AssetManager assetManager)	{
 		this.shootablesNode = shootablesNode;
 		this.cam = cam;
 		this.rootNode = rootNode;
@@ -41,50 +42,53 @@ public class CombinedActionListener implements ActionListener {
 	}
 	
 	@Override
-	public void onAction(String name, boolean isPressed, float tpf) {
+	public void onAnalog(String name, float value, float tpf) {
 		try	{
-			if(godMode && !isPressed)	{
-				if(name.equals(Constants.PICK))	{
-					pickObject();
-				}
-				else if(name.equals(Constants.PUSH_AWAY))	{
-					pickedObjectControll.applyImpulse(cam.getDirection().mult(pushForce), Vector3f.ZERO);
+			if(inGodMode)	{
+				if(name.equals(Constants.PUSH_AWAY))	{
+					pickedObjectControll.applyCentralForce(cam.getDirection().mult(pushForce));
 				}
 				else if(name.equals(Constants.PULL_TOWARDS))	{
-					pickedObjectControll.applyImpulse(cam.getDirection().mult(pushForce).negate(), Vector3f.ZERO);
+					pickedObjectControll.applyCentralForce(cam.getDirection().mult(pushForce).negate());
 				}
 				else if(name.equals(Constants.PUSH_LEFT))	{
-					pickedObjectControll.applyImpulse(directionVectorRotatedAroundZAxis().mult(pushForce/2), Vector3f.ZERO);
+					pickedObjectControll.applyCentralForce(directionVectorRotatedAroundZAxis().mult(pushForce/2));
 				}
 				else if(name.equals(Constants.PUSH_RIGHT))	{
-					pickedObjectControll.applyImpulse(directionVectorRotatedAroundZAxis().mult(pushForce/2).negate(), Vector3f.ZERO);
+					pickedObjectControll.applyCentralForce(directionVectorRotatedAroundZAxis().mult(pushForce/2).negate());
 				}
 				else if(name.equals(Constants.PUSH_UP))	{
-					oldGravityValue = pickedObjectControll.getGravity();
-					pickedObjectControll.setGravity(Vector3f.ZERO);
-					pickedObjectControll.applyImpulse(directionVectorRotatedAroundXAxis().mult(pushForce/10), Vector3f.ZERO);
+					pickedObjectControll.applyCentralForce(directionVectorRotatedAroundXAxis().mult(pushForce/2));
 				}
 				else if(name.equals(Constants.PUSH_DOWN))	{
-					pickedObjectControll.setGravity(oldGravityValue);
-				}
-			}
-			else if(name.equals(Constants.GOD_MODE) && isPressed)	{
-				if(godMode)	{
-					removeSelectedObject();
-					guiManger.addEnterGodModeText();
-					godMode = false;
-				}
-				else	{
-					guiManger.addExitGodModeText();
-					godMode = true;
+//					pickedObjectControll.setGravity(oldGravityValue);
+					pickedObjectControll.applyCentralForce(directionVectorRotatedAroundXAxis().mult(pushForce/2).negate());
 				}
 			}
 		}
 		catch(NullPointerException npe)	{
-			//pickedObjectControll not instantiated
+			//pickedObject not initialized, ignore
 		}
 	}
 	
+	@Override
+	public void onAction(String name, boolean isPressed, float tpf) {
+		if(name.equals(Constants.PICK) && inGodMode && !isPressed)	{
+			pickObject();
+		}
+		else if(name.equals(Constants.GOD_MODE) && !isPressed)	{
+			if(inGodMode)	{
+				removeSelectedObject();
+				guiManger.addEnterGodModeText();
+				inGodMode = false;
+			}
+			else	{
+				guiManger.addExitGodModeText();
+				inGodMode = true;
+			}
+		}
+	}
+
 	public void updateHighlightingPosition()	{
 		try	{
 			highlighting.setLocalTranslation(pickedObject.getLocalTranslation());
@@ -103,6 +107,7 @@ public class CombinedActionListener implements ActionListener {
 			if(highlighting != null) rootNode.detachChild(highlighting);
 			pickedObject =  results.getClosestCollision().getGeometry();
 			pickedObjectControll = pickedObject.getControl(RigidBodyControl.class);
+			pickedObjectControll.setGravity(Vector3f.ZERO);
 			
 			highlighting = results.getClosestCollision().getGeometry().clone();
 			highlighting.setLocalScale(1.01f);
@@ -115,7 +120,7 @@ public class CombinedActionListener implements ActionListener {
 	}
 	
 	private void removeSelectedObject()	{
-		pickedObjectControll.setGravity(oldGravityValue);
+		pickedObjectControll.setGravity(gravityVector);
 		rootNode.detachChild(highlighting);
 		highlighting = null;
 		pickedObject = null;
@@ -155,4 +160,6 @@ public class CombinedActionListener implements ActionListener {
 		
 		return new Vector3f(rX, rY, rZ);
 	}
+
+	
 }
