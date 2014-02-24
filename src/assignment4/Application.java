@@ -12,7 +12,6 @@ import assignment4.objects.Torch;
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.plugins.FileLocator;
 import com.jme3.bullet.BulletAppState;
-import com.jme3.font.BitmapText;
 import com.jme3.input.KeyInput;
 import com.jme3.input.MouseInput;
 import com.jme3.input.controls.KeyTrigger;
@@ -52,7 +51,6 @@ public class Application extends SimpleApplication {
 		bulletAppState.getPhysicsSpace().add(player.getCharacterControl());
 		initRoom();
 		initTorch();
-//		initCrossHairs();
 		initPicker();
 		initBoxes();
 	}
@@ -108,20 +106,7 @@ public class Application extends SimpleApplication {
 			rootNode.addLight(torch.getLight());
 		}
 	}
-	
-	/** A plus sign used as crosshairs to help the player with aiming.*/
-	private void initCrossHairs() {
-		guiNode.detachAllChildren();
-		guiFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
-		BitmapText ch = new BitmapText(guiFont, false);
-		ch.setSize(guiFont.getCharSet().getRenderedSize() * 2);
-		ch.setText("+");        // fake crosshairs :)
-		ch.setLocalTranslation( // center
-		settings.getWidth() / 2 - guiFont.getCharSet().getRenderedSize() / 3 * 2,
-		settings.getHeight() / 2 + ch.getLineHeight() / 2, 0);
-		guiNode.attachChild(ch);
-	}
-	
+
 	private void initBoxes()	{
 		Crate crate1 = new Crate("Crate1", 2, 2, 2, 1, assetManager);
 		crate1.translate(0, 2, -10);
