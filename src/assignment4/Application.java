@@ -31,6 +31,7 @@ public class Application extends SimpleApplication {
 	private ArrayList<Torch> torchList = new ArrayList<Torch>();
 	private Node shootablesNode = new Node();
 	private CombinedActionListener actionListener;
+	private GuiManager guiManager;
  
 	@Override
 	public void simpleInitApp() {
@@ -42,13 +43,16 @@ public class Application extends SimpleApplication {
 
 		assetManager.registerLocator("src/assignment3/assets", FileLocator.class);
 		
+		guiManager = new GuiManager(guiNode, settings.getWidth(), settings.getHeight(), assetManager);
+		guiManager.addCrossHairs();
+		
 		flyCam.setMoveSpeed(3f);
 		
 		player = new Player(inputManager, cam);
 		bulletAppState.getPhysicsSpace().add(player.getCharacterControl());
 		initRoom();
 		initTorch();
-		initCrossHairs();
+//		initCrossHairs();
 		initPicker();
 		initBoxes();
 	}
@@ -144,7 +148,8 @@ public class Application extends SimpleApplication {
 	    inputManager.addMapping(Constants.PULL_TOWARDS, new KeyTrigger(KeyInput.KEY_K));
 	    inputManager.addMapping(Constants.PUSH_LEFT, new KeyTrigger(KeyInput.KEY_J));
 	    inputManager.addMapping(Constants.PUSH_RIGHT, new KeyTrigger(KeyInput.KEY_L));
-	    actionListener = new CombinedActionListener(shootablesNode, cam, rootNode, assetManager, bulletAppState); 
+	    inputManager.addMapping(Constants.GOD_MODE, new KeyTrigger(KeyInput.KEY_G));
+	    actionListener = new CombinedActionListener(shootablesNode, cam, rootNode, guiManager, assetManager); 
 	    inputManager.addListener(actionListener, Constants.getMappingNames());
 	}
 	

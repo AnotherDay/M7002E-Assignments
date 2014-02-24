@@ -7,9 +7,10 @@ public class Constants {
 		PUSH_AWAY = "PushUp",
 		PULL_TOWARDS = "PushDown",
 		PUSH_LEFT = "PushLeft",
-		PUSH_RIGHT = "PushRight";
+		PUSH_RIGHT = "PushRight",
+		GOD_MODE = "GodMode";
 	
 	public static String[] getMappingNames()	{
-		return new String[]{PICK, PUSH_AWAY, PULL_TOWARDS, PUSH_LEFT, PUSH_RIGHT};
+		return new String[]{PICK, PUSH_AWAY, PULL_TOWARDS, PUSH_LEFT, PUSH_RIGHT, GOD_MODE};
 	}
 }

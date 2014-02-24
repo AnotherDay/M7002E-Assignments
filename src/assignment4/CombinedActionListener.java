@@ -1,7 +1,6 @@
 package assignment4;
 
 import com.jme3.asset.AssetManager;
-import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.collision.CollisionResults;
 import com.jme3.input.controls.ActionListener;
@@ -24,11 +23,16 @@ public class CombinedActionListener implements ActionListener {
 	private Material highlightMaterial;
 	private RigidBodyControl pickedObjectControll;
 	private float pushForce = 8f;
+	private boolean godMode = false;
+	private GuiManager guiManger;
 	
-	public CombinedActionListener(Node shootablesNode, Camera cam, Node rootNode, AssetManager assetManager, BulletAppState bulletAppState)	{
+	public CombinedActionListener(Node shootablesNode, Camera cam, Node rootNode, GuiManager guiManager, AssetManager assetManager)	{
 		this.shootablesNode = shootablesNode;
 		this.cam = cam;
 		this.rootNode = rootNode;
+		this.guiManger = guiManager;
+		
+		guiManager.addEnterGodModeText();
 		
 		highlightMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 		highlightMaterial.setColor("Color", ColorRGBA.Yellow);
@@ -38,38 +42,33 @@ public class CombinedActionListener implements ActionListener {
 	@Override
 	public void onAction(String name, boolean isPressed, float tpf) {
 		try	{
-			if(name.equals(Constants.PICK) && !isPressed)	{
-				CollisionResults results = new CollisionResults();
-				Ray ray = new Ray(cam.getLocation(), cam.getDirection());
-				shootablesNode.collideWith(ray, results);
-				if(results.size() > 0 && !results.getClosestCollision().getGeometry().equals(pickedObject))	{
-					if(highlighting != null) rootNode.detachChild(highlighting);
-					pickedObject =  results.getClosestCollision().getGeometry();
-					pickedObjectControll = pickedObject.getControl(RigidBodyControl.class);
-					
-					highlighting = results.getClosestCollision().getGeometry().clone();
-					highlighting.setLocalScale(1.01f);
-					highlighting.setMaterial(highlightMaterial);
-					rootNode.attachChild(highlighting);
+			if(godMode && !isPressed)	{
+				if(name.equals(Constants.PICK))	{
+					pickObject();
+				}
+				else if(name.equals(Constants.PUSH_AWAY))	{
+					pickedObjectControll.applyImpulse(cam.getDirection().mult(pushForce), new Vector3f(0,0,0));
+				}
+				else if(name.equals(Constants.PULL_TOWARDS))	{
+					pickedObjectControll.applyImpulse(cam.getDirection().mult(pushForce).negate(), new Vector3f(0,0,0));
+				}
+				else if(name.equals(Constants.PUSH_LEFT))	{
+					pickedObjectControll.applyImpulse(getRotatedCameraDirection().mult(pushForce/2), new Vector3f(0,0,0));
+				}
+				else if(name.equals(Constants.PUSH_RIGHT))	{
+					pickedObjectControll.applyImpulse(getRotatedCameraDirection().mult(pushForce/2).negate(), new Vector3f(0,0,0));
+				}
+			}
+			else if(name.equals(Constants.GOD_MODE) && isPressed)	{
+				if(godMode)	{
+					removeSelectedObject();
+					guiManger.addEnterGodModeText();
+					godMode = false;
 				}
 				else	{
-					rootNode.detachChild(highlighting);
-					highlighting = null;
-					pickedObject = null;
-					pickedObjectControll = null;
+					guiManger.addExitGodModeText();
+					godMode = true;
 				}
-			}
-			else if(name.equals(Constants.PUSH_AWAY) && !isPressed)	{
-				pickedObjectControll.applyImpulse(cam.getDirection().mult(pushForce), new Vector3f(0,0,0));
-			}
-			else if(name.equals(Constants.PULL_TOWARDS) && !isPressed)	{
-				pickedObjectControll.applyImpulse(cam.getDirection().mult(pushForce).negate(), new Vector3f(0,0,0));
-			}
-			else if(name.equals(Constants.PUSH_LEFT) && !isPressed)	{
-				pickedObjectControll.applyImpulse(getRotatedCameraDirection().mult(pushForce/2), new Vector3f(0,0,0));
-			}
-			else if(name.equals(Constants.PUSH_RIGHT) && !isPressed)	{
-				pickedObjectControll.applyImpulse(getRotatedCameraDirection().mult(pushForce/2).negate(), new Vector3f(0,0,0));
 			}
 		}
 		catch(NullPointerException npe)	{
@@ -85,6 +84,32 @@ public class CombinedActionListener implements ActionListener {
 		catch(NullPointerException npe)	{
 			//Mark or vector objects not initialized, ignore it
 		}
+	}
+	
+	private void pickObject()	{
+		CollisionResults results = new CollisionResults();
+		Ray ray = new Ray(cam.getLocation(), cam.getDirection());
+		shootablesNode.collideWith(ray, results);
+		if(results.size() > 0 && !results.getClosestCollision().getGeometry().equals(pickedObject))	{
+			if(highlighting != null) rootNode.detachChild(highlighting);
+			pickedObject =  results.getClosestCollision().getGeometry();
+			pickedObjectControll = pickedObject.getControl(RigidBodyControl.class);
+			
+			highlighting = results.getClosestCollision().getGeometry().clone();
+			highlighting.setLocalScale(1.01f);
+			highlighting.setMaterial(highlightMaterial);
+			rootNode.attachChild(highlighting);
+		}
+		else	{
+			removeSelectedObject();
+		}
+	}
+	
+	private void removeSelectedObject()	{
+		rootNode.detachChild(highlighting);
+		highlighting = null;
+		pickedObject = null;
+		pickedObjectControll = null;
 	}
 	
 	/**
@@ -103,5 +128,4 @@ public class CombinedActionListener implements ActionListener {
 		
 		return new Vector3f(rX, rY, rZ);
 	}
-
 }
