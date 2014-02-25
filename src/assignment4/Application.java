@@ -15,6 +15,7 @@ import com.jme3.bullet.BulletAppState;
 import com.jme3.input.KeyInput;
 import com.jme3.input.MouseInput;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.input.controls.MouseAxisTrigger;
 import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
@@ -128,7 +129,8 @@ public class Application extends SimpleApplication {
 	}
 	
 	private void initPicker()	{
-	    inputManager.addMapping(Constants.PICK, new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+		inputManager.addMapping(Constants.PICK_DRAG, new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+	    inputManager.addMapping(Constants.PICK, new MouseButtonTrigger(MouseInput.BUTTON_RIGHT));
 	    inputManager.addMapping(Constants.PUSH_AWAY, new KeyTrigger(KeyInput.KEY_I));
 	    inputManager.addMapping(Constants.PULL_TOWARDS, new KeyTrigger(KeyInput.KEY_K));
 	    inputManager.addMapping(Constants.PUSH_LEFT, new KeyTrigger(KeyInput.KEY_J));
@@ -136,6 +138,8 @@ public class Application extends SimpleApplication {
 	    inputManager.addMapping(Constants.PUSH_UP, new KeyTrigger(KeyInput.KEY_U));
 	    inputManager.addMapping(Constants.PUSH_DOWN, new KeyTrigger(KeyInput.KEY_O));
 	    inputManager.addMapping(Constants.GOD_MODE, new KeyTrigger(KeyInput.KEY_G));
+	    inputManager.addMapping(Constants.MOUSE_MOVEMENT, new MouseAxisTrigger(MouseInput.AXIS_X, false));
+	    inputManager.addMapping(Constants.MOUSE_MOVEMENT, new MouseAxisTrigger(MouseInput.AXIS_Y, false));
 	    actionListener = new MoveObjectListener(shootablesNode, cam, rootNode, guiManager, assetManager);
 	    inputManager.addListener(actionListener, Constants.getMappingNames());
 	}
