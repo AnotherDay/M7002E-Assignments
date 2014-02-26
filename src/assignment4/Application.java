@@ -41,10 +41,10 @@ public class Application extends SimpleApplication {
 		stateManager.attach(bulletAppState);
 		bulletAppState.getPhysicsSpace().setGravity(new Vector3f(0, -9.82f, 0));
 
-		assetManager.registerLocator("src/assignment3/assets", FileLocator.class);
+		assetManager.registerLocator("src/assignment4/assets", FileLocator.class);
 		
 		guiManager = new GuiManager(guiNode, settings.getWidth(), settings.getHeight(), assetManager);
-		guiManager.addCrossHairs();
+		guiManager.attachCrossHairs();
 		
 		flyCam.setMoveSpeed(3f);
 		
@@ -167,5 +167,6 @@ public class Application extends SimpleApplication {
 	public void simpleUpdate(float tpf) {
 		player.updateWalkingDirection();
 		actionListener.updateHighlightingPosition();
+		actionListener.checkDistanceToObject();
 	}
 }

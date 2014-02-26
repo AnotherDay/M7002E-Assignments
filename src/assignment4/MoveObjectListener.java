@@ -29,7 +29,7 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 	private GuiManager guiManger;
 	
 	private Vector3f gravityVector = new Vector3f(0, -9.82f, 0);
-	private float distance = 0;
+	private float distance = 0, pickingDistance = 10f;
 	
 	public MoveObjectListener(Node shootablesNode, Camera cam, Node rootNode, GuiManager guiManager, AssetManager assetManager)	{
 		this.shootablesNode = shootablesNode;
@@ -37,7 +37,7 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 		this.rootNode = rootNode;
 		this.guiManger = guiManager;
 		
-		guiManager.addEnterGodModeText();
+		guiManager.attachEnterGodModeText();
 		
 		highlightMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 		highlightMaterial.setColor("Color", ColorRGBA.Yellow);
@@ -48,23 +48,25 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 	public void onAnalog(String name, float value, float tpf) {
 		try	{
 			if(inGodMode)	{
-				if(name.equals(Constants.PUSH_AWAY))	{
+				switch(name)	{
+				case Constants.PUSH_AWAY:
 					pickedObjectControll.applyCentralForce(cam.getDirection().mult(pushForce));
-				}
-				else if(name.equals(Constants.PULL_TOWARDS))	{
+					break;
+				case Constants.PULL_TOWARDS:
 					pickedObjectControll.applyCentralForce(cam.getDirection().mult(pushForce).negate());
-				}
-				else if(name.equals(Constants.PUSH_LEFT))	{
+					break;
+				case Constants.PUSH_LEFT:
 					pickedObjectControll.applyCentralForce(directionVectorRotatedAroundZAxis().mult(pushForce/2));
-				}
-				else if(name.equals(Constants.PUSH_RIGHT))	{
+					break;
+				case Constants.PUSH_RIGHT:
 					pickedObjectControll.applyCentralForce(directionVectorRotatedAroundZAxis().mult(pushForce/2).negate());
-				}
-				else if(name.equals(Constants.PUSH_UP))	{
+					break;
+				case Constants.PUSH_UP:
 					pickedObjectControll.applyCentralForce(new Vector3f(0, 1.0f, 0).mult(pushForce));
-				}
-				else if(name.equals(Constants.PUSH_DOWN))	{
+					break;
+				case Constants.PUSH_DOWN:
 					pickedObjectControll.applyCentralForce(new Vector3f(0, 1.0f, 0).mult(pushForce).negate());
+					break;
 				}
 			}
 			else if(!inGodMode && name.equals(Constants.PICK_DRAG))	{
@@ -78,18 +80,11 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 	
 	@Override
 	public void onAction(String name, boolean isPressed, float tpf) {
-		if(name.equals(Constants.PICK_DRAG) && pickedObjectControll == null && !inGodMode)	{
-			CollisionResults results = new CollisionResults();
-			Ray ray = new Ray(cam.getLocation(), cam.getDirection());
-			shootablesNode.collideWith(ray, results);
-			if(results.size() > 0)	{
-				pickedObject =  results.getClosestCollision().getGeometry();
-				pickedObjectControll = pickedObject.getControl(RigidBodyControl.class);
-				distance = pickedObjectControll.getPhysicsLocation().distance(cam.getLocation());
-			}
+		if(name.equals(Constants.PICK_DRAG) && !inGodMode && pickedObjectControll == null)	{
+			if(distance <= pickingDistance)
+				pickObject();
 		}
-		else if(name.equals(Constants.PICK_DRAG) && !isPressed && pickedObject != null && !inGodMode)	{
-			System.out.println("Exit drag mode");
+		else if(name.equals(Constants.PICK_DRAG) && !inGodMode && pickedObjectControll != null && !isPressed )	{
 			removeSelectedObject();
 		}
 		else if(name.equals(Constants.PICK) && inGodMode && !isPressed)	{
@@ -98,11 +93,11 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 		else if(name.equals(Constants.GOD_MODE) && !isPressed)	{
 			if(inGodMode)	{
 				removeSelectedObject();
-				guiManger.addEnterGodModeText();
+				guiManger.attachEnterGodModeText();
 				inGodMode = false;
 			}
 			else	{
-				guiManger.addExitGodModeText();
+				guiManger.detachExitGodModeText();
 				inGodMode = true;
 			}
 		}
@@ -123,19 +118,31 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 		Ray ray = new Ray(cam.getLocation(), cam.getDirection());
 		shootablesNode.collideWith(ray, results);
 		if(results.size() > 0 && !results.getClosestCollision().getGeometry().equals(pickedObject))	{
-			if(highlighting != null && pickedObjectControll != null) 
-				removeSelectedObject();
+			if(highlighting != null && pickedObjectControll != null) removeSelectedObject();
 			pickedObject =  results.getClosestCollision().getGeometry();
 			pickedObjectControll = pickedObject.getControl(RigidBodyControl.class);
-			pickedObjectControll.setGravity(Vector3f.ZERO);
-			
-			highlighting = results.getClosestCollision().getGeometry().clone();
-			highlighting.setLocalScale(1.01f);
-			highlighting.setMaterial(highlightMaterial);
-			rootNode.attachChild(highlighting);
+			distance = pickedObjectControll.getPhysicsLocation().distance(cam.getLocation());
+			if(inGodMode)	{
+				pickedObjectControll.setGravity(Vector3f.ZERO);
+				highlighting = results.getClosestCollision().getGeometry().clone();
+				highlighting.setLocalScale(1.01f);
+				highlighting.setMaterial(highlightMaterial);
+				rootNode.attachChild(highlighting);
+			}
 		}
 		else	{
 			removeSelectedObject();
+		}
+	}
+	
+	public void checkDistanceToObject()	{
+		guiManger.detachGrabIcon();
+		CollisionResults results = new CollisionResults();
+		Ray ray = new Ray(cam.getLocation(), cam.getDirection());
+		shootablesNode.collideWith(ray, results);
+		if(results.size() > 0)	{
+			distance = results.getClosestCollision().getGeometry().getLocalTranslation().distance(cam.getLocation());
+			if(distance <= pickingDistance) guiManger.attachGrabIcon();
 		}
 	}
 	
