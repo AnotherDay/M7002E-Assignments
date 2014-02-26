@@ -140,13 +140,15 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 	}
 	
 	private void removeSelectedObject()	{
-		if(pickedObject != null) 
+		if(pickedObject != null)	{ 
 			pickedObjectControll.setGravity(gravityVector);
+			pickedObjectControll.activate(); //Makes sure that the physic engine doesn't ignore the object when it has not moved
+			pickedObjectControll = null;
+		}
 		if(highlighting != null) 
 			rootNode.detachChild(highlighting);
 		highlighting = null;
 		pickedObject = null;
-		pickedObjectControll = null;
 	}
 	
 	/**
