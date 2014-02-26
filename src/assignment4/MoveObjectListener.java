@@ -61,10 +61,10 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 					pickedObjectControll.applyCentralForce(directionVectorRotatedAroundZAxis().mult(pushForce/2).negate());
 				}
 				else if(name.equals(Constants.PUSH_UP))	{
-					pickedObjectControll.applyCentralForce(directionVectorRotatedAroundXAxis().mult(pushForce/2));
+					pickedObjectControll.applyCentralForce(new Vector3f(0, 1.0f, 0).mult(pushForce));
 				}
 				else if(name.equals(Constants.PUSH_DOWN))	{
-					pickedObjectControll.applyCentralForce(directionVectorRotatedAroundXAxis().mult(pushForce/2).negate());
+					pickedObjectControll.applyCentralForce(new Vector3f(0, 1.0f, 0).mult(pushForce).negate());
 				}
 			}
 			else if(!inGodMode && name.equals(Constants.PICK_DRAG))	{
@@ -78,7 +78,7 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 	
 	@Override
 	public void onAction(String name, boolean isPressed, float tpf) {
-		if(name.equals(Constants.PICK_DRAG) && pickedObject == null && !inGodMode)	{
+		if(name.equals(Constants.PICK_DRAG) && pickedObjectControll == null && !inGodMode)	{
 			CollisionResults results = new CollisionResults();
 			Ray ray = new Ray(cam.getLocation(), cam.getDirection());
 			shootablesNode.collideWith(ray, results);
@@ -123,7 +123,8 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 		Ray ray = new Ray(cam.getLocation(), cam.getDirection());
 		shootablesNode.collideWith(ray, results);
 		if(results.size() > 0 && !results.getClosestCollision().getGeometry().equals(pickedObject))	{
-			if(highlighting != null) rootNode.detachChild(highlighting);
+			if(highlighting != null && pickedObjectControll != null) 
+				removeSelectedObject();
 			pickedObject =  results.getClosestCollision().getGeometry();
 			pickedObjectControll = pickedObject.getControl(RigidBodyControl.class);
 			pickedObjectControll.setGravity(Vector3f.ZERO);
@@ -164,23 +165,4 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 		
 		return new Vector3f(rX, rY, rZ);
 	}
-	
-	/**
-	 * Rotates the vector between the camera and the selected object 90 degrees around the x-axis
-	 * 
-	 * @return the direction vector rotated 90 around the x-axis
-	 */
-	private Vector3f directionVectorRotatedAroundXAxis()	{
-		float x = pickedObject.getLocalTranslation().x - cam.getLocation().x;
-		float y = pickedObject.getLocalTranslation().y - cam.getLocation().y;
-		float z = pickedObject.getLocalTranslation().z - cam.getLocation().z;
-		
-		float rX = x/10;
-		float rY = -z/10;
-		float rZ = y/10;
-		
-		return new Vector3f(rX, rY, rZ);
-	}
-
-	
 }
