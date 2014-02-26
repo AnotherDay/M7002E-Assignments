@@ -136,13 +136,15 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 	}
 	
 	public void checkDistanceToObject()	{
-		guiManger.detachGrabIcon();
-		CollisionResults results = new CollisionResults();
-		Ray ray = new Ray(cam.getLocation(), cam.getDirection());
-		shootablesNode.collideWith(ray, results);
-		if(results.size() > 0)	{
-			distance = results.getClosestCollision().getGeometry().getLocalTranslation().distance(cam.getLocation());
-			if(distance <= pickingDistance) guiManger.attachGrabIcon();
+		if(!inGodMode)	{
+			guiManger.detachGrabIcon();
+			CollisionResults results = new CollisionResults();
+			Ray ray = new Ray(cam.getLocation(), cam.getDirection());
+			shootablesNode.collideWith(ray, results);
+			if(results.size() > 0)	{
+				distance = results.getClosestCollision().getGeometry().getLocalTranslation().distance(cam.getLocation());
+				if(distance <= pickingDistance) guiManger.attachGrabIcon();
+			}
 		}
 	}
 	
