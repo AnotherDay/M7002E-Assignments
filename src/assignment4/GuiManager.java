@@ -10,7 +10,7 @@ public class GuiManager {
 	
 	private Node guiNode;
 	private BitmapText crossHairsText, godModeText;
-	private Picture handPic;
+	private Picture handPic, godModeEffect;
 	
 	private String enterGodModeTextString = "Press G to enter god mode"; 
 	private String exitGodModeTextString = "Press G to exit god mode";
@@ -41,20 +41,27 @@ public class GuiManager {
 		handPic.setImage(assetManager, "Other/cursor_drag_hand.png", true);
 		handPic.setWidth(20f);
 		handPic.setHeight(20f);
-		handPic.setLocalTranslation( // center
+		handPic.setLocalTranslation(
 				(windowWidth / 2) + 2,
 				(windowHeight / 2) + 2, 
 				0);
+		
+		godModeEffect = new Picture("God Mode Effect");
+		godModeEffect.setImage(assetManager, "Other/god_mode_effect.png", true);
+		godModeEffect.setWidth(windowWidth);
+		godModeEffect.setHeight(windowHeight);
 	}
 	
 	public void attachEnterGodModeText()	{
 		godModeText.setText(enterGodModeTextString);
 		guiNode.attachChild(godModeText);
+		guiNode.detachChild(godModeEffect);
 	}
 	
 	public void detachExitGodModeText()	{
 		godModeText.setText(exitGodModeTextString);
 		guiNode.attachChild(godModeText);
+		guiNode.attachChild(godModeEffect);
 	}
 	
 	public void removeGodModeText()	{
