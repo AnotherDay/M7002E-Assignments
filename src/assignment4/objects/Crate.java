@@ -27,7 +27,8 @@ public class Crate extends Abstract3dObject {
 	    boxMaterial.setTexture("DiffuseMap", tex3);
 	    boxMaterial.setColor("Diffuse",ColorRGBA.White);
 	    boxMaterial.setColor("Specular",ColorRGBA.White);
-	    boxMaterial.setFloat("Shininess", 64f);  // [0,128]
+//	    boxMaterial.setFloat("Shininess", 64f);  // [0,128]
+	    boxMaterial.setBoolean("UseMaterialColors",true); 
 	    meshGeometry.setMaterial(boxMaterial);
 	}
 
