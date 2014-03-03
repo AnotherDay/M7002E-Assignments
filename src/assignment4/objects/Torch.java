@@ -66,7 +66,7 @@ public class Torch {
 	    pointLight.setPosition(new Vector3f(pointLightOffsetX, pointLightOffsetY, pointLightOffsetZ));
 	    torchNode.addLight(pointLight);
 	    
-	    plsr = new PointLightShadowRenderer(assetManager, 512);
+	    plsr = new PointLightShadowRenderer(assetManager, 1024);
         plsr.setLight(pointLight);
 	}
 	
