@@ -3,6 +3,7 @@ package assignment4;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import assignment4.actionListeners.MoveObjectListener;
 import assignment4.buildingBlocks.Floor;
 import assignment4.buildingBlocks.Roof;
 import assignment4.buildingBlocks.Wall;
@@ -142,7 +143,7 @@ public class Application extends SimpleApplication {
 	    inputManager.addMapping(Constants.PUSH_RIGHT, new KeyTrigger(KeyInput.KEY_L));
 	    inputManager.addMapping(Constants.PUSH_UP, new KeyTrigger(KeyInput.KEY_U));
 	    inputManager.addMapping(Constants.PUSH_DOWN, new KeyTrigger(KeyInput.KEY_O));
-	    inputManager.addMapping(Constants.GOD_MODE, new KeyTrigger(KeyInput.KEY_G));
+	    inputManager.addMapping(Constants.JEDI_MODE, new KeyTrigger(KeyInput.KEY_G));
 	    inputManager.addMapping(Constants.MOUSE_MOVEMENT, new MouseAxisTrigger(MouseInput.AXIS_X, false));
 	    inputManager.addMapping(Constants.MOUSE_MOVEMENT, new MouseAxisTrigger(MouseInput.AXIS_Y, false));
 	    actionListener = new MoveObjectListener(shootablesNode, cam, rootNode, guiManager, assetManager);

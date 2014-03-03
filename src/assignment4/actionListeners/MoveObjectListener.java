@@ -1,4 +1,7 @@
-package assignment4;
+package assignment4.actionListeners;
+
+import assignment4.Constants;
+import assignment4.GuiManager;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.control.RigidBodyControl;
@@ -25,7 +28,7 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 	private Material highlightMaterial;
 	private RigidBodyControl pickedObjectControll;
 	private float pushForce = 8f;
-	private boolean inGodMode = false;
+	private boolean inJediMode = false;
 	private GuiManager guiManger;
 	
 	private Vector3f gravityVector = new Vector3f(0, -9.82f, 0);
@@ -37,7 +40,7 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 		this.rootNode = rootNode;
 		this.guiManger = guiManager;
 		
-		guiManager.attachEnterGodModeText();
+		guiManager.attachEnterJediModeText();
 		
 		highlightMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 		highlightMaterial.setColor("Color", ColorRGBA.Yellow);
@@ -47,7 +50,7 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 	@Override
 	public void onAnalog(String name, float value, float tpf) {
 		try	{
-			if(inGodMode)	{
+			if(inJediMode)	{
 				switch(name)	{
 				case Constants.PUSH_AWAY:
 					pickedObjectControll.applyCentralForce(cam.getDirection().mult(pushForce));
@@ -69,7 +72,7 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 					break;
 				}
 			}
-			else if(!inGodMode && name.equals(Constants.PICK_DRAG) && distance <= pickingDistance)	{
+			else if(!inJediMode && name.equals(Constants.PICK_DRAG) && distance <= pickingDistance)	{
 				pickedObjectControll.setPhysicsLocation(cam.getLocation().add(cam.getDirection().mult(distance)));
 			}
 		}
@@ -80,25 +83,25 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 	
 	@Override
 	public void onAction(String name, boolean isPressed, float tpf) {
-		if(name.equals(Constants.PICK_DRAG) && !inGodMode && pickedObjectControll == null)	{
+		if(name.equals(Constants.PICK_DRAG) && !inJediMode && pickedObjectControll == null)	{
 			if(distance <= pickingDistance)
 				pickObject();
 		}
-		else if(name.equals(Constants.PICK_DRAG) && !inGodMode && pickedObjectControll != null && !isPressed )	{
+		else if(name.equals(Constants.PICK_DRAG) && !inJediMode && pickedObjectControll != null && !isPressed )	{
 			removeSelectedObject();
 		}
-		else if(name.equals(Constants.PICK) && inGodMode && !isPressed)	{
+		else if(name.equals(Constants.PICK) && inJediMode && !isPressed)	{
 			pickObject();
 		}
-		else if(name.equals(Constants.GOD_MODE) && !isPressed)	{
-			if(inGodMode)	{
+		else if(name.equals(Constants.JEDI_MODE) && !isPressed)	{
+			if(inJediMode)	{
 				removeSelectedObject();
-				guiManger.attachEnterGodModeText();
-				inGodMode = false;
+				guiManger.attachEnterJediModeText();
+				inJediMode = false;
 			}
 			else	{
-				guiManger.detachExitGodModeText();
-				inGodMode = true;
+				guiManger.detachExitJediModeText();
+				inJediMode = true;
 			}
 		}
 	}
@@ -122,7 +125,7 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 			pickedObject =  results.getClosestCollision().getGeometry();
 			pickedObjectControll = pickedObject.getControl(RigidBodyControl.class);
 			distance = pickedObjectControll.getPhysicsLocation().distance(cam.getLocation());
-			if(inGodMode)	{
+			if(inJediMode)	{
 				pickedObjectControll.setGravity(Vector3f.ZERO);
 				highlighting = results.getClosestCollision().getGeometry().clone();
 				highlighting.setLocalScale(1.01f);
@@ -136,7 +139,7 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 	}
 	
 	public void checkDistanceToObject()	{
-		if(!inGodMode)	{
+		if(!inJediMode)	{
 			guiManger.detachGrabIcon();
 			CollisionResults results = new CollisionResults();
 			Ray ray = new Ray(cam.getLocation(), cam.getDirection());

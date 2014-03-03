@@ -12,8 +12,8 @@ public class GuiManager {
 	private BitmapText crossHairsText, godModeText;
 	private Picture handPic, godModeEffect;
 	
-	private String enterGodModeTextString = "Press G to enter god mode"; 
-	private String exitGodModeTextString = "Press G to exit god mode";
+	private String enterJediModeTextString = "Press G to enter jedi mode"; 
+	private String exitJediModeTextString = "Press G to exit jedi mode";
 	
 	public GuiManager(Node guiNode, int windowWidth, int windowHeight, AssetManager assetManager)	{
 		this.guiNode = guiNode;
@@ -52,19 +52,19 @@ public class GuiManager {
 		godModeEffect.setHeight(windowHeight);
 	}
 	
-	public void attachEnterGodModeText()	{
-		godModeText.setText(enterGodModeTextString);
+	public void attachEnterJediModeText()	{
+		godModeText.setText(enterJediModeTextString);
 		guiNode.attachChild(godModeText);
 		guiNode.detachChild(godModeEffect);
 	}
 	
-	public void detachExitGodModeText()	{
-		godModeText.setText(exitGodModeTextString);
+	public void detachExitJediModeText()	{
+		godModeText.setText(exitJediModeTextString);
 		guiNode.attachChild(godModeText);
 		guiNode.attachChild(godModeEffect);
 	}
 	
-	public void removeGodModeText()	{
+	public void removeJediModeText()	{
 		guiNode.detachChild(godModeText);
 	}
 	
