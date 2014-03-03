@@ -69,7 +69,7 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 					break;
 				}
 			}
-			else if(!inGodMode && name.equals(Constants.PICK_DRAG))	{
+			else if(!inGodMode && name.equals(Constants.PICK_DRAG) && distance <= pickingDistance)	{
 				pickedObjectControll.setPhysicsLocation(cam.getLocation().add(cam.getDirection().mult(distance)));
 			}
 		}
