@@ -3,6 +3,7 @@ package assignment4;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
+import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
 
@@ -17,6 +18,7 @@ public abstract class Abstract3dObject {
 		meshGeometry = new Geometry(geometryName, mesh);
 		meshPhysics = new RigidBodyControl(mass);
 		meshGeometry.addControl(meshPhysics);
+		meshGeometry.setShadowMode(RenderQueue.ShadowMode.Receive);
 	}
 	
 	public Geometry getGeometry()	{

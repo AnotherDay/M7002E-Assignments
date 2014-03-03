@@ -9,6 +9,9 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
+import com.jme3.shadow.EdgeFilteringMode;
+import com.jme3.shadow.PointLightShadowFilter;
+import com.jme3.shadow.PointLightShadowRenderer;
 
 public class Torch {
 	
@@ -24,6 +27,7 @@ public class Torch {
 	private Spatial torch;
 	private ParticleEmitter fire; 
 	private PointLight pointLight;
+	private PointLightShadowRenderer plsr;
 	private float pointLightOffsetX = 2, pointLightOffsetY = 3.5f, pointLightOffsetZ = 2.5f; 
 	
 	public Torch(String name, AssetManager assetManager)	{
@@ -61,6 +65,9 @@ public class Torch {
 	    pointLight.setRadius(60f);
 	    pointLight.setPosition(new Vector3f(pointLightOffsetX, pointLightOffsetY, pointLightOffsetZ));
 	    torchNode.addLight(pointLight);
+	    
+	    plsr = new PointLightShadowRenderer(assetManager, 512);
+        plsr.setLight(pointLight);
 	}
 	
 	public void translate(float x, float y, float z)	{
@@ -84,4 +91,13 @@ public class Torch {
 	public Node getNode()	{
 		return torchNode;
 	}
+	
+	public void setFlushQueues(boolean value)	{
+		plsr.setFlushQueues(value);
+	}
+	
+	public PointLightShadowRenderer getShadowRenderer()	{
+		return plsr;
+	}
+	
 }

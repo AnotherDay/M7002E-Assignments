@@ -19,6 +19,7 @@ import com.jme3.input.controls.MouseAxisTrigger;
 import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
+import com.jme3.post.FilterPostProcessor;
 import com.jme3.scene.Node;
 
 public class Application extends SimpleApplication {
@@ -88,14 +89,17 @@ public class Application extends SimpleApplication {
 	private void initTorch()	{
 		Torch northTorch = new Torch("NorthTorch", assetManager);
 		northTorch.translate(0, 5, -halfFloorWidth+0.5f);
+		northTorch.setFlushQueues(false);
 		
 		Torch southTorch = new Torch("SouthTorch", assetManager);
 		southTorch.rotate(0, (float)Math.PI, 0);
 		southTorch.translate(0, 5, halfFloorWidth-0.5f);
+		southTorch.setFlushQueues(false);
 		
 		Torch westTorch = new Torch("EastTorch", assetManager);
 		westTorch.rotate(0, (float)(Math.PI/2), 0);
 		westTorch.translate(-halfFloorWidth+0.5f, 5, 0);
+		westTorch.setFlushQueues(false);
 		
 		Torch eastTorch = new Torch("WestTorch", assetManager);
 		eastTorch.rotate(0, -(float)(Math.PI/2), 0);
@@ -103,6 +107,7 @@ public class Application extends SimpleApplication {
 		
 		torchList.addAll(Arrays.asList(northTorch, southTorch, westTorch, eastTorch));
 		for(Torch torch : torchList)	{
+			viewPort.addProcessor(torch.getShadowRenderer());
 			rootNode.attachChild(torch.getNode());
 			rootNode.addLight(torch.getLight());
 		}
