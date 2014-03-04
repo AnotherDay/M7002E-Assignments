@@ -1,19 +1,11 @@
-Assignment 3
+Assignment 4 (Work in progress)
 =============
 
-[Github page](https://github.com/AnotherDay/M7002E-Assignments/tree/master/src/assignment3)
 
-Name of the zip file: daveri-9_Assignment3_M7002E.zip
+[Github page](https://github.com/AnotherDay/M7002E-Assignments/tree/master/src/assignment4)
 
-Moving objects
----------------
-First select a object by selecting it with the left mouse button then the object can be moved with the IJKL keys.
+Name of the zip file: daveri-9_Assignment4_M7002E.zip
 
-Extra Features
----------------
-* Lighting, point lights are added on the fire effects.
-* Diffuse, all objects have diffuse values so that they get darker when no light is shining directly at them.
-* Complex shapes are implemented in the form of wall torches
 
 References
 ----------
@@ -21,3 +13,4 @@ References
 * [Roof texture](http://opengameart.org/node/8160)
 * [Floor texture](http://opengameart.org/node/8050)
 * [Crate texture](http://opengameart.org/content/2d-wooden-box)
+* [Hand cursor](https://www.iconfinder.com/icons/42207/cursor_hand_icon)
