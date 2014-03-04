@@ -62,6 +62,7 @@ public class Application extends SimpleApplication {
 
 		Key theKey = new Key("StartRoomKey", assetManager);
 		theKey.translate(-2, 4, 0);
+		theKey.scale(0.5f);
 		shootablesNode.attachChild(theKey.getGeometry());
 		bulletAppState.getPhysicsSpace().add(theKey.getPhysics());
 	}
