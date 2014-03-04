@@ -9,32 +9,37 @@ import com.jme3.scene.Mesh;
 
 public abstract class Abstract3dObject {
 
-	protected Mesh mesh;
-	protected Geometry meshGeometry;
-	protected RigidBodyControl meshPhysics;
+	protected Geometry geometry;
+	protected RigidBodyControl physics;
 	
 	public Abstract3dObject(Mesh mesh, String geometryName, float mass)	{
-		this.mesh = mesh;
-		meshGeometry = new Geometry(geometryName, mesh);
-		meshPhysics = new RigidBodyControl(mass);
-		meshGeometry.addControl(meshPhysics);
-		meshGeometry.setShadowMode(RenderQueue.ShadowMode.Receive);
+		geometry = new Geometry(geometryName, mesh);
+		physics = new RigidBodyControl(mass);
+		geometry.addControl(physics);
+		geometry.setShadowMode(RenderQueue.ShadowMode.Receive);
+	}
+	
+	public Abstract3dObject(Geometry geometry, String geometryName, float mass)	{
+		this.geometry = geometry;
+		physics = new RigidBodyControl(mass);
+		geometry.addControl(physics);
+		geometry.setShadowMode(RenderQueue.ShadowMode.Receive);
 	}
 	
 	public Geometry getGeometry()	{
-		return meshGeometry;
+		return geometry;
 	}
 	
 	public RigidBodyControl getPhysics()	{
-		return meshPhysics;
+		return physics;
 	}
 	
 	public void translate(Vector3f location)	{
-		meshPhysics.setPhysicsLocation(location);
+		physics.setPhysicsLocation(location);
 	}
 	
 	public void translate(float x, float y, float z)	{
-		meshPhysics.setPhysicsLocation(new Vector3f(x, y, z));
+		physics.setPhysicsLocation(new Vector3f(x, y, z));
 	}
 	
 	/**
@@ -42,6 +47,6 @@ public abstract class Abstract3dObject {
 	 * texture to stretch.
 	 */
 	public void scaleTexture(Vector2f vector2f)	{
-		mesh.scaleTextureCoordinates(vector2f);
+		geometry.getMesh().scaleTextureCoordinates(vector2f);
 	}
 }
