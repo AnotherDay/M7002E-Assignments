@@ -17,7 +17,7 @@ public class Crate extends Abstract3dObject {
 
 	public Crate(String name ,float xLength, float yLength, float zLength, float mass, AssetManager assetManager) {
 		super(new Box(xLength, yLength, zLength), name, mass);
-		meshGeometry.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+		geometry.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
 		setMaterial(assetManager);
 	}
 	
@@ -31,7 +31,7 @@ public class Crate extends Abstract3dObject {
 	    boxMaterial.setColor("Specular",ColorRGBA.White);
 //	    boxMaterial.setFloat("Shininess", 64f);  // [0,128]
 	    boxMaterial.setBoolean("UseMaterialColors",true); 
-	    meshGeometry.setMaterial(boxMaterial);
+	    geometry.setMaterial(boxMaterial);
 	}
 
 }

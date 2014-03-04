@@ -19,13 +19,13 @@ public class PlayerMarker extends Abstract3dObject {
 	public PlayerMarker(String name, AssetManager assetManager) {
 		super(new Box(boxRadius, boxRadius, boxRadius), name, 0);
 		this.assetManager = assetManager;
-		meshGeometry.setShadowMode(RenderQueue.ShadowMode.Off);
+		geometry.setShadowMode(RenderQueue.ShadowMode.Off);
 		setMaterial();
 	}
 
 	private void setMaterial()	{
 		Material markerMaterial = new Material(assetManager, materialDefinitionFile);
 		markerMaterial.setColor("Color", ColorRGBA.Red);
-		meshGeometry.setMaterial(markerMaterial);
+		geometry.setMaterial(markerMaterial);
 	}
 }

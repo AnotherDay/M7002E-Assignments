@@ -9,6 +9,7 @@ import assignment4.buildingBlocks.Floor;
 import assignment4.buildingBlocks.Roof;
 import assignment4.buildingBlocks.Wall;
 import assignment4.objects.Crate;
+import assignment4.objects.Key;
 import assignment4.objects.Torch;
 
 import com.jme3.app.SimpleApplication;
@@ -22,7 +23,7 @@ import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
-import com.jme3.util.BufferUtils;
+import com.jme3.scene.plugins.blender.BlenderModelLoader;
 
 public class Application extends SimpleApplication {
 
@@ -43,6 +44,7 @@ public class Application extends SimpleApplication {
 		bulletAppState = new BulletAppState();
 		stateManager.attach(bulletAppState);
 		bulletAppState.getPhysicsSpace().setGravity(new Vector3f(0, -9.82f, 0));
+		assetManager.registerLoader(BlenderModelLoader.class, "blend");
 
 		assetManager.registerLocator("src/assignment4/assets", FileLocator.class);
 		
@@ -57,6 +59,11 @@ public class Application extends SimpleApplication {
 		initTorch();
 		initPicker();
 		initBoxes();
+
+		Key theKey = new Key("StartRoomKey", assetManager);
+		theKey.translate(-2, 4, 0);
+		shootablesNode.attachChild(theKey.getGeometry());
+		bulletAppState.getPhysicsSpace().add(theKey.getPhysics());
 	}
 	
 	private void initRoom()	{
@@ -119,20 +126,19 @@ public class Application extends SimpleApplication {
 		Crate crate1 = new Crate("Crate1", 2, 2, 2, 1, assetManager);
 		crate1.translate(0, 2, -10);
 		shootablesNode.attachChild(crate1.getGeometry());
-		rootNode.attachChild(shootablesNode);
 		addPhysics(crate1);
 		
 		Crate crate2 = new Crate("Crate2", 2, 2, 2, 1, assetManager);
 		crate2.translate(10, 2, -10);
 		shootablesNode.attachChild(crate2.getGeometry());
-		rootNode.attachChild(shootablesNode);
 		addPhysics(crate2);
 		
 		Crate crate3 = new Crate("Crate3", 2, 2, 2, 1, assetManager);
 		crate3.translate(-10, 2, -10);
 		shootablesNode.attachChild(crate3.getGeometry());
-		rootNode.attachChild(shootablesNode);
 		addPhysics(crate3);
+		
+		rootNode.attachChild(shootablesNode);
 	}
 	
 	private void initPicker()	{

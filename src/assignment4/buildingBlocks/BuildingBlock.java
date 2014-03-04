@@ -36,6 +36,6 @@ public abstract class BuildingBlock extends Abstract3dObject {
 	    Texture tex3 = assetManager.loadTexture(textureKey);
 	    tex3.setWrap(WrapMode.Repeat);
 	    boxMaterial.setTexture("DiffuseMap", tex3);
-	    meshGeometry.setMaterial(boxMaterial);
+	    geometry.setMaterial(boxMaterial);
 	}
 }
