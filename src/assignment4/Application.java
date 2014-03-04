@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import assignment4.actionListeners.MapModeActionListener;
 import assignment4.actionListeners.MoveObjectListener;
+import assignment4.buildingBlocks.Door;
 import assignment4.buildingBlocks.Floor;
 import assignment4.buildingBlocks.Roof;
 import assignment4.buildingBlocks.Wall;
@@ -91,7 +92,11 @@ public class Application extends SimpleApplication {
 		roof.translate(0, 2*halfWallHeight, 0);
 		roof.scaleTexture(new Vector2f(4, 4));
 		
-		Abstract3dObject[] startRoomList = new Abstract3dObject[]{floor, southWall, northWall, westWall, eastWall, roof};
+		Door door = new Door(2, 4, 0.15f, "StartRoomDoor", assetManager);
+		door.translate(2, 4, halfFloorWidth-0.15f);
+		
+		Abstract3dObject[] startRoomList = 
+				new Abstract3dObject[]{floor, southWall, northWall, westWall, eastWall, roof, door};
 		attachToRootNode(startRoomList);
 		addPhysics(startRoomList);
 	}
@@ -101,10 +106,10 @@ public class Application extends SimpleApplication {
 		northTorch.translate(0, 5, -halfFloorWidth+0.5f);
 		northTorch.setFlushQueues(false);
 		
-		Torch southTorch = new Torch("SouthTorch", assetManager);
-		southTorch.rotate(0, (float)Math.PI, 0);
-		southTorch.translate(0, 5, halfFloorWidth-0.5f);
-		southTorch.setFlushQueues(false);
+//		Torch southTorch = new Torch("SouthTorch", assetManager);
+//		southTorch.rotate(0, (float)Math.PI, 0);
+//		southTorch.translate(0, 5, halfFloorWidth-0.5f);
+//		southTorch.setFlushQueues(false);
 		
 		Torch westTorch = new Torch("EastTorch", assetManager);
 		westTorch.rotate(0, (float)(Math.PI/2), 0);
@@ -115,7 +120,7 @@ public class Application extends SimpleApplication {
 		eastTorch.rotate(0, -(float)(Math.PI/2), 0);
 		eastTorch.translate(halfFloorWidth-0.5f, 5, 0);
 		
-		torchList.addAll(Arrays.asList(northTorch, southTorch, westTorch, eastTorch));
+		torchList.addAll(Arrays.asList(northTorch, westTorch, eastTorch));
 		for(Torch torch : torchList)	{
 			viewPort.addProcessor(torch.getShadowRenderer());
 			rootNode.attachChild(torch.getNode());

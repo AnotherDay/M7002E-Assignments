@@ -17,4 +17,5 @@ References
     - [Floor texture](http://opengameart.org/node/8050)
     - [Crate texture](http://opengameart.org/content/2d-wooden-box)
     - [Hand cursor](https://www.iconfinder.com/icons/42207/cursor_hand_icon)
+    - [Door texture and normal map](http://opengameart.org/content/weathered-wood-door)
 

@@ -38,4 +38,15 @@ public abstract class BuildingBlock extends Abstract3dObject {
 	    boxMaterial.setTexture("DiffuseMap", tex3);
 	    geometry.setMaterial(boxMaterial);
 	}
+	
+	protected void setMaterialWithNormalMap(String normalMapFile, AssetManager assetManager)	{
+		Material boxMaterial = new Material(assetManager, materialDefinitionFile);
+	    TextureKey textureKey = new TextureKey(materialTextureFile);
+	    textureKey.setGenerateMips(true);
+	    Texture tex = assetManager.loadTexture(textureKey);
+	    tex.setWrap(WrapMode.Repeat);
+	    boxMaterial.setTexture("DiffuseMap", tex);
+	    boxMaterial.setTexture("NormalMap", assetManager.loadTexture(normalMapFile));
+	    geometry.setMaterial(boxMaterial);
+	}
 }
