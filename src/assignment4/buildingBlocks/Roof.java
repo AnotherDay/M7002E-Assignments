@@ -6,7 +6,7 @@ public class Roof extends BuildingBlock {
 
 	private static String materialTextureFile = "Textures/wood_roof.jpg";
 	
-	public Roof(float xLength, float yLength, float zLength, AssetManager assetManager)	{
-		super(xLength, yLength, zLength, assetManager, materialTextureFile);
+	public Roof(float xLength, float yLength, float zLength, String name, AssetManager assetManager)	{
+		super(xLength, yLength, zLength, name, assetManager, materialTextureFile);
 	}
 }

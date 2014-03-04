@@ -30,7 +30,7 @@ public abstract class Abstract3dObject {
 	}
 	
 	public void translate(Vector3f location)	{
-		meshPhysics.setPhysicsLocation(new Vector3f(0, 0, -10));
+		meshPhysics.setPhysicsLocation(location);
 	}
 	
 	public void translate(float x, float y, float z)	{

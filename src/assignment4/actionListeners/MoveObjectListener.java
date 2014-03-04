@@ -83,7 +83,8 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 	
 	@Override
 	public void onAction(String name, boolean isPressed, float tpf) {
-		if(name.equals(Constants.PICK_DRAG) && !inJediMode && pickedObjectControll == null)	{
+		if(cam.getLocation().y > 100){} //If the camera is viewing the rooms from above ignore input
+		else if(name.equals(Constants.PICK_DRAG) && !inJediMode && pickedObjectControll == null)	{
 			if(distance <= pickingDistance)
 				pickObject();
 		}

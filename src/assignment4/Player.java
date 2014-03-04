@@ -6,6 +6,7 @@ import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 
@@ -15,12 +16,12 @@ public class Player implements ActionListener {
 	private CharacterControl player = new CharacterControl(capsuleShape, 0.05f);
 	private InputManager inputManager;
 	private Camera cam;
-	private boolean left, right, up, down;
+	private boolean left, right, up, down, cameraDetached;
 	
 	public Player(InputManager inputManager, Camera cam)	{
 		this.inputManager = inputManager;
 		this.cam = cam;
-		this.cam.setFrustumPerspective(45, (float)this.cam.getWidth()/this.cam.getHeight(), 0.01f, 1000f);
+//		this.cam.setFrustumPerspective(45, (float)this.cam.getWidth()/this.cam.getHeight(), 0.01f, 1000f);
 		
 		player.setJumpSpeed(20);
 		player.setFallSpeed(30);
@@ -30,15 +31,44 @@ public class Player implements ActionListener {
 	}
 	
 	public void updateWalkingDirection()	{
-		player.setWalkDirection(getWalkingDirection());
-		cam.setLocation(player.getPhysicsLocation());
+		if(!cameraDetached)	{
+			player.setWalkDirection(getWalkingDirection());
+			cam.setLocation(player.getPhysicsLocation());
+		}
+	}
+	
+	public void setView(Vector3f direction, Vector3f up)	{
+		cam.lookAtDirection(direction, up);
+	}
+	
+	public void setCameraLocation(Vector3f location)	{
+		cam.setLocation(location);
+	}
+	
+	public void turnOffCameraRotation()	{
+	}
+	
+	public void detachCamera()	{
+		cameraDetached = true;
+	}
+	
+	public void attachCamera()	{
+		cameraDetached = false;
+	}
+	
+	public Vector3f getLocation()	{
+		return cam.getLocation();
 	}
 	
 	public CharacterControl getCharacterControl()	{
 		return player;
 	}
 	
-	public Vector3f getWalkingDirection()	{
+	public Vector3f getCameraDirection()	{
+		return cam.getDirection();
+	}
+	
+	private Vector3f getWalkingDirection()	{
 		Vector3f camDir = new Vector3f();
 		Vector3f camLeft = new Vector3f();
 		Vector3f walkDirection = new Vector3f();

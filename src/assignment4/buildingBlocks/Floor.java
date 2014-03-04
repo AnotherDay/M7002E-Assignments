@@ -7,8 +7,9 @@ public class Floor extends BuildingBlock {
 	
 	private static String materialTextureFile = "Textures/wood_floor.png";
 
-	public Floor(float xValue, float yValue, float zValue, AssetManager assetManager) {
-		super(xValue, yValue, zValue, assetManager, materialTextureFile);
+	public Floor(float xValue, float yValue, float zValue, String name, AssetManager assetManager) {
+//		super(xValue, yValue, zValue, name, assetManager, materialTextureFile, materialTextureFile);
+		super(xValue, yValue, zValue, name, assetManager, materialTextureFile);
 		scaleTexture(new Vector2f(2,2));
 	}
 }

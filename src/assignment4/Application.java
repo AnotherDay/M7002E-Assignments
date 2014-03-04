@@ -3,6 +3,7 @@ package assignment4;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import assignment4.actionListeners.MapModeActionListener;
 import assignment4.actionListeners.MoveObjectListener;
 import assignment4.buildingBlocks.Floor;
 import assignment4.buildingBlocks.Roof;
@@ -20,8 +21,8 @@ import com.jme3.input.controls.MouseAxisTrigger;
 import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
-import com.jme3.post.FilterPostProcessor;
 import com.jme3.scene.Node;
+import com.jme3.util.BufferUtils;
 
 public class Application extends SimpleApplication {
 
@@ -32,7 +33,7 @@ public class Application extends SimpleApplication {
 	private Player player;
 	private ArrayList<Torch> torchList = new ArrayList<Torch>();
 	private Node shootablesNode = new Node();
-	private MoveObjectListener actionListener; 
+	private MoveObjectListener moveObjectListener; 
 	private GuiManager guiManager;
  
 	@Override
@@ -59,32 +60,32 @@ public class Application extends SimpleApplication {
 	}
 	
 	private void initRoom()	{
-		Floor floor = new Floor(halfFloorWidth, materialThickness, halfFloorWidth, assetManager);
+		Floor floor = new Floor(halfFloorWidth, materialThickness, halfFloorWidth, "StartRoomFloor", assetManager);
 		floor.scaleTexture(new Vector2f(4, 4));
 		
-		Wall southWall = new Wall(halfFloorWidth, halfWallHeight, materialThickness, assetManager);
+		Wall southWall = new Wall(halfFloorWidth, halfWallHeight, materialThickness, "StartRoomSouthWall", assetManager);
 		southWall.translate(0, halfWallHeight, halfFloorWidth);
 		southWall.scaleTexture(wallTextureScaleFactor);
 		
-		Wall northWall = new Wall(halfFloorWidth, halfWallHeight, materialThickness, assetManager);
+		Wall northWall = new Wall(halfFloorWidth, halfWallHeight, materialThickness, "StartRoomSouthWall", assetManager);
 		northWall.translate(0, halfWallHeight, -halfFloorWidth);
 		northWall.scaleTexture(wallTextureScaleFactor);
 		
-		Wall westWall = new Wall(materialThickness, halfWallHeight, halfFloorWidth, assetManager);
+		Wall westWall = new Wall(materialThickness, halfWallHeight, halfFloorWidth, "StartRoomWestWall", assetManager);
 		westWall.translate(halfFloorWidth, halfWallHeight, 0);
 		westWall.scaleTexture(wallTextureScaleFactor);
 		
-		Wall eastWall = new Wall(materialThickness, halfWallHeight, halfFloorWidth, assetManager);
+		Wall eastWall = new Wall(materialThickness, halfWallHeight, halfFloorWidth, "StartRoomEastWall", assetManager);
 		eastWall.translate(-halfFloorWidth, halfWallHeight, 0);
 		eastWall.scaleTexture(wallTextureScaleFactor);
 		
-		Roof roof = new Roof(halfFloorWidth, materialThickness, halfFloorWidth, assetManager);
+		Roof roof = new Roof(halfFloorWidth, materialThickness, halfFloorWidth, Constants.START_ROOM_ROOF, assetManager);
 		roof.translate(0, 2*halfWallHeight, 0);
 		roof.scaleTexture(new Vector2f(4, 4));
 		
-		Abstract3dObject[] roomList = new Abstract3dObject[]{floor, southWall, northWall, westWall, eastWall, roof};
-		attachToRootNode(roomList);
-		addPhysics(roomList);
+		Abstract3dObject[] startRoomList = new Abstract3dObject[]{floor, southWall, northWall, westWall, eastWall, roof};
+		attachToRootNode(startRoomList);
+		addPhysics(startRoomList);
 	}
 	
 	private void initTorch()	{
@@ -146,8 +147,12 @@ public class Application extends SimpleApplication {
 	    inputManager.addMapping(Constants.JEDI_MODE, new KeyTrigger(KeyInput.KEY_G));
 	    inputManager.addMapping(Constants.MOUSE_MOVEMENT, new MouseAxisTrigger(MouseInput.AXIS_X, false));
 	    inputManager.addMapping(Constants.MOUSE_MOVEMENT, new MouseAxisTrigger(MouseInput.AXIS_Y, false));
-	    actionListener = new MoveObjectListener(shootablesNode, cam, rootNode, guiManager, assetManager);
-	    inputManager.addListener(actionListener, Constants.getMappingNames());
+	    moveObjectListener = new MoveObjectListener(shootablesNode, cam, rootNode, guiManager, assetManager);
+	    inputManager.addListener(moveObjectListener, Constants.getMappingNames());
+	    
+	    inputManager.addMapping(Constants.MAP_MODE, new KeyTrigger(KeyInput.KEY_M));
+	    MapModeActionListener mapModeActionListener = new MapModeActionListener(player, rootNode, guiManager, assetManager);
+	    inputManager.addListener(mapModeActionListener, Constants.MAP_MODE);
 	}
 	
 	private void attachToRootNode(Abstract3dObject... abstractBoxList)	{
@@ -172,7 +177,7 @@ public class Application extends SimpleApplication {
 	@Override
 	public void simpleUpdate(float tpf) {
 		player.updateWalkingDirection();
-		actionListener.updateHighlightingPosition();
-		actionListener.checkDistanceToObject();
+		moveObjectListener.updateHighlightingPosition();
+		moveObjectListener.checkDistanceToObject();
 	}
 }
