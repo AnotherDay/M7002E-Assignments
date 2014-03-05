@@ -3,6 +3,7 @@ package assignment4;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import assignment4.actionListeners.InventoryListener;
 import assignment4.actionListeners.MapModeActionListener;
 import assignment4.actionListeners.MoveObjectListener;
 import assignment4.buildingBlocks.Door;
@@ -11,6 +12,7 @@ import assignment4.buildingBlocks.Roof;
 import assignment4.buildingBlocks.Wall;
 import assignment4.objects.Crate;
 import assignment4.objects.Key;
+import assignment4.objects.MagicWand;
 import assignment4.objects.Torch;
 
 import com.jme3.app.SimpleApplication;
@@ -28,13 +30,13 @@ import com.jme3.scene.plugins.blender.BlenderModelLoader;
 
 public class Application extends SimpleApplication {
 
-	private float halfWallHeight = 8.0f, halfFloorWidth = 20.0f, materialThickness = 0.2f;
+	private float halfWallHeight = 8.0f, halfFloorWidth = 20.0f, materialThickness = 1f;
 	private Vector2f wallTextureScaleFactor = new Vector2f(7, 3);
 	
 	private BulletAppState bulletAppState;
 	private Player player;
 	private ArrayList<Torch> torchList = new ArrayList<Torch>();
-	private Node shootablesNode = new Node();
+	private Node pickablesNode = new Node(), inventoryNode = new Node();
 	private MoveObjectListener moveObjectListener; 
 	private GuiManager guiManager;
  
@@ -64,8 +66,14 @@ public class Application extends SimpleApplication {
 		Key theKey = new Key("StartRoomKey", assetManager);
 		theKey.translate(-2, 4, 0);
 		theKey.scale(0.5f);
-		shootablesNode.attachChild(theKey.getGeometry());
+		pickablesNode.attachChild(theKey.getGeometry());
 		bulletAppState.getPhysicsSpace().add(theKey.getPhysics());
+		
+		MagicWand magicWand = new MagicWand("LightRemover", assetManager);
+		magicWand.translate(-5, 4, 0);
+		pickablesNode.attachChild(magicWand.getGeometry());
+		inventoryNode.attachChild(magicWand.getGeometry());
+		bulletAppState.getPhysicsSpace().add(magicWand.getPhysics());
 	}
 	
 	private void initRoom()	{
@@ -103,7 +111,7 @@ public class Application extends SimpleApplication {
 	
 	private void initTorch()	{
 		Torch northTorch = new Torch("NorthTorch", assetManager);
-		northTorch.translate(0, 5, -halfFloorWidth+0.5f);
+		northTorch.translate(0, 5, -halfFloorWidth+materialThickness+0.5f);
 		northTorch.setFlushQueues(false);
 		
 //		Torch southTorch = new Torch("SouthTorch", assetManager);
@@ -113,12 +121,12 @@ public class Application extends SimpleApplication {
 		
 		Torch westTorch = new Torch("EastTorch", assetManager);
 		westTorch.rotate(0, (float)(Math.PI/2), 0);
-		westTorch.translate(-halfFloorWidth+0.5f, 5, 0);
+		westTorch.translate(-halfFloorWidth+materialThickness+0.5f, 5, 0);
 		westTorch.setFlushQueues(false);
 		
 		Torch eastTorch = new Torch("WestTorch", assetManager);
 		eastTorch.rotate(0, -(float)(Math.PI/2), 0);
-		eastTorch.translate(halfFloorWidth-0.5f, 5, 0);
+		eastTorch.translate(halfFloorWidth+materialThickness-0.5f, 5, 0);
 		
 		torchList.addAll(Arrays.asList(northTorch, westTorch, eastTorch));
 		for(Torch torch : torchList)	{
@@ -130,21 +138,21 @@ public class Application extends SimpleApplication {
 
 	private void initBoxes()	{
 		Crate crate1 = new Crate("Crate1", 2, 2, 2, 1, assetManager);
-		crate1.translate(0, 2, -10);
-		shootablesNode.attachChild(crate1.getGeometry());
+		crate1.translate(0, 2+materialThickness, -10);
+		pickablesNode.attachChild(crate1.getGeometry());
 		addPhysics(crate1);
 		
 		Crate crate2 = new Crate("Crate2", 2, 2, 2, 1, assetManager);
-		crate2.translate(10, 2, -10);
-		shootablesNode.attachChild(crate2.getGeometry());
+		crate2.translate(10, 2+materialThickness, -10);
+		pickablesNode.attachChild(crate2.getGeometry());
 		addPhysics(crate2);
 		
 		Crate crate3 = new Crate("Crate3", 2, 2, 2, 1, assetManager);
-		crate3.translate(-10, 2, -10);
-		shootablesNode.attachChild(crate3.getGeometry());
+		crate3.translate(-10, 2+materialThickness, -10);
+		pickablesNode.attachChild(crate3.getGeometry());
 		addPhysics(crate3);
 		
-		rootNode.attachChild(shootablesNode);
+		rootNode.attachChild(pickablesNode);
 	}
 	
 	private void initPicker()	{
@@ -159,7 +167,7 @@ public class Application extends SimpleApplication {
 	    inputManager.addMapping(Constants.JEDI_MODE, new KeyTrigger(KeyInput.KEY_G));
 	    inputManager.addMapping(Constants.MOUSE_MOVEMENT, new MouseAxisTrigger(MouseInput.AXIS_X, false));
 	    inputManager.addMapping(Constants.MOUSE_MOVEMENT, new MouseAxisTrigger(MouseInput.AXIS_Y, false));
-	    moveObjectListener = new MoveObjectListener(shootablesNode, cam, rootNode, guiManager, assetManager);
+	    moveObjectListener = new MoveObjectListener(pickablesNode, cam, rootNode, guiManager, assetManager);
 	    inputManager.addListener(moveObjectListener, Constants.getMappingNames());
 	    
 	    inputManager.addMapping(Constants.MAP_MODE, new KeyTrigger(KeyInput.KEY_M));
