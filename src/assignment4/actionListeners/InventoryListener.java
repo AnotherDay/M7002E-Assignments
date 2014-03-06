@@ -1,11 +1,14 @@
 package assignment4.actionListeners;
 
+import java.util.ArrayList;
+
 import assignment4.Constants;
 import assignment4.GuiManager;
 import assignment4.LightController;
 import assignment4.ObjectPicker;
 import assignment4.Player;
 import assignment4.exceptions.NoObjectFoundException;
+import assignment4.objects.MagicWand;
 import assignment4.objects.Torch;
 
 import com.jme3.bullet.control.RigidBodyControl;
@@ -13,7 +16,6 @@ import com.jme3.input.controls.ActionListener;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
-import com.jme3.scene.Spatial;
 
 public class InventoryListener implements ActionListener {
 
@@ -25,6 +27,7 @@ public class InventoryListener implements ActionListener {
 	private ObjectPicker objectPicker;
 	private MoveObjectListener moveObjectListener;
 	private Player player;
+	private ArrayList<MagicWand> wandList = new ArrayList<MagicWand>();
 	private boolean idleState;
 	
 	public InventoryListener(Node itemsNode, LightController lightController, Player player, MoveObjectListener moveObjectListener, GuiManager guiManager)	{
@@ -35,6 +38,18 @@ public class InventoryListener implements ActionListener {
 		this.guiManager = guiManager;
 		
 		this.objectPicker = new ObjectPicker(player);
+	}
+	
+	public void addWands(MagicWand... wands)	{
+		for(MagicWand wand : wands)	{
+			wandList.add(wand);
+		}
+	}
+	
+	public void removeWand(MagicWand... wands)		{
+		for(MagicWand wand : wands)	{
+			wandList.remove(wand);
+		}
 	}
 	
 	@Override
@@ -68,11 +83,16 @@ public class InventoryListener implements ActionListener {
 	private void pickUpItem()	{
 		try	{
 			inventoryItem = objectPicker.pickClosestGeometry(itemsNode);
-			itemController = inventoryItem.getControl(RigidBodyControl.class);
-			inventoryItem.removeControl(RigidBodyControl.class);
-			itemsNode.detachChild(inventoryItem);
-			moveObjectListener.turnOff();
-			guiManager.attachWand(inventoryItem);
+			for(MagicWand wand : wandList)	{
+				if(wand.getGeometry().equals(inventoryItem))	{
+					itemController = inventoryItem.getControl(RigidBodyControl.class);
+					inventoryItem.removeControl(RigidBodyControl.class);
+					itemsNode.detachChild(inventoryItem);
+					moveObjectListener.turnOff();
+					guiManager.attachWand(inventoryItem);
+					break;
+				}
+			}
 		} catch(NoObjectFoundException e)	{e.printStackTrace();}
 	}
 	

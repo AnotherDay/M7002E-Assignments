@@ -1,7 +1,6 @@
 package assignment4;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import assignment4.actionListeners.InventoryListener;
 import assignment4.actionListeners.MapModeActionListener;
@@ -36,10 +35,11 @@ public class Application extends SimpleApplication {
 	
 	private BulletAppState bulletAppState;
 	private Player player;
-	private Node pickablesNode = new Node(), itemsNode = new Node(), torchesNode = new Node();
+	private Node pickablesNode = new Node(), torchesNode = new Node();
 	private MoveObjectListener moveObjectListener; 
 	private GuiManager guiManager;
 	private LightController lightController;
+	private ArrayList<MagicWand> wandArray = new ArrayList<MagicWand>();
  
 	@Override
 	public void simpleInitApp() {
@@ -70,7 +70,8 @@ public class Application extends SimpleApplication {
 		
 		MagicWand magicWand = new MagicWand("LightRemover", assetManager);
 		magicWand.translate(-5, 4, 0);
-		itemsNode.attachChild(magicWand.getGeometry());
+		pickablesNode.attachChild(magicWand.getGeometry());
+		wandArray.add(magicWand);
 		bulletAppState.getPhysicsSpace().add(magicWand.getPhysics());
 		
 		initRoom();
@@ -79,7 +80,6 @@ public class Application extends SimpleApplication {
 		initBoxes();
 		
 		rootNode.attachChild(pickablesNode);
-		rootNode.attachChild(itemsNode);
 	}
 	
 	private void initRoom()	{
@@ -184,8 +184,8 @@ public class Application extends SimpleApplication {
 	    inputManager.addListener(mapModeActionListener, Constants.MAP_MODE);
 	    
 	    inputManager.addMapping(Constants.PUT_IN_INVENTORY, new KeyTrigger(KeyInput.KEY_E));
-	    ObjectPicker objectPicker = new ObjectPicker(player);
-	    InventoryListener inventoryListener = new InventoryListener(itemsNode, lightController, player, moveObjectListener, guiManager);
+	    InventoryListener inventoryListener = new InventoryListener(pickablesNode ,lightController, player, moveObjectListener, guiManager);
+	    inventoryListener.addWands(wandArray.toArray(new MagicWand[wandArray.size()]));
 	    inputManager.addListener(inventoryListener, Constants.PUT_IN_INVENTORY, Constants.PICK_DRAG);
 	}
 	

@@ -1,9 +1,6 @@
 package assignment4;
 
-import java.util.ArrayList;
-
 import assignment4.exceptions.NoObjectFoundException;
-import assignment4.objects.Torch;
 
 import com.jme3.collision.CollisionResults;
 import com.jme3.math.Ray;
