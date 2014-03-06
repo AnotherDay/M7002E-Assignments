@@ -159,12 +159,11 @@ public class Application extends SimpleApplication {
 	}
 	
 	private void initInput()	{
-		inputManager.addMapping(Constants.PICK_DRAG, new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
-	    inputManager.addMapping(Constants.PICK, new MouseButtonTrigger(MouseInput.BUTTON_RIGHT));
-	    inputManager.addMapping(Constants.PUSH_AWAY, new KeyTrigger(KeyInput.KEY_I));
-	    inputManager.addMapping(Constants.PULL_TOWARDS, new KeyTrigger(KeyInput.KEY_K));
-	    inputManager.addMapping(Constants.PUSH_LEFT, new KeyTrigger(KeyInput.KEY_J));
-	    inputManager.addMapping(Constants.PUSH_RIGHT, new KeyTrigger(KeyInput.KEY_L));
+		inputManager.addMapping(Constants.PICK, new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+	    inputManager.addMapping(Constants.JEDI_PUSH_AWAY, new KeyTrigger(KeyInput.KEY_I));
+	    inputManager.addMapping(Constants.JEDI_PULL_TOWARDS, new KeyTrigger(KeyInput.KEY_K));
+	    inputManager.addMapping(Constants.JEDI_PUSH_LEFT, new KeyTrigger(KeyInput.KEY_J));
+	    inputManager.addMapping(Constants.JEDI_PUSH_RIGHT, new KeyTrigger(KeyInput.KEY_L));
 	    inputManager.addMapping(Constants.PUSH_UP, new KeyTrigger(KeyInput.KEY_U));
 	    inputManager.addMapping(Constants.PUSH_DOWN, new KeyTrigger(KeyInput.KEY_O));
 	    inputManager.addMapping(Constants.JEDI_MODE, new KeyTrigger(KeyInput.KEY_G));
@@ -180,7 +179,7 @@ public class Application extends SimpleApplication {
 	    inputManager.addMapping(Constants.PUT_IN_INVENTORY, new KeyTrigger(KeyInput.KEY_E));
 	    InventoryListener inventoryListener = new InventoryListener(pickablesNode ,lightController, player, moveObjectListener, guiManager);
 	    inventoryListener.addWands(wandArray.toArray(new MagicWand[wandArray.size()]));
-	    inputManager.addListener(inventoryListener, Constants.PUT_IN_INVENTORY, Constants.PICK_DRAG);
+	    inputManager.addListener(inventoryListener, Constants.PUT_IN_INVENTORY, Constants.PICK);
 	}
 	
 	private void attachToRootNode(Abstract3dObject... abstractBoxList)	{

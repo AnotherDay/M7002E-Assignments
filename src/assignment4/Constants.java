@@ -7,11 +7,10 @@ public class Constants {
 	//Player actions
 	public final static String
 		PICK = "Pick",
-		PICK_DRAG = "PickDrag",
-		PUSH_AWAY = "PushAway",
-		PULL_TOWARDS = "PushTowards",
-		PUSH_LEFT = "PushLeft",
-		PUSH_RIGHT = "PushRight",
+		JEDI_PUSH_AWAY = "PushAway",
+		JEDI_PULL_TOWARDS = "PushTowards",
+		JEDI_PUSH_LEFT = "PushLeft",
+		JEDI_PUSH_RIGHT = "PushRight",
 		JEDI_MODE = "JediMode",
 		PUSH_UP = "PushUp",
 		PUSH_DOWN = "PushDown",
@@ -26,7 +25,7 @@ public class Constants {
 		TORCH_LIGHT_COLOR = new ColorRGBA(1.0f, 0.6f, 0, 1.0f);
 	
 	public static String[] getMappingNames()	{
-		return new String[]{PICK, PICK_DRAG, PUSH_AWAY, PULL_TOWARDS, PUSH_LEFT, PUSH_RIGHT, JEDI_MODE, 
+		return new String[]{PICK, JEDI_PUSH_AWAY, JEDI_PULL_TOWARDS, JEDI_PUSH_LEFT, JEDI_PUSH_RIGHT, JEDI_MODE, 
 				PUSH_UP, PUSH_DOWN, MOUSE_MOVEMENT, MAP_MODE, PUT_IN_INVENTORY};
 	}
 	

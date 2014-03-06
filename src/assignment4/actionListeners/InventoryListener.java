@@ -62,7 +62,7 @@ public class InventoryListener implements ActionListener {
 				removeItem();
 			}
 		}
-		else if(name.equals(Constants.PICK_DRAG) && !isPressed && !idleState)	{
+		else if(name.equals(Constants.PICK) && !isPressed && !idleState)	{
 			if(inventoryItem != null)	{
 				try {
 					Torch pickedTorch = (Torch) objectPicker.pickClosestGeometry(lightController.getTorchesNode()).getParent().getParent();

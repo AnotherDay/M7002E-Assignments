@@ -53,16 +53,16 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 			if(idleState) {} //In idle state ignore on action inputs
 			else if(inJediMode)	{
 				switch(name)	{
-				case Constants.PUSH_AWAY:
+				case Constants.JEDI_PUSH_AWAY:
 					pickedObjectControll.applyCentralForce(cam.getDirection().mult(pushForce));
 					break;
-				case Constants.PULL_TOWARDS:
+				case Constants.JEDI_PULL_TOWARDS:
 					pickedObjectControll.applyCentralForce(cam.getDirection().mult(pushForce).negate());
 					break;
-				case Constants.PUSH_LEFT:
+				case Constants.JEDI_PUSH_LEFT:
 					pickedObjectControll.applyCentralForce(directionVectorRotatedAroundZAxis().mult(pushForce/2));
 					break;
-				case Constants.PUSH_RIGHT:
+				case Constants.JEDI_PUSH_RIGHT:
 					pickedObjectControll.applyCentralForce(directionVectorRotatedAroundZAxis().mult(pushForce/2).negate());
 					break;
 				case Constants.PUSH_UP:
@@ -73,7 +73,7 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 					break;
 				}
 			}
-			else if(!inJediMode && name.equals(Constants.PICK_DRAG) && distance <= pickingDistance)	{
+			else if(!inJediMode && name.equals(Constants.PICK) && distance <= pickingDistance)	{
 				pickedObjectControll.setPhysicsLocation(cam.getLocation().add(cam.getDirection().mult(distance)));
 			}
 		}
@@ -86,11 +86,11 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 	public void onAction(String name, boolean isPressed, float tpf) {
 		if(cam.getLocation().y > 100){} //If the camera is viewing the rooms from above ignore input
 		else if(idleState){} //In idle state ignore on action inputs
-		else if(name.equals(Constants.PICK_DRAG) && !inJediMode && pickedObjectControll == null)	{
+		else if(name.equals(Constants.PICK) && !inJediMode && pickedObjectControll == null)	{
 			if(distance <= pickingDistance)
 				pickObject();
 		}
-		else if(name.equals(Constants.PICK_DRAG) && !inJediMode && pickedObjectControll != null && !isPressed )	{
+		else if(name.equals(Constants.PICK) && !inJediMode && pickedObjectControll != null && !isPressed )	{
 			removeSelectedObject();
 		}
 		else if(name.equals(Constants.PICK) && inJediMode && !isPressed)	{
