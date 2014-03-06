@@ -205,6 +205,6 @@ public class Application extends SimpleApplication {
 	public void simpleUpdate(float tpf) {
 		player.updateWalkingDirection();
 		moveObjectListener.updateHighlightingPosition();
-		moveObjectListener.checkDistanceToObject();
+		guiManager.updateActionIndicators(player, pickablesNode, wandArray);
 	}
 }

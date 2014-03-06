@@ -19,6 +19,8 @@ import com.jme3.scene.Node;
 
 public class InventoryListener implements ActionListener {
 
+	private float pickingDistance = 10f;
+	
 	private Node itemsNode;
 	private Geometry inventoryItem;
 	private RigidBodyControl itemController;
@@ -84,7 +86,8 @@ public class InventoryListener implements ActionListener {
 		try	{
 			inventoryItem = objectPicker.pickClosestGeometry(itemsNode);
 			for(MagicWand wand : wandList)	{
-				if(wand.getGeometry().equals(inventoryItem))	{
+				if(wand.getGeometry().equals(inventoryItem) && 
+						player.getLocation().distance(inventoryItem.getLocalTranslation()) <= pickingDistance)	{
 					itemController = inventoryItem.getControl(RigidBodyControl.class);
 					inventoryItem.removeControl(RigidBodyControl.class);
 					itemsNode.detachChild(inventoryItem);
@@ -92,18 +95,23 @@ public class InventoryListener implements ActionListener {
 					guiManager.attachWand(inventoryItem);
 					break;
 				}
+				else {
+					inventoryItem = null;
+				}
 			}
-		} catch(NoObjectFoundException e)	{e.printStackTrace();}
+		} catch(NoObjectFoundException e)	{}
 	}
 	
 	private void removeItem()	{
-		guiManager.detachAllItems();
-		inventoryItem.addControl(itemController);
-		Vector3f newItemLocation = player.getCameraLocation().add(player.getCameraDirection().mult(1.5f));
-		itemController.setPhysicsLocation(newItemLocation);
-		itemController.activate();
-		itemsNode.attachChild(inventoryItem);
-		moveObjectListener.turnOn();
-		inventoryItem = null;
+		if(inventoryItem != null)	{
+			guiManager.detachAllItems();
+			inventoryItem.addControl(itemController);
+			Vector3f newItemLocation = player.getCameraLocation().add(player.getCameraDirection().mult(2.0f));
+			itemController.setPhysicsLocation(newItemLocation);
+			itemController.activate();
+			itemsNode.attachChild(inventoryItem);
+			moveObjectListener.turnOn();
+			inventoryItem = null;
+		}
 	}
 }

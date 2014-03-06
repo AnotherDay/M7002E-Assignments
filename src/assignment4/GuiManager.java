@@ -2,6 +2,9 @@ package assignment4;
 
 import java.util.ArrayList;
 
+import assignment4.exceptions.NoObjectFoundException;
+import assignment4.objects.MagicWand;
+
 import com.jme3.asset.AssetManager;
 import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
@@ -17,7 +20,7 @@ public class GuiManager {
 	
 	private Node guiNode;
 	private BitmapText crossHairsText, godModeText;
-	private Picture handPic, godModeEffect;
+	private Picture handPicClosed, handPicOpen, godModeEffect;
 	private int windowWidth, windowHeight;
 	private AssetManager assetManager;
 	private ArrayList<Geometry> attachedGemetries = new ArrayList<Geometry>();
@@ -50,14 +53,23 @@ public class GuiManager {
 				windowHeight / 2 + crossHairsText.getLineHeight() / 2, 
 				0);
 		
-		handPic = new Picture("Hand Picture");
-		handPic.setImage(assetManager, "Other/cursor_drag_hand.png", true);
-		handPic.setWidth(20f);
-		handPic.setHeight(20f);
-		handPic.setLocalTranslation(
-				(windowWidth / 2) + 2,
-				(windowHeight / 2) + 2, 
+		handPicClosed = new Picture("Closed Hand Picture");
+		handPicClosed.setImage(assetManager, "Other/cursor_drag_hand.png", true);
+		handPicClosed.setWidth(20f);
+		handPicClosed.setHeight(20f);
+		handPicClosed.setLocalTranslation(
+				(windowWidth / 2) + 5,
+				(windowHeight / 2.2f), 
 				0);
+
+		handPicOpen = new Picture("Open Hand Picture");
+		handPicOpen.setImage(assetManager, "Other/cursor_pick_hand.png", true);
+		handPicOpen.setWidth(20f);
+		handPicOpen.setHeight(20f);
+		handPicOpen.setLocalTranslation(
+				(windowWidth / 2) + 5,
+				(windowHeight / 2) + 2, 
+				0);		
 		
 		godModeEffect = new Picture("God Mode Effect");
 		godModeEffect.setImage(assetManager, "Other/god_mode_effect.png", true);
@@ -100,12 +112,25 @@ public class GuiManager {
 	}
 	
 	public void attachGrabIcon()	{
-		guiNode.attachChild(handPic);
+		guiNode.attachChild(handPicClosed);
 	}
 	
 	public void detachGrabIcon()	{
 		try	{
-			guiNode.detachChild(handPic);
+			guiNode.detachChild(handPicClosed);
+		}
+		catch(NullPointerException npe)	{
+			//handPick not attach to guiNode, ignore
+		}
+	}
+	
+	public void attachPickIcon()	{
+		guiNode.attachChild(handPicOpen);
+	}
+	
+	public void detachPickIcon()	{
+		try	{
+			guiNode.detachChild(handPicOpen);
 		}
 		catch(NullPointerException npe)	{
 			//handPick not attach to guiNode, ignore
@@ -142,5 +167,21 @@ public class GuiManager {
 		for(Geometry geometry : attachedGemetries)	{
 			guiNode.detachChild(geometry);
 		}
+	}
+	
+	public void updateActionIndicators(Player player, Node pickablesNode, ArrayList<MagicWand> wandList)	{
+		detachPickIcon();
+		detachGrabIcon();
+		try {
+			Geometry closestGeometry = new ObjectPicker(player).pickClosestGeometry(pickablesNode);
+			if(closestGeometry.getLocalTranslation().distance(player.getLocation()) <= Constants.PICKING_DISTANCE)	{
+				attachGrabIcon();
+				for(MagicWand wand : wandList)	{
+					if(wand.getGeometry().equals(closestGeometry))	{
+						attachPickIcon();
+					}
+				}
+			}
+		} catch (NoObjectFoundException e) {}
 	}
 }

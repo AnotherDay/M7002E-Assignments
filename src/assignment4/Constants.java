@@ -24,6 +24,9 @@ public class Constants {
 	public final static ColorRGBA
 		TORCH_LIGHT_COLOR = new ColorRGBA(1.0f, 0.6f, 0, 1.0f);
 	
+	public final static float 
+		PICKING_DISTANCE = 10.0f;
+	
 	public static String[] getMappingNames()	{
 		return new String[]{PICK, JEDI_PUSH_AWAY, JEDI_PULL_TOWARDS, JEDI_PUSH_LEFT, JEDI_PUSH_RIGHT, JEDI_MODE, 
 				PUSH_UP, PUSH_DOWN, MOUSE_MOVEMENT, MAP_MODE, PUT_IN_INVENTORY};

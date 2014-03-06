@@ -10,7 +10,6 @@ import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.AnalogListener;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.Line;
 import com.jme3.math.Ray;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
@@ -138,19 +137,6 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 		}
 		else	{
 			removeSelectedObject();
-		}
-	}
-	
-	public void checkDistanceToObject()	{
-		if(!inJediMode)	{
-			guiManger.detachGrabIcon();
-			CollisionResults results = new CollisionResults();
-			Ray ray = new Ray(cam.getLocation(), cam.getDirection());
-			shootablesNode.collideWith(ray, results);
-			if(results.size() > 0)	{
-				distance = results.getClosestCollision().getGeometry().getLocalTranslation().distance(cam.getLocation());
-				if(distance <= pickingDistance) guiManger.attachGrabIcon();
-			}
 		}
 	}
 	
