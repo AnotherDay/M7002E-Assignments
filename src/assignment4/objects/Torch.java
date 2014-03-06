@@ -1,5 +1,7 @@
 package assignment4.objects;
 
+import assignment4.Constants;
+
 import com.jme3.asset.AssetManager;
 import com.jme3.effect.ParticleEmitter;
 import com.jme3.effect.ParticleMesh;
@@ -61,7 +63,7 @@ public class Torch {
 	    torchNode.attachChild(fire);
 	    
 	    pointLight = new PointLight();
-	    pointLight.setColor(new ColorRGBA(1.0f, 0.6f, 0, 1.0f));
+	    pointLight.setColor(Constants.TORCH_LIGHT_COLOR);
 	    pointLight.setRadius(60f);
 	    pointLight.setPosition(new Vector3f(pointLightOffsetX, pointLightOffsetY, pointLightOffsetZ));
 	    torchNode.addLight(pointLight);
