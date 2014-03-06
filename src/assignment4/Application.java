@@ -121,12 +121,6 @@ public class Application extends SimpleApplication {
 		northTorch.setFlushQueues(false);
 		torchesNode.attachChild(northTorch);
 		
-//		Torch southTorch = new Torch("SouthTorch", assetManager);
-//		southTorch.rotate(0, (float)Math.PI, 0);
-//		southTorch.translate(0, 5, halfFloorWidth-0.5f);
-//		southTorch.setFlushQueues(false);
-//		torchesNode.attachChild(southTorch);
-		
 		Torch westTorch = new Torch("EastTorch", assetManager);
 		westTorch.rotate(0, (float)(Math.PI/2), 0);
 		westTorch.translate(-halfFloorWidth+materialThickness+0.5f, 5, 0);
