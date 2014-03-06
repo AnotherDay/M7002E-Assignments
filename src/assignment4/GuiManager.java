@@ -2,14 +2,10 @@ package assignment4;
 
 import java.util.ArrayList;
 
-import assignment4.objects.Crate;
-
 import com.jme3.asset.AssetManager;
 import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
-import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
-import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
@@ -23,15 +19,17 @@ public class GuiManager {
 	private BitmapText crossHairsText, godModeText;
 	private Picture handPic, godModeEffect;
 	private int windowWidth, windowHeight;
+	private AssetManager assetManager;
 	private ArrayList<Geometry> attachedGemetries = new ArrayList<Geometry>();
 	
 	private String enterJediModeTextString = "Press G to enter jedi mode"; 
 	private String exitJediModeTextString = "Press G to exit jedi mode";
 	
-	public GuiManager(Node guiNode, int windowWidth, int windowHeight)	{
+	public GuiManager(Node guiNode, int windowWidth, int windowHeight, AssetManager assetManager)	{
 		this.guiNode = guiNode;
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
+		this.assetManager = assetManager;
 		
 		guiNode.detachAllChildren();
 		BitmapFont godModeFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
