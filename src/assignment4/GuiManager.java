@@ -23,17 +23,15 @@ public class GuiManager {
 	private BitmapText crossHairsText, godModeText;
 	private Picture handPic, godModeEffect;
 	private int windowWidth, windowHeight;
-	private AssetManager assetManager;
 	private ArrayList<Geometry> attachedGemetries = new ArrayList<Geometry>();
 	
 	private String enterJediModeTextString = "Press G to enter jedi mode"; 
 	private String exitJediModeTextString = "Press G to exit jedi mode";
 	
-	public GuiManager(Node guiNode, int windowWidth, int windowHeight, AssetManager assetManager)	{
+	public GuiManager(Node guiNode, int windowWidth, int windowHeight)	{
 		this.guiNode = guiNode;
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
-		this.assetManager = assetManager;
 		
 		guiNode.detachAllChildren();
 		BitmapFont godModeFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
