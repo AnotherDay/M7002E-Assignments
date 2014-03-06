@@ -26,6 +26,7 @@ import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.plugins.blender.BlenderModelLoader;
 
 public class Application extends SimpleApplication {
@@ -35,10 +36,10 @@ public class Application extends SimpleApplication {
 	
 	private BulletAppState bulletAppState;
 	private Player player;
-	private ArrayList<Torch> torchList = new ArrayList<Torch>();
-	private Node pickablesNode = new Node(), inventoryNode = new Node();
+	private Node pickablesNode = new Node(), itemsNode = new Node(), torchesNode = new Node();
 	private MoveObjectListener moveObjectListener; 
 	private GuiManager guiManager;
+	private LightController lightController;
  
 	@Override
 	public void simpleInitApp() {
@@ -58,11 +59,9 @@ public class Application extends SimpleApplication {
 		
 		player = new Player(inputManager, cam);
 		bulletAppState.getPhysicsSpace().add(player.getCharacterControl());
-		initRoom();
-		initTorch();
-		initPicker();
-		initBoxes();
-
+		
+		lightController = new LightController(rootNode, torchesNode);
+		
 		Key theKey = new Key("StartRoomKey", assetManager);
 		theKey.translate(-2, 4, 0);
 		theKey.scale(0.5f);
@@ -71,9 +70,16 @@ public class Application extends SimpleApplication {
 		
 		MagicWand magicWand = new MagicWand("LightRemover", assetManager);
 		magicWand.translate(-5, 4, 0);
-		pickablesNode.attachChild(magicWand.getGeometry());
-		inventoryNode.attachChild(magicWand.getGeometry());
+		itemsNode.attachChild(magicWand.getGeometry());
 		bulletAppState.getPhysicsSpace().add(magicWand.getPhysics());
+		
+		initRoom();
+		initTorch();
+		initInput();
+		initBoxes();
+		
+		rootNode.attachChild(pickablesNode);
+		rootNode.attachChild(itemsNode);
 	}
 	
 	private void initRoom()	{
@@ -101,7 +107,7 @@ public class Application extends SimpleApplication {
 		roof.scaleTexture(new Vector2f(4, 4));
 		
 		Door door = new Door(2, 4, 0.15f, "StartRoomDoor", assetManager);
-		door.translate(2, 4, halfFloorWidth-0.15f);
+		door.translate(2, 4, halfFloorWidth-materialThickness-0.15f);
 		
 		Abstract3dObject[] startRoomList = 
 				new Abstract3dObject[]{floor, southWall, northWall, westWall, eastWall, roof, door};
@@ -113,25 +119,30 @@ public class Application extends SimpleApplication {
 		Torch northTorch = new Torch("NorthTorch", assetManager);
 		northTorch.translate(0, 5, -halfFloorWidth+materialThickness+0.5f);
 		northTorch.setFlushQueues(false);
+		torchesNode.attachChild(northTorch);
 		
 //		Torch southTorch = new Torch("SouthTorch", assetManager);
 //		southTorch.rotate(0, (float)Math.PI, 0);
 //		southTorch.translate(0, 5, halfFloorWidth-0.5f);
 //		southTorch.setFlushQueues(false);
+//		torchesNode.attachChild(southTorch);
 		
 		Torch westTorch = new Torch("EastTorch", assetManager);
 		westTorch.rotate(0, (float)(Math.PI/2), 0);
 		westTorch.translate(-halfFloorWidth+materialThickness+0.5f, 5, 0);
 		westTorch.setFlushQueues(false);
+		torchesNode.attachChild(westTorch);
 		
 		Torch eastTorch = new Torch("WestTorch", assetManager);
 		eastTorch.rotate(0, -(float)(Math.PI/2), 0);
-		eastTorch.translate(halfFloorWidth+materialThickness-0.5f, 5, 0);
+		eastTorch.translate(halfFloorWidth-materialThickness-0.5f, 5, 0);
+		torchesNode.attachChild(eastTorch);
 		
-		torchList.addAll(Arrays.asList(northTorch, westTorch, eastTorch));
-		for(Torch torch : torchList)	{
+		rootNode.attachChild(torchesNode);
+		for(Spatial torchSpatial : torchesNode.getChildren())	{
+			Torch torch = (Torch) torchSpatial;
+			lightController.addTorches(torch);
 			viewPort.addProcessor(torch.getShadowRenderer());
-			rootNode.attachChild(torch.getNode());
 			rootNode.addLight(torch.getLight());
 		}
 	}
@@ -151,11 +162,9 @@ public class Application extends SimpleApplication {
 		crate3.translate(-10, 2+materialThickness, -10);
 		pickablesNode.attachChild(crate3.getGeometry());
 		addPhysics(crate3);
-		
-		rootNode.attachChild(pickablesNode);
 	}
 	
-	private void initPicker()	{
+	private void initInput()	{
 		inputManager.addMapping(Constants.PICK_DRAG, new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
 	    inputManager.addMapping(Constants.PICK, new MouseButtonTrigger(MouseInput.BUTTON_RIGHT));
 	    inputManager.addMapping(Constants.PUSH_AWAY, new KeyTrigger(KeyInput.KEY_I));
@@ -173,6 +182,11 @@ public class Application extends SimpleApplication {
 	    inputManager.addMapping(Constants.MAP_MODE, new KeyTrigger(KeyInput.KEY_M));
 	    MapModeActionListener mapModeActionListener = new MapModeActionListener(player, rootNode, guiManager, assetManager);
 	    inputManager.addListener(mapModeActionListener, Constants.MAP_MODE);
+	    
+	    inputManager.addMapping(Constants.PUT_IN_INVENTORY, new KeyTrigger(KeyInput.KEY_E));
+	    ObjectPicker objectPicker = new ObjectPicker(player);
+	    InventoryListener inventoryListener = new InventoryListener(itemsNode, lightController, player, moveObjectListener, guiManager);
+	    inputManager.addListener(inventoryListener, Constants.PUT_IN_INVENTORY, Constants.PICK_DRAG);
 	}
 	
 	private void attachToRootNode(Abstract3dObject... abstractBoxList)	{

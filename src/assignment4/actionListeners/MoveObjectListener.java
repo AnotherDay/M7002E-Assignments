@@ -28,7 +28,7 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 	private Material highlightMaterial;
 	private RigidBodyControl pickedObjectControll;
 	private float pushForce = 8f;
-	private boolean inJediMode = false;
+	private boolean inJediMode, idleState;
 	private GuiManager guiManger;
 	
 	private Vector3f gravityVector = new Vector3f(0, -9.82f, 0);
@@ -50,7 +50,8 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 	@Override
 	public void onAnalog(String name, float value, float tpf) {
 		try	{
-			if(inJediMode)	{
+			if(idleState) {} //In idle state ignore on action inputs
+			else if(inJediMode)	{
 				switch(name)	{
 				case Constants.PUSH_AWAY:
 					pickedObjectControll.applyCentralForce(cam.getDirection().mult(pushForce));
@@ -84,6 +85,7 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 	@Override
 	public void onAction(String name, boolean isPressed, float tpf) {
 		if(cam.getLocation().y > 100){} //If the camera is viewing the rooms from above ignore input
+		else if(idleState){} //In idle state ignore on action inputs
 		else if(name.equals(Constants.PICK_DRAG) && !inJediMode && pickedObjectControll == null)	{
 			if(distance <= pickingDistance)
 				pickObject();
@@ -150,6 +152,14 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 				if(distance <= pickingDistance) guiManger.attachGrabIcon();
 			}
 		}
+	}
+	
+	public void turnOff()	{
+		idleState = true;
+	}
+	
+	public void turnOn()	{
+		idleState = false;
 	}
 	
 	private void removeSelectedObject()	{

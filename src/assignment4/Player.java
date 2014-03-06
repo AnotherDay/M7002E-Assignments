@@ -68,6 +68,10 @@ public class Player implements ActionListener {
 		return cam.getDirection();
 	}
 	
+	public Vector3f getCameraLocation()	{
+		return cam.getLocation();
+	}
+	
 	private Vector3f getWalkingDirection()	{
 		Vector3f camDir = new Vector3f();
 		Vector3f camLeft = new Vector3f();
