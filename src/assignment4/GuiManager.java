@@ -53,20 +53,18 @@ public class GuiManager {
 		
 		handPicClosed = new Picture("Closed Hand Picture");
 		handPicClosed.setImage(assetManager, "Other/cursor_drag_hand.png", true);
-		handPicClosed.setWidth(20f);
-		handPicClosed.setHeight(20f);
+		handPicClosed.scale(20f);
 		handPicClosed.setLocalTranslation(
-				(windowWidth / 2) + 5,
-				(windowHeight / 2.2f), 
+				(windowWidth / 2) - 30,
+				(windowHeight / 2f + 10), 
 				0);
 
 		handPicOpen = new Picture("Open Hand Picture");
 		handPicOpen.setImage(assetManager, "Other/cursor_pick_hand.png", true);
-		handPicOpen.setWidth(20f);
-		handPicOpen.setHeight(20f);
+		handPicOpen.scale(18f);
 		handPicOpen.setLocalTranslation(
-				(windowWidth / 2) + 5,
-				(windowHeight / 2) + 2, 
+				(windowWidth / 2) + 15,
+				(windowHeight / 2.2f) - 5, 
 				0);		
 		
 		DirectionalLight guiLight = new DirectionalLight();
