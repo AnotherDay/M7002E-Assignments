@@ -27,7 +27,7 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 	private Material highlightMaterial;
 	private RigidBodyControl pickedObjectControll;
 	private float pushForce = 8f;
-	private boolean inJediMode, idleState;
+	private boolean jediModeEnabled, inJediMode, idleState;
 	private GuiManager guiManger;
 	
 	private Vector3f gravityVector = new Vector3f(0, -9.82f, 0);
@@ -38,8 +38,6 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 		this.cam = cam;
 		this.rootNode = rootNode;
 		this.guiManger = guiManager;
-		
-		guiManager.leaveJediMode();
 		
 		highlightMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 		highlightMaterial.setColor("Color", ColorRGBA.Yellow);
@@ -92,10 +90,10 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 		else if(name.equals(Constants.PICK) && !inJediMode && pickedObjectControll != null && !isPressed )	{
 			removeSelectedObject();
 		}
-		else if(name.equals(Constants.PICK) && inJediMode && !isPressed)	{
+		else if(name.equals(Constants.PICK) && inJediMode && jediModeEnabled && !isPressed)	{
 			pickObject();
 		}
-		else if(name.equals(Constants.JEDI_MODE) && !isPressed)	{
+		else if(name.equals(Constants.JEDI_MODE) && jediModeEnabled && !isPressed)	{
 			if(inJediMode)	{
 				removeSelectedObject();
 				guiManger.leaveJediMode();
@@ -146,6 +144,14 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 	
 	public void turnOn()	{
 		idleState = false;
+	}
+	
+	public void enableJediMode()	{
+		jediModeEnabled = true;
+	}
+	
+	public void disableJediMode()	{
+		jediModeEnabled = false;
 	}
 	
 	private void removeSelectedObject()	{

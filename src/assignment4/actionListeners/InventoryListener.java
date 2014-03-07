@@ -9,6 +9,7 @@ import assignment4.ObjectPicker;
 import assignment4.Player;
 import assignment4.exceptions.NoObjectFoundException;
 import assignment4.items.Item;
+import assignment4.items.Key;
 import assignment4.items.MagicWand;
 import assignment4.objects.Torch;
 
@@ -89,30 +90,22 @@ public class InventoryListener implements ActionListener {
 			for(Item item : itemsList)	{
 				if(item.getGeometry().equals(itemGeometry) &&
 						player.getLocation().distance(itemGeometry.getLocalTranslation()) <= pickingDistance)	{
-					itemController = itemGeometry.getControl(RigidBodyControl.class);
-					itemGeometry.removeControl(RigidBodyControl.class);
-					itemsNode.detachChild(itemGeometry);
-					guiManager.attachWand(itemGeometry);
-					guiManager.turnOffPickingInidcator();
-					break;
+					if(item instanceof MagicWand)	{
+						itemController = itemGeometry.getControl(RigidBodyControl.class);
+						itemGeometry.removeControl(RigidBodyControl.class);
+						itemsNode.detachChild(itemGeometry);
+						guiManager.attachWand(itemGeometry);
+						guiManager.turnOffPickingInidcator();
+						break;
+					}
+					else if(item instanceof Key)	{
+						itemsNode.detachChild(itemGeometry);
+						moveObjectListener.enableJediMode();
+						guiManager.leaveJediMode();
+					}
+					
 				}
 			}
-//			inventoryItem = objectPicker.pickClosestGeometry(itemsNode);
-//			for(MagicWand wand : wandList)	{
-//				if(wand.getGeometry().equals(inventoryItem) && 
-//						player.getLocation().distance(inventoryItem.getLocalTranslation()) <= pickingDistance)	{
-//					itemController = inventoryItem.getControl(RigidBodyControl.class);
-//					inventoryItem.removeControl(RigidBodyControl.class);
-//					itemsNode.detachChild(inventoryItem);
-//					moveObjectListener.turnOff();
-//					guiManager.attachWand(inventoryItem);
-//					guiManager.turnOffPickingInidcator();
-//					break;
-//				}
-//				else {
-//					inventoryItem = null;
-//				}
-//			}
 		} catch(NoObjectFoundException e)	{}
 	}
 	

@@ -6,7 +6,6 @@ import java.util.LinkedList;
 
 import assignment4.exceptions.NoObjectFoundException;
 import assignment4.items.Item;
-import assignment4.items.MagicWand;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.font.BitmapFont;
@@ -103,10 +102,6 @@ public class GuiManager {
 			guiNode.attachChild(instructions);
 		}
 		guiNode.attachChild(jediModeEffect);
-	}
-	
-	public void removeJediModeText()	{
-		guiNode.detachChild(jediModeText);
 	}
 	
 	public void attachGrabIcon()	{
@@ -218,7 +213,7 @@ public class GuiManager {
 		jediInstructionsLeft.setText("J : Push left");
 		
 		BitmapText jediInstructionsRight = new BitmapText(jediModeFont, false);
-		jediInstructionsRight.setText("L : Push object right");
+		jediInstructionsRight.setText("L : Push right");
 		
 		jediModeInstructions.addAll(Arrays.asList(
 				jediInstructionsUp, jediInstructionsDown, jediInstructionsForward, jediInstructionsBackward,
