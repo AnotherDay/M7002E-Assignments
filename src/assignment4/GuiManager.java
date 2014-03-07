@@ -1,6 +1,8 @@
 package assignment4;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 
 import assignment4.exceptions.NoObjectFoundException;
 import assignment4.objects.MagicWand;
@@ -19,11 +21,13 @@ import com.jme3.ui.Picture;
 public class GuiManager {
 	
 	private Node guiNode;
-	private BitmapText crossHairsText, godModeText;
-	private Picture handPicClosed, handPicOpen, godModeEffect;
+	private BitmapText crossHairsText, jediModeText; 
+	private LinkedList<BitmapText> jediModeInstructions = new LinkedList<BitmapText>(); 
+	private Picture handPicClosed, handPicOpen, jediModeEffect;
 	private int windowWidth, windowHeight;
 	private AssetManager assetManager;
 	private ArrayList<Geometry> attachedGemetries = new ArrayList<Geometry>();
+	private boolean pickingAllowed = true;
 	
 	private String enterJediModeTextString = "Press G to enter jedi mode"; 
 	private String exitJediModeTextString = "Press G to exit jedi mode";
@@ -35,14 +39,8 @@ public class GuiManager {
 		this.assetManager = assetManager;
 		
 		guiNode.detachAllChildren();
-		BitmapFont godModeFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
-		godModeText = new BitmapText(godModeFont, false);
-		godModeText.setSize(godModeFont.getCharSet().getRenderedSize() * 1.5f);
-		godModeText.setLocalTranslation(
-				windowWidth - godModeFont.getCharSet().getRenderedSize()*18, 
-				windowHeight, 
-				0);
 		
+		initJediModeTextAndEffects();
 		
 		BitmapFont crossHairFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
 		crossHairsText = new BitmapText(crossHairFont, false);
@@ -71,11 +69,6 @@ public class GuiManager {
 				(windowHeight / 2) + 2, 
 				0);		
 		
-		godModeEffect = new Picture("God Mode Effect");
-		godModeEffect.setImage(assetManager, "Other/god_mode_effect.png", true);
-		godModeEffect.setWidth(windowWidth);
-		godModeEffect.setHeight(windowHeight);
-		
 		DirectionalLight guiLight = new DirectionalLight();
 		guiLight.setDirection(new Vector3f(0, 0, -1.0f));
 		guiLight.setColor(Constants.TORCH_LIGHT_COLOR);
@@ -95,20 +88,26 @@ public class GuiManager {
 		guiNode.detachChildNamed(name);
 	}
 	
-	public void attachEnterJediModeText()	{
-		godModeText.setText(enterJediModeTextString);
-		guiNode.attachChild(godModeText);
-		guiNode.detachChild(godModeEffect);
+	public void leaveJediMode()	{
+		jediModeText.setText(enterJediModeTextString);
+		guiNode.attachChild(jediModeText);
+		for(BitmapText instructions : jediModeInstructions)	{
+			guiNode.detachChild(instructions);
+		}
+		guiNode.detachChild(jediModeEffect);
 	}
 	
-	public void detachExitJediModeText()	{
-		godModeText.setText(exitJediModeTextString);
-		guiNode.attachChild(godModeText);
-		guiNode.attachChild(godModeEffect);
+	public void enterJediMode()	{
+		jediModeText.setText(exitJediModeTextString);
+		guiNode.attachChild(jediModeText);
+		for(BitmapText instructions : jediModeInstructions)	{
+			guiNode.attachChild(instructions);
+		}
+		guiNode.attachChild(jediModeEffect);
 	}
 	
 	public void removeJediModeText()	{
-		guiNode.detachChild(godModeText);
+		guiNode.detachChild(jediModeText);
 	}
 	
 	public void attachGrabIcon()	{
@@ -169,19 +168,72 @@ public class GuiManager {
 		}
 	}
 	
+	public void turnOffPickingInidcator()	{
+		pickingAllowed = false;
+	}
+	
+	public void turnOnPickingIndicator()	{
+		pickingAllowed = true;
+	}
+	
 	public void updateActionIndicators(Player player, Node pickablesNode, ArrayList<MagicWand> wandList)	{
 		detachPickIcon();
 		detachGrabIcon();
-		try {
-			Geometry closestGeometry = new ObjectPicker(player).pickClosestGeometry(pickablesNode);
-			if(closestGeometry.getLocalTranslation().distance(player.getLocation()) <= Constants.PICKING_DISTANCE)	{
-				attachGrabIcon();
-				for(MagicWand wand : wandList)	{
-					if(wand.getGeometry().equals(closestGeometry))	{
-						attachPickIcon();
+		if(pickingAllowed)
+			try {
+				Geometry closestGeometry = new ObjectPicker(player).pickClosestGeometry(pickablesNode);
+				if(closestGeometry.getLocalTranslation().distance(player.getLocation()) <= Constants.PICKING_DISTANCE)	{
+					attachGrabIcon();
+					for(MagicWand wand : wandList)	{
+						if(wand.getGeometry().equals(closestGeometry))	{
+							attachPickIcon();
+							break;
+						}
 					}
 				}
-			}
-		} catch (NoObjectFoundException e) {}
+			} catch (NoObjectFoundException e) {}
+	}
+	
+	private void initJediModeTextAndEffects()	{
+		BitmapFont jediModeFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
+		jediModeText = new BitmapText(jediModeFont, false);
+		jediModeText.setLocalTranslation(jediModeFont.getCharSet().getRenderedSize(), 
+				windowHeight, 
+				0);
+		
+		Vector3f textHeight = Vector3f.UNIT_Y.mult(jediModeFont.getCharSet().getLineHeight());
+		
+		BitmapText jediInstructionsUp = new BitmapText(jediModeFont, false);
+		jediInstructionsUp.setText("U : Push up");
+		
+		BitmapText jediInstructionsDown = new BitmapText(jediModeFont, false);
+		jediInstructionsDown.setText("O : Push down");
+		
+		BitmapText jediInstructionsForward = new BitmapText(jediModeFont, false);
+		jediInstructionsForward.setText("I : Push forward");
+		
+		BitmapText jediInstructionsBackward = new BitmapText(jediModeFont, false);
+		jediInstructionsBackward.setText("K : Push backward");
+		
+		BitmapText jediInstructionsLeft = new BitmapText(jediModeFont, false);
+		jediInstructionsLeft.setText("J : Push left");
+		
+		BitmapText jediInstructionsRight = new BitmapText(jediModeFont, false);
+		jediInstructionsRight.setText("L : Push object right");
+		
+		jediModeInstructions.addAll(Arrays.asList(
+				jediInstructionsUp, jediInstructionsDown, jediInstructionsForward, jediInstructionsBackward,
+				jediInstructionsLeft, jediInstructionsRight));
+		
+		Vector3f lastLocalTranslation = jediModeText.getLocalTranslation();
+		for(BitmapText instructions : jediModeInstructions)		{
+			instructions.setLocalTranslation(lastLocalTranslation.subtract(textHeight));
+			lastLocalTranslation = instructions.getLocalTranslation();
+		}
+		
+		jediModeEffect = new Picture("God Mode Effect");
+		jediModeEffect.setImage(assetManager, "Other/god_mode_effect.png", true);
+		jediModeEffect.setWidth(windowWidth);
+		jediModeEffect.setHeight(windowHeight);
 	}
 }

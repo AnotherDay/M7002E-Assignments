@@ -93,6 +93,7 @@ public class InventoryListener implements ActionListener {
 					itemsNode.detachChild(inventoryItem);
 					moveObjectListener.turnOff();
 					guiManager.attachWand(inventoryItem);
+					guiManager.turnOffPickingInidcator();
 					break;
 				}
 				else {
@@ -105,6 +106,7 @@ public class InventoryListener implements ActionListener {
 	private void removeItem()	{
 		if(inventoryItem != null)	{
 			guiManager.detachAllItems();
+			guiManager.turnOnPickingIndicator();
 			inventoryItem.addControl(itemController);
 			Vector3f newItemLocation = player.getCameraLocation().add(player.getCameraDirection().mult(2.0f));
 			itemController.setPhysicsLocation(newItemLocation);

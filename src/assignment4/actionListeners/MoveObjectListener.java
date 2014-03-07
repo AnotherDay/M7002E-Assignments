@@ -39,7 +39,7 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 		this.rootNode = rootNode;
 		this.guiManger = guiManager;
 		
-		guiManager.attachEnterJediModeText();
+		guiManager.leaveJediMode();
 		
 		highlightMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 		highlightMaterial.setColor("Color", ColorRGBA.Yellow);
@@ -98,11 +98,11 @@ public class MoveObjectListener implements AnalogListener, ActionListener {
 		else if(name.equals(Constants.JEDI_MODE) && !isPressed)	{
 			if(inJediMode)	{
 				removeSelectedObject();
-				guiManger.attachEnterJediModeText();
+				guiManger.leaveJediMode();
 				inJediMode = false;
 			}
 			else	{
-				guiManger.detachExitJediModeText();
+				guiManger.enterJediMode();
 				inJediMode = true;
 			}
 		}
