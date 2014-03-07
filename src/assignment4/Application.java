@@ -48,15 +48,18 @@ public class Application extends SimpleApplication {
 		bulletAppState = new BulletAppState();
 		stateManager.attach(bulletAppState);
 		bulletAppState.getPhysicsSpace().setGravity(new Vector3f(0, -9.82f, 0));
+		
 		assetManager.registerLoader(BlenderModelLoader.class, "blend");
-
 		assetManager.registerLocator("src/assignment4/assets", FileLocator.class);
+		
+		settings.setTitle("Assignment 4 - The dungeon");
+		setDisplayFps(false);
+		setDisplayStatView(false); 
 		
 		guiManager = new GuiManager(guiNode, settings.getWidth(), settings.getHeight(), assetManager);
 		guiManager.attachCrossHairs();
 		
 		flyCam.setMoveSpeed(3f);
-		
 		player = new Player(inputManager, cam);
 		bulletAppState.getPhysicsSpace().add(player.getCharacterControl());
 		
