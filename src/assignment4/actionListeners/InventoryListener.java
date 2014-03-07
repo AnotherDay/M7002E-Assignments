@@ -8,7 +8,8 @@ import assignment4.LightController;
 import assignment4.ObjectPicker;
 import assignment4.Player;
 import assignment4.exceptions.NoObjectFoundException;
-import assignment4.objects.MagicWand;
+import assignment4.items.Item;
+import assignment4.items.MagicWand;
 import assignment4.objects.Torch;
 
 import com.jme3.bullet.control.RigidBodyControl;
@@ -22,15 +23,15 @@ public class InventoryListener implements ActionListener {
 	private float pickingDistance = 10f;
 	
 	private Node itemsNode;
-	private Geometry inventoryItem;
+	private Geometry itemGeometry;
 	private RigidBodyControl itemController;
 	private LightController lightController;
 	private GuiManager guiManager;
 	private ObjectPicker objectPicker;
 	private MoveObjectListener moveObjectListener;
 	private Player player;
-	private ArrayList<MagicWand> wandList = new ArrayList<MagicWand>();
 	private boolean idleState;
+	private ArrayList<Item> itemsList = new ArrayList<Item>();
 	
 	public InventoryListener(Node itemsNode, LightController lightController, Player player, MoveObjectListener moveObjectListener, GuiManager guiManager)	{
 		this.itemsNode = itemsNode;
@@ -42,22 +43,22 @@ public class InventoryListener implements ActionListener {
 		this.objectPicker = new ObjectPicker(player);
 	}
 	
-	public void addWands(MagicWand... wands)	{
-		for(MagicWand wand : wands)	{
-			wandList.add(wand);
+	public void addItems(Item... items)	{
+		for(Item item: items)	{
+			itemsList.add(item);
 		}
 	}
 	
-	public void removeWand(MagicWand... wands)		{
-		for(MagicWand wand : wands)	{
-			wandList.remove(wand);
+	public void removeItems(Item... items)	{
+		for(Item item: items)	{
+			itemsList.remove(item);
 		}
 	}
 	
 	@Override
 	public void onAction(String name, boolean isPressed, float tpf) {
 		if(name.equals(Constants.PUT_IN_INVENTORY) && !isPressed && !idleState)	{
-			if(inventoryItem == null)	{
+			if(itemGeometry == null)	{
 				pickUpItem();
 			}
 			else	{
@@ -65,7 +66,7 @@ public class InventoryListener implements ActionListener {
 			}
 		}
 		else if(name.equals(Constants.PICK) && !isPressed && !idleState)	{
-			if(inventoryItem != null)	{
+			if(itemGeometry != null)	{
 				try {
 					Torch pickedTorch = (Torch) objectPicker.pickClosestGeometry(lightController.getTorchesNode()).getParent().getParent();
 					lightController.turnTorchLightSwitch(pickedTorch);
@@ -84,36 +85,48 @@ public class InventoryListener implements ActionListener {
 	
 	private void pickUpItem()	{
 		try	{
-			inventoryItem = objectPicker.pickClosestGeometry(itemsNode);
-			for(MagicWand wand : wandList)	{
-				if(wand.getGeometry().equals(inventoryItem) && 
-						player.getLocation().distance(inventoryItem.getLocalTranslation()) <= pickingDistance)	{
-					itemController = inventoryItem.getControl(RigidBodyControl.class);
-					inventoryItem.removeControl(RigidBodyControl.class);
-					itemsNode.detachChild(inventoryItem);
-					moveObjectListener.turnOff();
-					guiManager.attachWand(inventoryItem);
+			itemGeometry = objectPicker.pickClosestGeometry(itemsNode);
+			for(Item item : itemsList)	{
+				if(item.getGeometry().equals(itemGeometry) &&
+						player.getLocation().distance(itemGeometry.getLocalTranslation()) <= pickingDistance)	{
+					itemController = itemGeometry.getControl(RigidBodyControl.class);
+					itemGeometry.removeControl(RigidBodyControl.class);
+					itemsNode.detachChild(itemGeometry);
+					guiManager.attachWand(itemGeometry);
 					guiManager.turnOffPickingInidcator();
 					break;
 				}
-				else {
-					inventoryItem = null;
-				}
 			}
+//			inventoryItem = objectPicker.pickClosestGeometry(itemsNode);
+//			for(MagicWand wand : wandList)	{
+//				if(wand.getGeometry().equals(inventoryItem) && 
+//						player.getLocation().distance(inventoryItem.getLocalTranslation()) <= pickingDistance)	{
+//					itemController = inventoryItem.getControl(RigidBodyControl.class);
+//					inventoryItem.removeControl(RigidBodyControl.class);
+//					itemsNode.detachChild(inventoryItem);
+//					moveObjectListener.turnOff();
+//					guiManager.attachWand(inventoryItem);
+//					guiManager.turnOffPickingInidcator();
+//					break;
+//				}
+//				else {
+//					inventoryItem = null;
+//				}
+//			}
 		} catch(NoObjectFoundException e)	{}
 	}
 	
 	private void removeItem()	{
-		if(inventoryItem != null)	{
+		if(itemGeometry != null)	{
 			guiManager.detachAllItems();
 			guiManager.turnOnPickingIndicator();
-			inventoryItem.addControl(itemController);
+			itemGeometry.addControl(itemController);
 			Vector3f newItemLocation = player.getCameraLocation().add(player.getCameraDirection().mult(2.0f));
 			itemController.setPhysicsLocation(newItemLocation);
 			itemController.activate();
-			itemsNode.attachChild(inventoryItem);
+			itemsNode.attachChild(itemGeometry);
 			moveObjectListener.turnOn();
-			inventoryItem = null;
+			itemGeometry = null;
 		}
 	}
 }

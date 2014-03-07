@@ -1,11 +1,9 @@
-package assignment4.objects;
-
-import assignment4.Abstract3dObject;
+package assignment4.items;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.asset.BlenderKey;
 
-public class Key extends Abstract3dObject {
+public class Key extends Item {
 
 	private static String filePath = "Models/key.blend";
 	private static float mass = 0.2f;

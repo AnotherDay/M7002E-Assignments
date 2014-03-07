@@ -5,7 +5,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 import assignment4.exceptions.NoObjectFoundException;
-import assignment4.objects.MagicWand;
+import assignment4.items.Item;
+import assignment4.items.MagicWand;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.font.BitmapFont;
@@ -174,7 +175,7 @@ public class GuiManager {
 		pickingAllowed = true;
 	}
 	
-	public void updateActionIndicators(Player player, Node pickablesNode, ArrayList<MagicWand> wandList)	{
+	public void updateActionIndicators(Player player, Node pickablesNode, Item... items)	{
 		detachPickIcon();
 		detachGrabIcon();
 		if(pickingAllowed)
@@ -182,8 +183,8 @@ public class GuiManager {
 				Geometry closestGeometry = new ObjectPicker(player).pickClosestGeometry(pickablesNode);
 				if(closestGeometry.getLocalTranslation().distance(player.getLocation()) <= Constants.PICKING_DISTANCE)	{
 					attachGrabIcon();
-					for(MagicWand wand : wandList)	{
-						if(wand.getGeometry().equals(closestGeometry))	{
+					for(Item item : items)	{
+						if(item.getGeometry().equals(closestGeometry))	{
 							attachPickIcon();
 							break;
 						}

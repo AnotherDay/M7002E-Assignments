@@ -9,9 +9,10 @@ import assignment4.buildingBlocks.Door;
 import assignment4.buildingBlocks.Floor;
 import assignment4.buildingBlocks.Roof;
 import assignment4.buildingBlocks.Wall;
+import assignment4.items.Item;
+import assignment4.items.Key;
+import assignment4.items.MagicWand;
 import assignment4.objects.Crate;
-import assignment4.objects.Key;
-import assignment4.objects.MagicWand;
 import assignment4.objects.Torch;
 
 import com.jme3.app.SimpleApplication;
@@ -39,7 +40,7 @@ public class Application extends SimpleApplication {
 	private MoveObjectListener moveObjectListener; 
 	private GuiManager guiManager;
 	private LightController lightController;
-	private ArrayList<MagicWand> wandArray = new ArrayList<MagicWand>();
+	private ArrayList<Item> itemsList = new ArrayList<Item>();
  
 	@Override
 	public void simpleInitApp() {
@@ -68,13 +69,14 @@ public class Application extends SimpleApplication {
 		Key theKey = new Key("StartRoomKey", assetManager);
 		theKey.translate(-2, 4, 0);
 		theKey.scale(0.5f);
+		itemsList.add(theKey);
 		pickablesNode.attachChild(theKey.getGeometry());
 		bulletAppState.getPhysicsSpace().add(theKey.getPhysics());
 		
 		MagicWand magicWand = new MagicWand("LightRemover", assetManager);
 		magicWand.translate(-5, 4, 0);
+		itemsList.add(magicWand);
 		pickablesNode.attachChild(magicWand.getGeometry());
-		wandArray.add(magicWand);
 		bulletAppState.getPhysicsSpace().add(magicWand.getPhysics());
 		
 		initRoom();
@@ -181,7 +183,7 @@ public class Application extends SimpleApplication {
 	    
 	    inputManager.addMapping(Constants.PUT_IN_INVENTORY, new KeyTrigger(KeyInput.KEY_E));
 	    InventoryListener inventoryListener = new InventoryListener(pickablesNode ,lightController, player, moveObjectListener, guiManager);
-	    inventoryListener.addWands(wandArray.toArray(new MagicWand[wandArray.size()]));
+	    inventoryListener.addItems(itemsList.toArray(new Item[itemsList.size()]));
 	    inputManager.addListener(inventoryListener, Constants.PUT_IN_INVENTORY, Constants.PICK);
 	}
 	
@@ -208,6 +210,6 @@ public class Application extends SimpleApplication {
 	public void simpleUpdate(float tpf) {
 		player.updateWalkingDirection();
 		moveObjectListener.updateHighlightingPosition();
-		guiManager.updateActionIndicators(player, pickablesNode, wandArray);
+		guiManager.updateActionIndicators(player, pickablesNode, itemsList.toArray(new Item[itemsList.size()]));
 	}
 }

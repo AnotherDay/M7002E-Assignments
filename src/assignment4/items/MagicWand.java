@@ -1,6 +1,4 @@
-package assignment4.objects;
-
-import assignment4.Abstract3dObject;
+package assignment4.items;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.asset.TextureKey;
@@ -13,7 +11,7 @@ import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.shape.Cylinder;
 import com.jme3.texture.Texture;
 
-public class MagicWand extends Abstract3dObject {
+public class MagicWand extends Item {
 
 	private static float mass = 1f;
 	private static String materialDefinitionFile = "Common/MatDefs/Light/Lighting.j3md";
