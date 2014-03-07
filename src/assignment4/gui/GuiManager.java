@@ -1,9 +1,10 @@
-package assignment4;
+package assignment4.gui;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 
+import assignment4.Constants;
+import assignment4.ObjectPicker;
+import assignment4.Player;
 import assignment4.exceptions.NoObjectFoundException;
 import assignment4.items.Item;
 
@@ -21,26 +22,21 @@ import com.jme3.ui.Picture;
 public class GuiManager {
 	
 	private Node guiNode;
-	private BitmapText crossHairsText, jediModeText; 
-	private LinkedList<BitmapText> jediModeInstructions = new LinkedList<BitmapText>(); 
-	private Picture handPicClosed, handPicOpen, jediModeEffect;
+	private BitmapText crossHairsText; 
+	private Picture handPicClosed, handPicOpen;
 	private int windowWidth, windowHeight;
-	private AssetManager assetManager;
+	private JediModeGui jediModeGui;
 	private ArrayList<Geometry> attachedGemetries = new ArrayList<Geometry>();
 	private boolean pickingAllowed = true;
-	
-	private String enterJediModeTextString = "Press G to enter jedi mode"; 
-	private String exitJediModeTextString = "Press G to exit jedi mode";
 	
 	public GuiManager(Node guiNode, int windowWidth, int windowHeight, AssetManager assetManager)	{
 		this.guiNode = guiNode;
 		this.windowWidth = windowWidth;
 		this.windowHeight = windowHeight;
-		this.assetManager = assetManager;
 		
 		guiNode.detachAllChildren();
 		
-		initJediModeTextAndEffects();
+		jediModeGui = new JediModeGui(windowWidth, windowHeight, assetManager);
 		
 		BitmapFont crossHairFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
 		crossHairsText = new BitmapText(crossHairFont, false);
@@ -86,22 +82,20 @@ public class GuiManager {
 		guiNode.detachChildNamed(name);
 	}
 	
+	public void attachJediGui()	{
+		guiNode.attachChild(jediModeGui);
+	}
+	
+	public void detachJediGui()	{
+		guiNode.detachChild(jediModeGui);
+	}
+	
 	public void leaveJediMode()	{
-		jediModeText.setText(enterJediModeTextString);
-		guiNode.attachChild(jediModeText);
-		for(BitmapText instructions : jediModeInstructions)	{
-			guiNode.detachChild(instructions);
-		}
-		guiNode.detachChild(jediModeEffect);
+		jediModeGui.jediModeOff();
 	}
 	
 	public void enterJediMode()	{
-		jediModeText.setText(exitJediModeTextString);
-		guiNode.attachChild(jediModeText);
-		for(BitmapText instructions : jediModeInstructions)	{
-			guiNode.attachChild(instructions);
-		}
-		guiNode.attachChild(jediModeEffect);
+		jediModeGui.jediModeOn();
 	}
 	
 	public void attachGrabIcon()	{
@@ -186,48 +180,5 @@ public class GuiManager {
 					}
 				}
 			} catch (NoObjectFoundException e) {}
-	}
-	
-	private void initJediModeTextAndEffects()	{
-		BitmapFont jediModeFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
-		jediModeText = new BitmapText(jediModeFont, false);
-		jediModeText.setLocalTranslation(jediModeFont.getCharSet().getRenderedSize(), 
-				windowHeight, 
-				0);
-		
-		Vector3f textHeight = Vector3f.UNIT_Y.mult(jediModeFont.getCharSet().getLineHeight());
-		
-		BitmapText jediInstructionsUp = new BitmapText(jediModeFont, false);
-		jediInstructionsUp.setText("U : Push up");
-		
-		BitmapText jediInstructionsDown = new BitmapText(jediModeFont, false);
-		jediInstructionsDown.setText("O : Push down");
-		
-		BitmapText jediInstructionsForward = new BitmapText(jediModeFont, false);
-		jediInstructionsForward.setText("I : Push forward");
-		
-		BitmapText jediInstructionsBackward = new BitmapText(jediModeFont, false);
-		jediInstructionsBackward.setText("K : Push backward");
-		
-		BitmapText jediInstructionsLeft = new BitmapText(jediModeFont, false);
-		jediInstructionsLeft.setText("J : Push left");
-		
-		BitmapText jediInstructionsRight = new BitmapText(jediModeFont, false);
-		jediInstructionsRight.setText("L : Push right");
-		
-		jediModeInstructions.addAll(Arrays.asList(
-				jediInstructionsUp, jediInstructionsDown, jediInstructionsForward, jediInstructionsBackward,
-				jediInstructionsLeft, jediInstructionsRight));
-		
-		Vector3f lastLocalTranslation = jediModeText.getLocalTranslation();
-		for(BitmapText instructions : jediModeInstructions)		{
-			instructions.setLocalTranslation(lastLocalTranslation.subtract(textHeight));
-			lastLocalTranslation = instructions.getLocalTranslation();
-		}
-		
-		jediModeEffect = new Picture("God Mode Effect");
-		jediModeEffect.setImage(assetManager, "Other/god_mode_effect.png", true);
-		jediModeEffect.setWidth(windowWidth);
-		jediModeEffect.setHeight(windowHeight);
 	}
 }

@@ -9,6 +9,7 @@ import assignment4.buildingBlocks.Door;
 import assignment4.buildingBlocks.Floor;
 import assignment4.buildingBlocks.Roof;
 import assignment4.buildingBlocks.Wall;
+import assignment4.gui.GuiManager;
 import assignment4.items.Item;
 import assignment4.items.Key;
 import assignment4.items.MagicWand;

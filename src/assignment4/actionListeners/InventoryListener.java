@@ -3,11 +3,11 @@ package assignment4.actionListeners;
 import java.util.ArrayList;
 
 import assignment4.Constants;
-import assignment4.GuiManager;
 import assignment4.LightController;
 import assignment4.ObjectPicker;
 import assignment4.Player;
 import assignment4.exceptions.NoObjectFoundException;
+import assignment4.gui.GuiManager;
 import assignment4.items.Item;
 import assignment4.items.Key;
 import assignment4.items.MagicWand;
@@ -101,7 +101,7 @@ public class InventoryListener implements ActionListener {
 					else if(item instanceof Key)	{
 						itemsNode.detachChild(itemGeometry);
 						moveObjectListener.enableJediMode();
-						guiManager.leaveJediMode();
+						guiManager.attachJediGui();
 					}
 					
 				}

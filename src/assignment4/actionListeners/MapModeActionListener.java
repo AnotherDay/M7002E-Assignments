@@ -1,8 +1,8 @@
 package assignment4.actionListeners;
 
 import assignment4.Constants;
-import assignment4.GuiManager;
 import assignment4.Player;
+import assignment4.gui.GuiManager;
 import assignment4.objects.PlayerMarker;
 
 import com.jme3.asset.AssetManager;

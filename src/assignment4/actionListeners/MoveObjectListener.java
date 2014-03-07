@@ -1,7 +1,7 @@
 package assignment4.actionListeners;
 
 import assignment4.Constants;
-import assignment4.GuiManager;
+import assignment4.gui.GuiManager;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.control.RigidBodyControl;
