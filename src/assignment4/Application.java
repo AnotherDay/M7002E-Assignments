@@ -61,9 +61,9 @@ public class Application extends SimpleApplication {
 		guiManager = new GuiManager(guiNode, settings.getWidth(), settings.getHeight(), assetManager);
 		guiManager.attachCrossHairs();
 		
-		flyCam.setMoveSpeed(3f);
 		player = new Player(inputManager, cam);
 		bulletAppState.getPhysicsSpace().add(player.getCharacterControl());
+		player.setLocation(new Vector3f(0, 10, 10));
 		
 		lightController = new LightController(rootNode, torchesNode);
 		

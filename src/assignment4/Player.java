@@ -6,7 +6,6 @@ import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
-import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 
@@ -21,11 +20,10 @@ public class Player implements ActionListener {
 	public Player(InputManager inputManager, Camera cam)	{
 		this.inputManager = inputManager;
 		this.cam = cam;
-//		this.cam.setFrustumPerspective(45, (float)this.cam.getWidth()/this.cam.getHeight(), 0.01f, 1000f);
 		
 		player.setJumpSpeed(20);
 		player.setFallSpeed(30);
-		player.setPhysicsLocation(new Vector3f(0, 1, 0));
+		player.setGravity(80);
 		
 		initKeys();
 	}
@@ -35,6 +33,10 @@ public class Player implements ActionListener {
 			player.setWalkDirection(getWalkingDirection());
 			cam.setLocation(player.getPhysicsLocation());
 		}
+	}
+	
+	public void setLocation(Vector3f location)	{
+		player.setPhysicsLocation(location);
 	}
 	
 	public void setView(Vector3f direction, Vector3f up)	{
