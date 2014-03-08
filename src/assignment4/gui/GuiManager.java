@@ -7,6 +7,8 @@ import assignment4.ObjectPicker;
 import assignment4.Player;
 import assignment4.exceptions.NoObjectFoundException;
 import assignment4.items.Item;
+import assignment4.items.Key;
+import assignment4.items.MagicWand;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.font.BitmapFont;
@@ -27,6 +29,7 @@ public class GuiManager {
 	private int windowWidth, windowHeight;
 	private JediModeGui jediModeGui;
 	private ArrayList<Geometry> attachedGemetries = new ArrayList<Geometry>();
+	private TextMessage keyMessage, wandMessage;
 	private boolean pickingAllowed = true;
 	
 	public GuiManager(Node guiNode, int windowWidth, int windowHeight, AssetManager assetManager)	{
@@ -67,7 +70,18 @@ public class GuiManager {
 		guiLight.setDirection(new Vector3f(0, 0, -1.0f));
 		guiLight.setColor(Constants.TORCH_LIGHT_COLOR);
 		guiNode.addLight(guiLight);
-		
+
+		keyMessage = new TextMessage("There is something strange with this key", assetManager);
+		keyMessage.setLocalTranslation(
+				windowWidth/2 - keyMessage.getLineWidth()/2, 
+				windowHeight/1.5f,
+				0);
+
+		wandMessage = new TextMessage("This controls the torches, how convenient", assetManager);
+		wandMessage.setLocalTranslation(
+				windowWidth/2 - keyMessage.getLineWidth()/2, 
+				windowHeight/1.5f,
+				0);
 	}
 	
 	public void attachGeometry(Geometry geometry)	{
@@ -165,6 +179,7 @@ public class GuiManager {
 	}
 	
 	public void updateActionIndicators(Player player, Node pickablesNode, Item... items)	{
+		detachItemMessages();
 		detachPickIcon();
 		detachGrabIcon();
 		if(pickingAllowed)
@@ -175,10 +190,25 @@ public class GuiManager {
 					for(Item item : items)	{
 						if(item.getGeometry().equals(closestGeometry))	{
 							attachPickIcon();
+							if(item instanceof MagicWand)	{
+								guiNode.attachChild(wandMessage);
+							}
+							else if(item instanceof Key)	{
+								guiNode.attachChild(keyMessage);
+							}
 							break;
 						}
 					}
 				}
 			} catch (NoObjectFoundException e) {}
+	}
+	
+	private void detachItemMessages()	{
+		try	{
+			guiNode.detachChild(wandMessage);
+		} catch(NullPointerException npe) {}
+		try	{
+			guiNode.detachChild(keyMessage);
+		} catch(NullPointerException npe) {}
 	}
 }
