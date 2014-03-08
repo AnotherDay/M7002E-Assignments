@@ -7,7 +7,6 @@ import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.shape.Box;
-import com.jme3.scene.shape.Cylinder;
 
 public class PlayerMarker extends Abstract3dObject {
 	

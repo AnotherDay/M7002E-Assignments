@@ -179,7 +179,7 @@ public class Application extends SimpleApplication {
 	    inputManager.addListener(moveObjectListener, Constants.getMappingNames());
 	    
 	    inputManager.addMapping(Constants.MAP_MODE, new KeyTrigger(KeyInput.KEY_M));
-	    MapModeActionListener mapModeActionListener = new MapModeActionListener(player, rootNode, guiManager, assetManager);
+	    MapModeActionListener mapModeActionListener = new MapModeActionListener(player, rootNode, assetManager);
 	    inputManager.addListener(mapModeActionListener, Constants.MAP_MODE);
 	    
 	    inputManager.addMapping(Constants.PUT_IN_INVENTORY, new KeyTrigger(KeyInput.KEY_E));

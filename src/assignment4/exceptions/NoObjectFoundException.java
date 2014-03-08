@@ -1,5 +1,6 @@
 package assignment4.exceptions;
 
+@SuppressWarnings("serial")
 public class NoObjectFoundException extends Exception {
 
 	public NoObjectFoundException() {

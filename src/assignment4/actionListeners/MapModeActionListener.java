@@ -2,7 +2,6 @@ package assignment4.actionListeners;
 
 import assignment4.Constants;
 import assignment4.Player;
-import assignment4.gui.GuiManager;
 import assignment4.objects.PlayerMarker;
 
 import com.jme3.asset.AssetManager;
@@ -15,15 +14,13 @@ public class MapModeActionListener implements ActionListener {
 	
 	private Player player;
 	private Node rootNode, removedRoofs;
-	private GuiManager guiManager;
 	private Vector3f lastCameraDirection;
 	private boolean inMapMode;
 	private PlayerMarker playerMarker;
 	
-	public MapModeActionListener(Player player, Node rootNode, GuiManager guiManager, AssetManager assetManager)	{
+	public MapModeActionListener(Player player, Node rootNode, AssetManager assetManager)	{
 		this.player = player;
 		this.rootNode = rootNode;
-		this.guiManager = guiManager;
 		removedRoofs = new Node("RemovedRoofs");
 		playerMarker = new PlayerMarker("PlayerMarker", assetManager);
 	}
