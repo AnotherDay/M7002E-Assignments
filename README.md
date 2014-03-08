@@ -15,3 +15,8 @@ Assignment 3
 ------------
 
 [Creating and manipulating objects in JMonkey](https://github.com/AnotherDay/M7002E-Assignments/tree/master/src/assignment3)
+
+Assignment 4
+------------
+
+[Simple Tech Demo](https://github.com/AnotherDay/M7002E-Assignments/tree/master/src/assignment4)
